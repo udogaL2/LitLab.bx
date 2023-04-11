@@ -2,12 +2,12 @@
 
 use Bitrix\Main\DI\ServiceLocator;
 
-class LitlabBookshelfListComponent extends CBitrixComponent
+class LitlabBookDetailfComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
 		$this->prepareTemplateParams();
-		$this->fetchBookshelfList();
+		$this->fetchBookDetail();
 		$this->includeComponentTemplate();
 	}
 
@@ -20,10 +20,7 @@ class LitlabBookshelfListComponent extends CBitrixComponent
 	{
 	}
 
-	protected function fetchBookshelfList()
+	protected function fetchBookDetail()
 	{
-		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
-
-		$this->arResult['BookshelfApi'] = $bookshelfApi;
 	}
 }
