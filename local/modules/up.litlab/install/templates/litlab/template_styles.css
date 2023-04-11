@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+*{
+	padding: 0;
+	margin: 0;
+	font-family: Montserrat;
+}
+body{
+	background-color: #DEDEDE;
+	height: 100%;
+
+}
+.button{
+	border-radius: 10px;
+	font-family: Montserrat;
+}
+header{
+	background-color: #75903a;
+
+}
+
+/*Главный хедер*/
+
+.navbar{
+	margin: 0 50px;
+	/*padding-top: 40px;*/
+	background-color: #75903a;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.navbar-brand{
+	margin-right: auto;
+	width:18%
+}
+
+.navbar-menu{
+	display: flex;
+	justify-content: space-evenly;
+	width:40%;
+}
+
+.navbar-end{
+	justify-content: flex-end;
+	margin-left:auto;
+	align-items: stretch;
+	display: flex;
+	width: 25%;
+}
+.navbar-menu a{
+	font-size: 22px;
+	text-decoration:none;
+	border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+	display: block;
+	padding-bottom: 5px;
+
+}
+.navbar-item{
+	font-weight: 500;
+	font-size: 18px;
+	color: rgba(255, 255, 255, 0.8);
+	font-family: Montserrat;
+	cursor: pointer;
+	align-items: center;
+	display: flex;
+}
+
+.buttons{
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+.button.is-primary{
+	background-color: rgba(46, 50, 4, 0.7);
+	padding: 5px 15px;
+	margin-right: 10px;
+}
+
+
+
+
+/*Второй хедер*/
+
+.title{
+	text-align: center;
+	width: 70%;
+	margin: 70px auto 0 auto;
+}
+
+.title h1{
+	text-shadow: 0px 2px 4px #484848;
+	font-family: "Noto Sans";
+	color:rgba(255, 255, 255, 0.8);
+	font-size: 36px;
+}
+
+.title h3{
+	color:rgba(255, 255, 255, 0.8);
+	font-family: Montserrat;
+	margin-top:20px;
+	font-weight: 100;
+}
+
+.search {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin: 80px auto 0 auto;
+	width: 50%;
+}
+
+.search>.search-wrapper.input-wrapper {
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.search-wrapper {
+	margin-left:25px;
+	font-family: Montserrat;
+	margin-bottom: 70px;
+}
+
+.search-input{
+	box-shadow: inset 0 0.0625em 0.125em rgba(10,10,10,0.5);
+	max-width: 100%;
+	width: 100%;
+	padding: 10px 0px 10px 15px;
+	border-radius: 10px;
+	border:none;
+}
+
+.button.is-info {
+	background-color: #2E3204;
+	background-color: rgba(46, 50, 4, 0.7);
+	border-color: transparent;
+	color: rgba(255, 255, 255, 0.8);
+	padding: 8px 10px;
+	font-family: Montserrat;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+footer{
+	height: 180px;
+	background-color: #75903a;
+	display: flex;
+	justify-content: center;
+	/*включить при подключении всего*/
+	/*margin-top:-180px;*/
+	width: 100%;
+}
+
+.footer-wrapper{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.footer-copyright{
+	margin-bottom: 40px;
+	text-align: center;
+	color: rgb(7, 14, 1);
+}
+
+.footer-links{
+	display: flex;
+	justify-content: space-between;
+}
+
+.footer-link{
+	display: block;
+	color: rgba(255, 255, 255, 0.8);
+}
