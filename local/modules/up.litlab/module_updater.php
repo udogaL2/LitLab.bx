@@ -33,7 +33,6 @@ __litlabMigrate(1, function($updater, $DB) {
 			'CREATE TABLE IF NOT EXISTS up_LitLab_book
 			(
 				ID               INT AUTO_INCREMENT NOT NULL,
-				AUTHOR_ID        INT                NOT NULL,
 				TITLE            VARCHAR(255)       NOT NULL,
 				DESCRIPTION      TEXT               NOT NULL,
 				IMAGE_ID         INT                NOT NULL,
@@ -221,16 +220,6 @@ __litlabMigrate(13, function($updater, $DB) {
 				BOOKSHELF_ID INT NOT NULL,
 				PRIMARY KEY (TAG_ID, BOOKSHELF_ID)
 			);'
-		);
-	}
-});
-
-__litlabMigrate(14, function($updater, $DB) {
-	if ($updater->CanUpdateDatabase())
-	{
-		$DB->query(
-			'ALTER TABLE up_LitLab_book
-			DROP COLUMN AUTHOR_ID;'
 		);
 	}
 });
