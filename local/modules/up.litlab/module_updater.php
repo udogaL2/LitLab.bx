@@ -224,3 +224,13 @@ __litlabMigrate(13, function($updater, $DB) {
 		);
 	}
 });
+
+__litlabMigrate(14, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query(
+			'ALTER TABLE up_LitLab_book
+			DROP COLUMN AUTHOR_ID;'
+		);
+	}
+});

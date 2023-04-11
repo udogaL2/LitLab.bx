@@ -14,3 +14,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 ?>
 
 book detail
+
+	<br>
+
+<?php
+var_dump($arResult['Book']);

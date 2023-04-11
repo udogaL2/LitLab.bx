@@ -6,13 +6,9 @@
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("LitLab");
+?>
 
-$APPLICATION->IncludeComponent(
-	'up:book.detail',
-	'',
-	[
-		'BOOK_ID' => (int)$_REQUEST['id']
-	]
-);
+<h1>404 не найдено</h1>
 
+<?php
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

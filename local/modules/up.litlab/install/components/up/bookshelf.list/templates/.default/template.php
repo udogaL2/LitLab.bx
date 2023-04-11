@@ -15,9 +15,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 <div class="columns">
 	<?php
-	$projects = $arResult['BookshelfApi']->getListOfBookshelf();
-	foreach ($projects as $project):
-		var_dump($project['TITLE']); ?>
+	$bookshelves = $arResult['BookshelfApi']->getListOfBookshelf();
+	foreach ($bookshelves as $bookshelf):
+		var_dump($bookshelf['TITLE']); ?>
 
 		<br>
 		<br>

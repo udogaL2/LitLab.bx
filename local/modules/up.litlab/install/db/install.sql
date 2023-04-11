@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS up_LitLab_book
 (
 	ID               INT AUTO_INCREMENT NOT NULL,
-	AUTHOR_ID        INT                NOT NULL,
 	TITLE            VARCHAR(255)       NOT NULL,
 	DESCRIPTION      TEXT               NOT NULL,
 	IMAGE_ID         INT                NOT NULL,

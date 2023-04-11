@@ -6,7 +6,6 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
-		$this->prepareTemplateParams();
 		$this->fetchBookshelfDetail();
 		$this->includeComponentTemplate();
 	}
@@ -16,11 +15,15 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 		return $arParams;
 	}
 
-	protected function prepareTemplateParams()
-	{
-	}
-
 	protected function fetchBookshelfDetail()
 	{
+		$BookshelfAPI = ServiceLocator::getInstance()->get('Bookshelf');
+
+		$bookshelfInfo = $BookshelfAPI->getDetailsById($this->arParams['BOOKSHELF_ID']);
+
+		if (!$bookshelfInfo)
+			LocalRedirect('/404');
+
+		$this->arResult['Bookshelf'] = $bookshelfInfo;
 	}
 }

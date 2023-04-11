@@ -14,3 +14,15 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 ?>
 
 book list
+<br>
+<?php
+$books = $arResult['BookshelfApi']->getListOfBook();
+foreach ($books as $book):
+	var_dump($book['TITLE']); ?>
+
+	<br>
+	<br>
+	<br>
+
+<?php
+endforeach; ?>
