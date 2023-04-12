@@ -12,11 +12,4 @@ class Bookshelf
 						   ->fetchAll()
 			;
 	}
-
-	public function getDetailsById(int $id): array|false
-	{
-		return BookshelfTable::getByPrimary($id)
-						   ->fetch()
-			;
-	}
 }

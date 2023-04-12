@@ -7,7 +7,7 @@ Loc::loadMessages(__FILE__);
 
 class up_litlab extends CModule
 {
-	public $MODULE_ID = 'up.litlab'; // не влияет
+	public $MODULE_ID = 'up.litlab';
 	public $MODULE_VERSION;
 	public $MODULE_VERSION_DATE;
 	public $MODULE_NAME;

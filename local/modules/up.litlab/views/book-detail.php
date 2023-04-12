@@ -7,12 +7,6 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("LitLab");
 
-$APPLICATION->IncludeComponent(
-	'up:book.detail',
-	'',
-	[
-		'BOOK_ID' => (int)$_REQUEST['id']
-	]
-);
+$APPLICATION->IncludeComponent('up:book.detail', '');
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

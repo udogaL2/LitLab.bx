@@ -1,0 +1,93 @@
+button{
+	border-radius: 10px;
+	font-family: Montserrat;
+}
+
+.book-list-main{
+	width: 95%;
+	margin: 70px auto 180px auto;
+	background-color: #ededed;
+	border-radius: 10px;
+	display: flex;
+	min-height: calc(100vh);
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.main-header{
+	margin: 40px 80px 0 80px;
+	display: flex;
+	height: 70px;
+	justify-content: space-between;
+}
+
+.main-title{
+	font-size:36px;
+}
+
+.book-list-search{
+	display: flex;
+}
+
+.book-list-search>.book-list-search-wrapper.book-list-input-wrapper{
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.book-list-search-wrapper{
+	margin-right: 25px;
+}
+
+.book-list-search-input{
+	box-shadow: inset 0 0.0625em 0.125em rgba(10,10,10,0.5);
+	/*max-width: 100%;*/
+	width: 100%;
+	padding: 10px 0px 10px 15px;
+	border-radius: 10px;
+	border:none;
+	font-size: 16px;
+}
+
+.button.book-list-is-info{
+	background-color: #2E3204;
+	background-color: rgba(46, 50, 4, 0.7);
+	border-color: transparent;
+	color: rgba(255, 255, 255, 0.8);
+	padding: 8px 10px;
+	font-family: Montserrat;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+/*Карточка книги*/
+
+/*в 905 делать в cards justify-content: center;*/
+
+.book-list-cards{
+	margin: 70px 80px 50px 80px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.book-list-card{
+	display: flex;
+	flex-direction: column;
+	width:350px;
+	background-color: #ced9b3;
+	padding: 30px 0;
+	border-radius: 10px;
+	margin-bottom: 50px;
+}
+
+.book-list-card p{
+	text-align: center;
+	padding: 0 35px;
+}
+
+.book-list-card-name{
+	font-size:20px;
+	color: #4f4f4f;
+	word-wrap: break-word;
+	text-decoration: none;
+}

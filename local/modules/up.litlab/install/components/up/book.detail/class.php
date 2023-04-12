@@ -22,13 +22,5 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 
 	protected function fetchBookDetail()
 	{
-		$BookAPI = ServiceLocator::getInstance()->get('Book');
-
-		$bookInfo = $BookAPI->getDetailsById($this->arParams['BOOK_ID']);
-
-		if (!$bookInfo)
-			LocalRedirect('/404');
-
-		$this->arResult['Book'] = $bookInfo;
 	}
 }

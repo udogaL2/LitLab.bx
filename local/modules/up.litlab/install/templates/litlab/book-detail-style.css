@@ -1,0 +1,94 @@
+.book-detail-main{
+	width: 95%;
+	margin: 70px auto 200px auto;
+	background-color: #ededed;
+	border-radius: 10px;
+	display: flex;
+	min-height: calc(100vh);
+	flex-direction: column;
+
+	align-items: center;
+}
+/*в мобилке добавить flex-wrap:wrap*/
+.book-detail-card{
+	display: flex;
+	margin:50px 100px 0px 100px;
+	padding-bottom: 100px;
+}
+
+.book-detail-card-image{
+	margin-right: 100px;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.book-detail-card-image img{
+	border-radius: 10px;
+}
+
+.book-detail-card-buttons{
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+	margin:20px 0 40px 0;
+}
+
+.book-detail-card button{
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.book-detail-card-buttons button{
+	padding: 10px 15px;
+}
+
+
+.book-detail-card-description{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.book-detail-card-description-name{
+	font-size: 36px;
+	font-weight: 600;
+	/*применить везде*/
+	color: #2e2e2e;
+	margin-bottom: 30px;
+}
+
+.book-detail-card-description-author{
+	font-size:22px;
+	margin-bottom: 20px;
+}
+
+.book-detail-card-description-overview{
+	border-left: 1px solid #000;
+	padding-left: 10px;
+	word-wrap: break-word;
+	margin-bottom: 40px;
+}
+
+.book-detail-card-description-genres{
+	display: flex;
+	width: 100%;
+	align-items: baseline;
+}
+
+.book-detail-card-description-genres-links{
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.book-detail-card-description-genres-links a{
+	margin-right: 20px;
+	margin-bottom: 20px;
+	padding: 5px 10px;
+	border: 1px solid #DDDDDD;
+	border-radius: 10px;
+	color:#000;
+	background-color: #DDDDDD;
+	text-decoration: none;
+}
