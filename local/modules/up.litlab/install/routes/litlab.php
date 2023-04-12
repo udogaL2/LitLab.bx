@@ -5,6 +5,8 @@ use Bitrix\Main\Routing\Controllers\PublicPageController;
 use Bitrix\Main\Routing\RoutingConfigurator;
 
 return function(RoutingConfigurator $routes) {
+	$routes->get('/404', new PublicPageController('/local/modules/up.litlab/views/404.php'));
+
 	$routes->get('/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));
 	$routes->get('/bookshelves', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));
 	$routes->get('/bookshelves/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));

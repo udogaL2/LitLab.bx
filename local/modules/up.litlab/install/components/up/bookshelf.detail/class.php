@@ -22,5 +22,8 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 
 	protected function fetchBookshelfDetail()
 	{
+		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
+
+		$this->arResult['BookshelfApi'] = $bookshelfApi;
 	}
 }

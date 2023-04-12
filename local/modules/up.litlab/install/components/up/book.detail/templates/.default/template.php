@@ -13,6 +13,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 }
 ?>
 
+<? var_dump($arResult['Book']) ?>
+
 <main class="book-detail-main">
 	<div class="book-detail-card">
 		<div class="book-detail-card-image">
@@ -24,7 +26,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<button style="padding: 10px 50px; background-color: #7fb255; border: 1px solid #65B95E">+ добавить</button>
 		</div>
 		<div class="book-detail-card-description">
-			<p class="book-detail-card-description-name">Название</p>
+			<p class="book-detail-card-description-name"> <?= $arResult['Book']['TITLE'] ?> </p>
 			<p class="book-detail-card-description-author">Автор</p>
 			<div class="book-detail-card-description-rating"></div>
 			<p class="book-detail-card-description-overview">

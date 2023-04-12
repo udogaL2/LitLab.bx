@@ -27,13 +27,6 @@ class BookTable extends DataManager
 				]
 			),
 
-			'AUTHOR_ID' => new IntegerField(
-				'AUTHOR_ID',
-				[
-					'required' => true,
-				]
-			),
-
 			'TITLE' => new StringField(
 				'TITLE',
 				[
