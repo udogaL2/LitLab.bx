@@ -223,3 +223,12 @@ __litlabMigrate(13, function($updater, $DB) {
 		);
 	}
 });
+
+__litlabMigrate(15, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase() && !$updater->TableExists('up_LitLab_book'))
+	{
+		$DB->query(
+			'alter table up_LitLab_book modify ISBN varchar(20) null;'
+		);
+	}
+});
