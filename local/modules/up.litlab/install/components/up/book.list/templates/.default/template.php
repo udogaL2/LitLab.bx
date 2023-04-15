@@ -30,10 +30,32 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		</div>
 	</div>
 	<div class="book-list-cards">
+		<?php
+		$nav = new \Bitrix\Main\UI\PageNavigation('page');
+		$nav->allowAllRecords(false)->setPageSize(4)->initFromUri();
+
+		$books = $arResult['BookApi']->getListOfBook($nav->getLimit(), $nav->getOffset());
+
+		$nav->setRecordCount($arResult['BookApi']->getCount());
+		foreach ($books as $book):
+		$book = $arResult['FormattingApi']->prepareText($book);
+		?>
 		<div class="book-list-card">
-			<p><a href="/book/1/"><img height="300px" width="250px" style="margin-bottom:20px"></a></p>
-			<p><strong><a class="book-list-card-name" href="/book/1/">Название книги</a></strong></p><br>
-			<p class="book-list-card-author">Автор</p>
+			<p><a href="/book/<?= $book['ID'] ?>/"><img height="300px" width="250px" style="margin-bottom:20px"></a></p>
+			<p><strong><a class="book-list-card-name" href="/book/<?= $book['ID'] ?>/"><?= $book['TITLE'] ?></a></strong></p><br>
+<!--			<p class="book-list-card-author">Автор</p>-->
 		</div>
+		<?php endforeach; ?>
 	</div>
+	<?php
+	$APPLICATION->IncludeComponent(
+		"bitrix:main.pagenavigation",
+		"",
+		[
+			"NAV_OBJECT" => $nav,
+			"SEF_MODE" => "Y",
+		],
+		false
+	);
+	?>
 </main>

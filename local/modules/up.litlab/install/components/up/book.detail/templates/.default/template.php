@@ -13,8 +13,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 }
 ?>
 
-<? var_dump($arResult['Book']) ?>
-
 <main class="book-detail-main">
 	<div class="book-detail-card">
 		<div class="book-detail-card-image">
@@ -27,22 +25,17 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		</div>
 		<div class="book-detail-card-description">
 			<p class="book-detail-card-description-name"> <?= $arResult['Book']['TITLE'] ?> </p>
-			<p class="book-detail-card-description-author">Автор</p>
+			<p class="book-detail-card-description-author"><?= $arResult['Authors']['NAME'] ?></p>
 			<div class="book-detail-card-description-rating"></div>
 			<p class="book-detail-card-description-overview">
-					<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Ab accusamus aperiam autem delectus dignissimos eos esse ex harum illum,
-						laudantium mollitia nostrum numquam officiis quibusdam ratione reprehenderit sapiente totam voluptatum.
-					</span>
+					<span> <?= $arResult['Book']['DESCRIPTION'] ?> </span>
 			</p>
 			<div class="book-detail-card-description-genres">
 				<p style="margin-right: 20px">Жанры:</p>
 				<div class="book-detail-card-description-genres-links">
-					<a href="">Фантастика</a>
-					<a href="">Наука</a>
-					<a href="">Юмор</a>
-					<a href="">Приключения</a>
-					<a href="">ААА</a>
+					<?php foreach ($arResult['GENRE'] as $genre): ?>
+					<a href=""><?= $genre ?></a>
+					<?php endforeach; ?>
 				</div>
 			</div>
 		</div>

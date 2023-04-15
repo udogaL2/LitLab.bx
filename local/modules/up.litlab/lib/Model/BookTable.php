@@ -62,7 +62,6 @@ class BookTable extends DataManager
 			'ISBN' => new StringField(
 				'ISBN',
 				[
-					'required' => true,
 					'validation' => [__CLASS__, 'validateIsbn'],
 				]
 			),
@@ -113,7 +112,7 @@ class BookTable extends DataManager
 	public static function validateIsbn()
 	{
 		return [
-			new LengthValidator(null, 13),
+			new LengthValidator(null, 20),
 		];
 	}
 

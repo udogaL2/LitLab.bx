@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS up_LitLab_book
 	DESCRIPTION      TEXT               NOT NULL,
 	IMAGE_ID         INT                NOT NULL,
 	PUBLICATION_YEAR VARCHAR(4)         NOT NULL,
-	ISBN             VARCHAR(13)        NOT NULL,
+	ISBN             VARCHAR(20),
 	STATUS           VARCHAR(30)        NOT NULL,
 	DATE_CREATED     DATETIME           NOT NULL,
 	PRIMARY KEY (ID)

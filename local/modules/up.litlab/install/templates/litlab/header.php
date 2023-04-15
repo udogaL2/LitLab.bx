@@ -38,7 +38,7 @@ use Bitrix\Main\Localization\Loc;
 
 		<div id="navbarBasicExample" class="navbar-menu">
 			<a href="/" class="navbar-item " >Книжные полки</a>
-			<a href="/books" class="navbar-item" >Книги</a>
+			<a href="/books/" class="navbar-item" >Книги</a>
 		</div>
 
 		<div class="navbar-end">

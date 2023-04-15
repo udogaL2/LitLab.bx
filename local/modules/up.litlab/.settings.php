@@ -9,6 +9,9 @@ return [
 			'Book' => [
 				'className' => \Up\LitLab\API\Book::class,
 			],
+			'Formatting' => [
+				'className' => \Up\LitLab\API\Formatting::class,
+			],
 		],
 		'readonly' => true,
 	],
