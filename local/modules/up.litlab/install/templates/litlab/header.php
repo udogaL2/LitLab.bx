@@ -11,10 +11,12 @@ use Bitrix\Main\Localization\Loc;
 	<meta name="viewport"
 		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link href="/local/templates/litlab/template_styles.css" rel="stylesheet">
-	<link href="/local/templates/litlab/bookshelf-style.css" rel="stylesheet">
-	<link href="/local/templates/litlab/books-list.css" rel="stylesheet">
-	<link href="/local/templates/litlab/book-detail-style.css" rel="stylesheet">
+	<link href="/local/templates/litlab/template_styles.css" rel="stylesheet" type="text/css">
+	<link href="/local/templates/litlab/bookshelf-style.css" rel="stylesheet" type="text/css">
+	<link href="/local/templates/litlab/books-list.css" rel="stylesheet" type="text/css">
+	<link href="/local/templates/litlab/bookshelf-detail-style.css" rel="stylesheet" type="text/css">
+	<link href="/local/templates/litlab/book-detail-style.css" rel="stylesheet" type="text/css">
+
 
 	<title><?php $APPLICATION->ShowTitle(); ?></title>
 
@@ -30,7 +32,7 @@ use Bitrix\Main\Localization\Loc;
 	<nav class="navbar" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<a class="navbar-item" href="/">
-				<img src="logo.png" style="height: 130px;" alt="мимо">
+				<img src="\local\modules\up.litlab\install\templates\litlab\images\logo.png" style="height: 130px;" alt="logo">
 			</a>
 		</div>
 
@@ -73,5 +75,3 @@ use Bitrix\Main\Localization\Loc;
 	</div>
 </header>
 
-<section class="section">
-	<div class="container">

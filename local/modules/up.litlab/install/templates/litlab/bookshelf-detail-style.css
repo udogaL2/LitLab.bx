@@ -1,0 +1,75 @@
+.bookshelf-detail-main{
+	width:95%;
+	background-color: #EDEDED;
+	border-radius: 10px;
+	margin: 50px auto 100px auto;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+}
+
+.bookshelf-detail-overview{
+	padding:30px 0 30px 30px;
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+}
+
+.bookshelf-detail-name{
+	font-size: 30px;
+	margin-bottom: 20px;
+}
+
+.bookshelf-detail-author-name{
+	font-size: 24px;
+}
+
+.bookshelf-detail-description{
+	font-size:20px;
+	padding-left:10px;
+	border-left: 1px solid #000;
+	margin-bottom: 30px;
+	width:80%;
+}
+
+.bookshelf-detail-info{
+	display: flex;
+	justify-content: space-between;
+}
+
+.bookshelf-detail-buttons{
+	display: flex;
+	flex-direction: column;
+	padding-right: 10px;
+}
+
+.bookshelf-detail-buttons button{
+	margin-bottom: 20px;
+}
+
+.bookshelf-detail-card-list{
+	width:95%;
+	background-color: #EDEDED;
+	border-radius: 10px;
+	margin: 50px auto 100px auto;
+	display: flex;
+}
+/*в мобильной изменить padding:10px*/
+.bookshelf-list-cards{
+	padding:30px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
+}
+
+
+@media screen and (max-width: 480px){
+	html {
+		-webkit-text-size-adjust: none;
+		font-size: 90%;
+	}
+	.bookshelf-list-cards{
+		padding:10px;
+	}
+}

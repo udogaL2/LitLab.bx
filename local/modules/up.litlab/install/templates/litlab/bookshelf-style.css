@@ -28,14 +28,15 @@ header{
 	background-color: #EDEDED;
 	border-radius: 10px;
 	display: flex;
-	min-height: calc(100vh - 200px);
+	/*min-height: calc(100vh);*/
+	flex-direction: column;
 
 }
 .shelf-card{
 	background-color: #ced9b3;
 	border-radius: 10px;
-	height: 600px;
-	width: 600px;
+	/*height: 600px;*/
+	width: 50%;
 	margin: 50px auto;
 	padding: 0 50px;
 	display: flex;
@@ -48,6 +49,7 @@ header{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin:25px 0 35px 0;
 }
 
 .shelf-card-author{
@@ -66,13 +68,14 @@ header{
 
 .shelf-card-images{
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	margin-bottom: 30px;
 }
 
 .shelf-card-tags{
 	display: flex;
 	align-items: baseline;
+	margin-bottom:20px;
 }
 
 .shelf-card-tags p{
@@ -101,6 +104,7 @@ header{
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	margin-bottom: 20px;
 }
 
 .shelf-card-rating p{
@@ -109,4 +113,27 @@ header{
 }
 .shelf-card-rating p img{
 	margin-right: 10px;
+	cursor: pointer;
+}
+
+.shelf-likes{
+	display: flex;
+}
+
+.likes-amount{
+	margin-left:10px;
+}
+
+.save-amount{
+	margin-left: 10px;
+}
+
+@media screen and (max-width: 480px){
+	html {
+		-webkit-text-size-adjust: none;
+		font-size: 90%;
+	}
+	.shelf-card-image2, .shelf-card-image3{
+		display: none;
+	}
 }
