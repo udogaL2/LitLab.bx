@@ -11,6 +11,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 {
 	die();
 }
+$this->addExternalCss("\local\modules\up.litlab\install\components\up\bookshelf.detail\\templates\.default\add-style.css");
+$this->addExternalCss("\local\modules\up.litlab\install\components\up\bookshelf.detail\\templates\.default\add-two-style.css");
 ?>
 
 <section class="bookshelf-detail-main">
@@ -35,9 +37,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		</div>
 	</div>
 	<div class="bookshelf-detail-buttons">
-		<button>100</button>
-		<button>10</button>
-		<button>10</button>
+		<input src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" type="image" height="25px" width="20px">
+		<p>100</p>
+		<input  src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" type="image"  height="25px" width="30px">
+		<p>250</p>
+		<img src="\local\modules\up.litlab\install\templates\litlab\images\icon-book.png" height="25px" width="25px">
+		<p>10</p>
 	</div>
 </section>
 <section class="bookshelf-detail-card-list">

@@ -41,9 +41,10 @@
 	display: flex;
 	flex-direction: column;
 	padding-right: 10px;
+	align-items: center;
 }
 
-.bookshelf-detail-buttons button{
+.bookshelf-detail-buttons p{
 	margin-bottom: 20px;
 }
 

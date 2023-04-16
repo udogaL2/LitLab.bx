@@ -26,4 +26,6 @@ return function(RoutingConfigurator $routes) {
 
 	$routes->get('/create/bookshelf/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-create.php'));
 	$routes->get('/create/bookshelf/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-create.php'));
+
+	$routes->get('/edit/bookshelf/{id}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-edit.php'));
 };

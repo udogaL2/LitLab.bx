@@ -7,8 +7,6 @@
 }
 body{
 	background-color: #DEDEDE;
-	height: 100%;
-
 }
 .button{
 	border-radius: 10px;
@@ -16,7 +14,13 @@ body{
 }
 header{
 	background-color: #75903a;
+}
+.header-bookshelf{
+	background-color: #75903a;
+}
 
+.container{
+	min-height: calc(100vh - 200px);
 }
 
 /*Главный хедер*/
@@ -77,9 +81,21 @@ header{
 	background-color: rgba(46, 50, 4, 0.7);
 	padding: 5px 15px;
 	margin-right: 10px;
+	color: #e3e9d3;
+	text-decoration: none;
+}
+.button.is-light{
+	color:#e3e9d3;
+	text-decoration: none;
 }
 
+.button.is-light:hover{
+	text-decoration: underline;
+}
 
+.button.is-primary:hover{
+	background-color: rgba(46, 50, 4, 0.55);
+}
 
 
 /*Второй хедер*/
@@ -87,7 +103,8 @@ header{
 .title{
 	text-align: center;
 	width: 70%;
-	margin: 70px auto 0 auto;
+	margin: 0 auto 0 auto;
+	padding-top: 70px;
 }
 
 .title h1{
@@ -150,7 +167,6 @@ footer{
 	justify-content: center;
 	/*включить при подключении всего*/
 	/*margin-top:-180px;*/
-	width: 100%;
 }
 
 .footer-wrapper{

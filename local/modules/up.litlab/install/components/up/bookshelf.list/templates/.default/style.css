@@ -15,7 +15,7 @@ body{
 	border-radius: 10px;
 	font-family: Montserrat;
 }
-header{
+.header-bookshelf{
 	background-color: #75903a;
 
 }
@@ -31,6 +31,7 @@ header{
 	/*min-height: calc(100vh);*/
 	flex-direction: column;
 
+
 }
 .shelf-card{
 	background-color: #ced9b3;
@@ -44,6 +45,29 @@ header{
 	justify-content: space-evenly;
 }
 
+.move-to-shelf {
+	position:absolute;
+	width: 150px;
+	left: 0; right: 0;
+	margin:0 auto;
+	padding: 15px 25px;
+	background-color: #e3e3e3;
+	text-align: center;
+	font-size: 24px;
+	text-decoration: none;
+	color: rgba(0, 0, 0, 0.78);
+	display: none;
+	border-radius: 10px;
+}
+
+.shelf-card:hover{
+	background-color: #a9b888;
+}
+
+.shelf-card:hover .move-to-shelf{
+	display: block;
+}
+
 
 .shelf-card-description{
 	display: flex;
@@ -55,11 +79,17 @@ header{
 .shelf-card-author{
 	color: #434343;
 	display: block;
+
 }
 .shelf-card-name{
 	word-wrap: break-word;
 	font-weight: 500;
 	font-size: 22px;
+}
+
+.shelf-card-name a{
+	color: #434343;
+	text-decoration: none;
 }
 
 .shelf-card-book-count{
