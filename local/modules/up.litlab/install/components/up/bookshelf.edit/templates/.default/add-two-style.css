@@ -1,0 +1,160 @@
+.profile-main{
+	padding: 0 30px;
+	margin: 50px 0 200px 0;
+}
+
+
+.user-header{
+	width: 70%;
+	margin-left:auto;
+	display: flex;
+	justify-content: space-between;
+	padding: 40px;
+}
+
+.user-header p{
+	font-size: 28px;
+}
+
+.user-header a{
+	background-color: #336B19;
+	color: #fff;
+	padding: 10px 15px;
+	border:none;
+	text-decoration: none;
+	border-radius: 10px;
+}
+
+.user-profile{
+	display: flex;
+}
+
+.user-profile-avatar{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.user-profile-avatar button{
+	padding: 5px 25px;
+	margin: 20px 0;
+	border-radius: 10px;
+	background-color: #b9b9b9;
+	border: none;
+}
+
+.user-profile-card-nickname{
+	margin: 10px 0;
+}
+
+.user-profile-card a{
+	color:#000;
+	margin: 15px 0;
+
+}
+
+.user-profile-card{
+	height: 400px;
+	display: flex;
+	flex-direction: column;
+	width:250px;
+	background-color: #EDEDED;
+	border-radius: 10px;
+	padding: 20px;
+	margin-right: 20px;
+}
+
+.user-bookshelf-list{
+	background-color: #EDEDED;
+	width: 70%;
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	border-radius: 10px;
+	padding: 30px;
+}
+
+.user-bookshelf{
+	display: flex;
+	justify-content: space-between;
+	background-color: #EDEDED;
+	padding: 30px 0 30px 30px;
+}
+
+.user-bookshelf-buttons{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.user-bookshelf-buttons a{
+	padding: 10px 15px;
+	border: none;
+	background-color: #75aa4a;
+	color:#fff;
+	text-decoration: none;
+	border-radius:10px;
+}
+
+.user-bookshelf-description{
+	width:65%;
+	margin-left: 40px;
+}
+
+.user-bookshelf-description p{
+	margin-bottom: 30px;
+	font-size: 26px;
+}
+
+.user-bookshelf-description span{
+	word-wrap: break-word;
+}
+
+@media screen and (max-width: 805px){
+	html {
+		-webkit-text-size-adjust: none;
+		font-size: 90%;
+	}
+	.user-profile{
+		flex-direction: column;
+		align-items: center;
+	}
+	.user-bookshelf-list{
+		margin-right: auto;
+	}
+	.user-profile-card{
+		margin-bottom: 50px;
+		width: 60%;
+	}
+	.user-header{
+		margin-right: auto;
+
+	}
+	.user-header p{
+		font-size: 22px;
+	}
+
+}
+
+@media screen and (max-width: 660px){
+	.user-bookshelf{
+		padding: 30px 0;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.user-bookshelf img{
+		margin-bottom: 30px;
+	}
+}
+
+@media screen and (max-width: 505px){
+	.user-bookshelf-buttons{
+		flex-direction: row-reverse;
+		align-items: center;
+	}
+	.user-bookshelf-buttons button{
+		margin-right: 40px;
+		margin-top: 20px;
+	}
+}

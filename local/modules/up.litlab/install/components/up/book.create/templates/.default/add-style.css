@@ -1,0 +1,75 @@
+.bookshelf-create-main{
+	width:90%;
+	margin: 50px auto 0 auto;
+	background-color: #EDEDED;
+	padding: 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 10px;
+}
+.bookshelf-add-form{
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.bookshelf-create-main-title{
+	font-size: 26px;
+	margin-bottom: 50px;
+}
+
+.bookshelf-create-main div{
+	display: flex;
+	margin-bottom: 30px;
+	width: 60%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.bookshelf-create-main div p{
+	font-size: 20px;
+}
+
+.bookshelf-create-main div input{
+	width:80%;
+	border-radius: 10px;
+	border: 1px solid #000;
+	padding: 10px;
+}
+
+.bookshelf-create-main button{
+	padding: 10px 30px;
+	font-size: 16px;
+	margin-top: 10px;
+	background-color: #81b95e;
+	border: none;
+	cursor:pointer;
+	border-radius: 10px;
+}
+
+.bookshelf-edit-descr{
+	height: 50px;
+	width:80%;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+@media screen and (max-width: 480px){
+	html {
+		-webkit-text-size-adjust: none;
+	}
+	.bookshelf-create-main{
+		width: inherit;
+	}
+	.bookshelf-create-main div{
+		width: 80%;
+	}
+	.bookshelf-create-main div p{
+		font-size: 16px;
+	}
+	.bookshelf-create-main div input{
+		margin-left: 20px;
+	}
+}

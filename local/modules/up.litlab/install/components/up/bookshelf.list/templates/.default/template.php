@@ -14,13 +14,34 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 ?>
 
 
+<div class="header-bookshelf">
+	<div class="title">
+		<h1>Создайте свою виртуальную книжную полку и найдите подборки, которые подходят именно вам</h1>
+		<h3>Погрузись в мир литературы прямо сейчас</h3>
+	</div>
+
+	<div class="header-search">
+		<p class="header-search-wrapper header-input-wrapper">
+			<label>
+				<input class="header-search-input" type="text" placeholder="Найти полку...">
+			</label>
+		</p>
+		<p class="header-search-wrapper">
+			<button class="button header-is-info">
+				Поиск
+			</button>
+		</p>
+	</div>
+</div>
+
 <main class="shelf-list-main">
 	<!--		Карточка полки-->
 	<div class="shelf-card">
+		<a class="move-to-shelf" href="/user/1/bookshelf/1/">Перейти</a>
 		<div class="shelf-card-description">
 			<div>
 				<a href="#" class="shelf-card-author">Ник автора</a><br>
-				<p class="shelf-card-name"><a href="/user/1/bookshelf/1">Книжная полка</a></p>
+				<p class="shelf-card-name">Книжная полка</p>
 			</div>
 			<p class="shelf-card-book-count">книг<br><span style="font-size: 42px">22</span></p>
 		</div>

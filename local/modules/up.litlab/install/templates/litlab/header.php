@@ -12,11 +12,6 @@ use Bitrix\Main\Localization\Loc;
 		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link href="/local/templates/litlab/template_styles.css" rel="stylesheet" type="text/css">
-	<link href="/local/templates/litlab/bookshelf-style.css" rel="stylesheet" type="text/css">
-	<link href="/local/templates/litlab/books-list.css" rel="stylesheet" type="text/css">
-	<link href="/local/templates/litlab/bookshelf-detail-style.css" rel="stylesheet" type="text/css">
-	<link href="/local/templates/litlab/book-detail-style.css" rel="stylesheet" type="text/css">
-
 
 	<title><?php $APPLICATION->ShowTitle(); ?></title>
 
@@ -44,34 +39,15 @@ use Bitrix\Main\Localization\Loc;
 		<div class="navbar-end">
 			<div class="navbar-item">
 				<div class="buttons">
-					<a class="button is-primary">
+					<a class="button is-primary" href="/user/1/">
 						Войти
 					</a>
-					<a class="button is-light">
+					<a class="button is-light" href="/">
 						Зарегистрироваться
 					</a>
 				</div>
 			</div>
 		</div>
 	</nav>
-
-	<!--		второй хедер-->
-	<div class="title">
-		<h1>Создайте свою виртуальную книжную полку и найдите подборки, которые подходят именно вам</h1>
-		<h3>Погрузись в мир литературы прямо сейчас</h3>
-	</div>
-
-	<div class="header-search">
-		<p class="header-search-wrapper header-input-wrapper">
-			<label>
-				<input class="header-search-input" type="text" placeholder="Найти полку...">
-			</label>
-		</p>
-		<p class="header-search-wrapper">
-			<button class="button header-is-info">
-				Поиск
-			</button>
-		</p>
-	</div>
 </header>
-
+<section class="container">
