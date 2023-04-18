@@ -89,4 +89,10 @@ class BookshelfTable extends DataManager
 			new LengthValidator(null, 30),
 		];
 	}
+	public static function validateTitle()
+	{
+		return [
+			new LengthValidator(null, 255),
+		];
+	}
 }

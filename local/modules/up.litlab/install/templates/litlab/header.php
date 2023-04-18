@@ -3,6 +3,8 @@
  * @var CMain $APPLICATION
  */
 use Bitrix\Main\Localization\Loc;
+use Up\Litlab\API\User;
+
 ?>
 <!doctype html>
 <html lang="<?= LANGUAGE_ID; ?>">
@@ -36,15 +38,25 @@ use Bitrix\Main\Localization\Loc;
 			<a href="/books/" class="navbar-item" >Книги</a>
 		</div>
 
+		<?php
+			$userApi = new User;
+			$userId = $userApi->getUserId($_SESSION['USER']);
+		?>
 		<div class="navbar-end">
 			<div class="navbar-item">
 				<div class="buttons">
-					<a class="button is-primary" href="/user/1/">
+
+					<?if (isset($_SESSION['USER'])):?>
+					<a href="/user/<?=$userId?>/" class="button is-primary"><?=$_SESSION['USER']?></a>
+					<a href="/logout/" class="button is-light">Выйти</a>
+					<? else:?>
+					<a class="button is-primary" href="/auth/">
 						Войти
 					</a>
-					<a class="button is-light" href="/">
+					<a class="button is-light" href="/register/">
 						Зарегистрироваться
 					</a>
+					<?endif;?>
 				</div>
 			</div>
 		</div>
