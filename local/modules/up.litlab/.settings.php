@@ -12,6 +12,9 @@ return [
 			'Formatting' => [
 				'className' => \Up\LitLab\API\Formatting::class,
 			],
+			'User' => [
+				'className' => \Up\LitLab\API\User::class,
+			],
 		],
 		'readonly' => true,
 	],

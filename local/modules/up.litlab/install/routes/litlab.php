@@ -8,8 +8,8 @@ return function(RoutingConfigurator $routes) {
 	$routes->get('/404', new PublicPageController('/local/modules/up.litlab/views/404.php'));
 
 	$routes->get('/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));
+	$routes->get('/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));
 	$routes->get('/bookshelves/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));
-	$routes->get('/bookshelves/{page}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));
 
 	$routes->get('/books/', new PublicPageController('/local/modules/up.litlab/views/book-list.php'));
 	$routes->get('/books/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/book-list.php'));

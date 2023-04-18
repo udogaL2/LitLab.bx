@@ -11,7 +11,8 @@ $APPLICATION->IncludeComponent(
 	'up:bookshelf.detail',
 	'',
 	[
-		'BOOKSHELF_ID' => (int)$_REQUEST['bookshelf_id']
+		'BOOKSHELF_ID' => (int)$_REQUEST['bookshelf_id'],
+		'USER_ID' => (int)$_REQUEST['user_id'],
 	]
 );
 

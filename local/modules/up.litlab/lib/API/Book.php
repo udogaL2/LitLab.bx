@@ -5,25 +5,51 @@ use Up\Litlab\Model\BookTable;
 
 class Book
 {
-	public function getListOfBook(?int $limit = 3, int $offset = 0): array
+	public function getListOfBook(?int $limit = 3, int $offset = 0, string $status = 'public'): array
 	{
 		return BookTable::query()
 			->setSelect(['*'])
+			->where('STATUS', $status)
 			->setLimit($limit)
 			->setOffset($offset)
 			->fetchAll()
 			;
 	}
 
-	public function getCount(): int
+	public function getListOfBookByBookshelf(int $bookshelfId, ?int $limit = 3, int $offset = 0, string $status = 'public'): array
 	{
-		return BookTable::getCount();
+		return BookTable::query()
+			->setSelect(['*'])
+			->where('BOOK.BOOKSHELF_ID', $bookshelfId)
+			->where('STATUS', $status)
+			->setLimit($limit)
+			->setOffset($offset)
+			->fetchAll()
+		;
 	}
 
-	public function getDetailsById(int $id): array|false
+	public function getCount(string $status = 'public'): int
 	{
-		return BookTable::getByPrimary($id)
-			 ->fetch()
+		return BookTable::getCount(['STATUS' => $status]);
+	}
+
+	public function getCountInBookshelf(int $bookshelfId, string $status = 'public'): int
+	{
+		return BookTable::getCount(
+			[
+				'BOOK.BOOKSHELF_ID' => $bookshelfId,
+				'STATUS' => $status
+			]
+		);
+	}
+
+	public function getDetailsById(int $id, string $status = 'public'): array|false
+	{
+		return BookTable::query()
+			->setSelect(['*'])
+			->where('ID', $id)
+			->where('STATUS', $status)
+			->fetch()
 			;
 	}
 
@@ -39,5 +65,24 @@ class Book
 		return BookTable::getByPrimary($bookId, ['select' => ['G_TITLE' => 'GENRES.TITLE']])
 						->fetchAll()
 			;
+	}
+
+	public function getImages(array $bookshelfId)
+	{
+		$images = BookTable::query()
+			->setSelect(['BS_ID' => 'BOOK.BOOKSHELF_ID', 'IMAGE_ID'])
+			->where('BOOK.BOOKSHELF_ID', 'in', $bookshelfId)
+			->setLimit(3)
+			->fetchAll()
+			;
+
+		$result = [];
+
+		foreach ($images as $image)
+		{
+			$result[$image['BS_ID']][] = $image['IMAGE_ID'];
+		}
+
+		return $result;
 	}
 }

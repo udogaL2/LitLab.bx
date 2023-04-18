@@ -11,65 +11,50 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 {
 	die();
 }
-$this->addExternalCss("\local\modules\up.litlab\install\components\up\bookshelf.detail\\templates\.default\add-style.css");
-$this->addExternalCss("\local\modules\up.litlab\install\components\up\bookshelf.detail\\templates\.default\add-two-style.css");
+$this->addExternalCss(
+	"\local\modules\up.litlab\install\components\up\bookshelf.detail\\templates\.default\add-style.css"
+);
+$this->addExternalCss(
+	"\local\modules\up.litlab\install\components\up\bookshelf.detail\\templates\.default\add-two-style.css"
+);
 ?>
 
 <section class="bookshelf-detail-main">
 	<div class="bookshelf-detail-overview">
-		<p class="bookshelf-detail-name">Книжная полка от <a class="bookshelf-detail-author-name" href="#">Андрюша</a></p>
-		<p class="bookshelf-detail-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-			Ab accusamus aperiam autem delectus dignissimos eos esse ex harum illum,
-			laudantium mollitia nostrum numquam officiis quibusdam ratione reprehenderit</p>
+		<p class="bookshelf-detail-name">Книжная полка "<?= $arResult['Bookshelf']['TITLE'] ?>" от
+			<a class="bookshelf-detail-author-name" href="/user/<?= $arResult['Bookshelf']['Creator']['ID'] ?>/"><?= $arResult['Bookshelf']['Creator']['NAME'] ?></a>
+		</p>
+		<p class="bookshelf-detail-description"><?= $arResult['Bookshelf']['DESCRIPTION'] ?></p>
 		<div class="book-detail-card-description-genres">
 			<p style="margin-right: 20px">Теги:</p>
 			<div class="book-detail-card-description-genres-links">
-				<a href="">Фантастика</a>
-				<a href="">Наука</a>
-				<a href="">Юмор</a>
-				<a href="">Приключения</a>
-				<a href="">ААА</a>
+				<?php foreach ($arResult['Bookshelf']['Tags'] as $tag):?>
+				<p><?= $tag ?></p>
+				<?php endforeach; ?>
 			</div>
 		</div>
 		<div class="bookshelf-detail-info">
-			<p>Создано: 22.10.2022</p>
-			<p>Последнее обновление: 23.12.2022</p>
+			<p>Создано: <?= $arResult['Bookshelf']['DATE_CREATED'] ?></p>
+			<p>Последнее обновление: <?= $arResult['Bookshelf']['DATE_UPDATED'] ?></p>
 		</div>
 	</div>
 	<div class="bookshelf-detail-buttons">
 		<input src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" type="image" height="25px" width="20px">
-		<p>100</p>
-		<input  src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" type="image"  height="25px" width="30px">
-		<p>250</p>
+		<p><?= $arResult['Bookshelf']['SavesCount'] ?></p>
+		<input src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" type="image" height="25px" width="30px">
+		<p><?= $arResult['Bookshelf']['LIKES'] ?></p>
 		<img src="\local\modules\up.litlab\install\templates\litlab\images\icon-book.png" height="25px" width="25px">
-		<p>10</p>
+		<p><?= $arResult['Bookshelf']['BookCount'] ?></p>
 	</div>
 </section>
 <section class="bookshelf-detail-card-list">
 	<div class="bookshelf-list-cards">
-		<div class="book-list-card">
-			<p><a href="/book/1/"><img height="300px" width="250px" style="margin-bottom:20px"></a></p>
-			<p><strong><a class="book-list-card-name" href="/book/1/">Название книги</a></strong></p><br>
-			<p class="book-list-card-author">Автор</p>
-			<div class="book-list-card-comment comment">Комментарий fffff fffffff ffffffff fffffff</div>
-		</div>
-		<div class="book-list-card">
-			<p><a href="/book/1/"><img height="300px" width="250px" style="margin-bottom:20px"></a></p>
-			<p><strong><a class="book-list-card-name" href="/book/1/">Название книги</a></strong></p><br>
-			<p class="book-list-card-author">Автор</p>
-			<div class="book-list-card-comment comment">Комментарий fffff fffffff ffffffff fffffff</div>
-		</div>
-		<div class="book-list-card">
-			<p><a href="/book/1/"><img height="300px" width="250px" style="margin-bottom:20px"></a></p>
-			<p><strong><a class="book-list-card-name" href="/book/1/">Название книги</a></strong></p><br>
-			<p class="book-list-card-author">Автор</p>
-			<div class="book-list-card-comment comment">Комментарий fffff fffffff ffffffff fffffff</div>
-		</div>
-		<div class="book-list-card">
-			<p><a href="/book/1/"><img height="300px" width="250px" style="margin-bottom:20px"></a></p>
-			<p><strong><a class="book-list-card-name" href="/book/1/">Название книги</a></strong></p><br>
-			<p class="book-list-card-author">Автор</p>
-			<div class="book-list-card-comment comment">Комментарий fffff fffffff ffffffff fffffff</div>
-		</div>
+		<?php
+		$APPLICATION->IncludeComponent(
+			'up:book.list',
+			'bookshelf_template',
+			['BOOKSHELF_ID' => (int)$_REQUEST['bookshelf_id']]
+		);
+		?>
 	</div>
 </section>

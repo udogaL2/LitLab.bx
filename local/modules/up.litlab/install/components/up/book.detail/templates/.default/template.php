@@ -16,7 +16,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 <main class="book-detail-main">
 	<div class="book-detail-card">
 		<div class="book-detail-card-image">
-			<img height="500px" width="400px">
+			<img height="500px" width="400px" alt="" src="<?= $arResult['Book']['IMG_PATH'] ?>">
 			<div class="book-detail-card-buttons">
 				<button>буду читать</button>
 				<button>прочитано</button>
@@ -33,7 +33,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<div class="book-detail-card-description-genres">
 				<p style="margin-right: 20px">Жанры:</p>
 				<div class="book-detail-card-description-genres-links">
-					<?php foreach ($arResult['GENRE'] as $genre): ?>
+					<?php foreach ($arResult['Genre'] as $genre): ?>
 					<a href=""><?= $genre ?></a>
 					<?php endforeach; ?>
 				</div>

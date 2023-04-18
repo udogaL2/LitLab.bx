@@ -6,8 +6,8 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
-		$this->prepareTemplateParams();
 		$this->fetchBookshelfDetail();
+		$this->prepareTemplateParams();
 		$this->includeComponentTemplate();
 	}
 
@@ -18,12 +18,27 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 
 	protected function prepareTemplateParams()
 	{
+		$formattingAPI = ServiceLocator::getInstance()->get('Formatting');
+		$this->arResult['Bookshelf'] = $formattingAPI->prepareText($this->arResult['Bookshelf']);
 	}
 
 	protected function fetchBookshelfDetail()
 	{
 		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 
-		$this->arResult['BookshelfApi'] = $bookshelfApi;
+		$bookshelfInfo = $bookshelfApi->getDetailsById($this->arParams['BOOKSHELF_ID'], $this->arParams['USER_ID']);
+
+		if (!$bookshelfInfo)
+		{
+			LocalRedirect('/404');
+		}
+
+		$userApi = ServiceLocator::getInstance()->get('User');
+
+		$this->arResult['Bookshelf'] = $bookshelfInfo;
+		$this->arResult['Bookshelf']['BookCount'] = $bookshelfApi->getCountInBookshelf($this->arParams['BOOKSHELF_ID']);
+		$this->arResult['Bookshelf']['Tags'] = $bookshelfApi->getTags($this->arParams['BOOKSHELF_ID']);
+		$this->arResult['Bookshelf']['SavesCount'] = $bookshelfApi->getCountOfSavedBookshelves($this->arParams['BOOKSHELF_ID']);
+		$this->arResult['Bookshelf']['Creator'] = $userApi->getCreatorInfo($this->arParams['USER_ID']);
 	}
 }
