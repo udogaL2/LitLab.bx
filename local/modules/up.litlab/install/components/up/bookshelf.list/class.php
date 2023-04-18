@@ -28,7 +28,6 @@ class LitlabBookshelfListComponent extends CBitrixComponent
 		$formattingApi = ServiceLocator::getInstance()->get('Formatting');
 
 		$this->arResult['BookshelfApi'] = $bookshelfApi;
-		var_dump($userApi->getUserNames([1, 2]));
 		$this->arResult['UserApi'] = $userApi;
 		$this->arResult['BookApi'] = $bookApi;
 		$this->arResult['FormattingApi'] = $formattingApi;
