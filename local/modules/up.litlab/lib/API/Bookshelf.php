@@ -17,10 +17,25 @@ class Bookshelf
 		 	->fetchAll()
 			;
 	}
+	public function getListOfUserBookshelf($userId, ?int $limit = 3, int $offset = 0): array
+	{
+		return BookshelfTable::query()
+							 ->setSelect(['*'])
+							 ->setFilter(array(['CREATOR_ID'=>$userId]))
+							 ->setLimit($limit)
+							 ->setOffset($offset)
+							 ->fetchAll()
+			;
+	}
 
 	public function getCount(): int
 	{
 		return BookshelfTable::getCount();
+	}
+
+	public function getUserBookshelfCount($userId): int
+	{
+		return BookshelfTable::getCount(['CREATOR_ID'=> $userId]);
 	}
 
 	public function getDetailsById(int $id, int $userId, string $status = 'public'): array|false
@@ -141,5 +156,9 @@ class Bookshelf
 		}
 
 		return $result;
+	}
+
+	public function addBookshelf(array $params){
+		return BookshelfTable::add($params);
 	}
 }

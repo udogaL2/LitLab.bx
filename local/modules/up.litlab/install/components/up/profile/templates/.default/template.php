@@ -28,7 +28,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<hr>
 			<a href="/create/book/" style="text-decoration: none">Добавить свою книгу</a>
 			<hr>
-			<a href="/">Выйти</a>
+			<a href="/logout/">Выйти</a>
 		</div>
 
 		<div class="user-bookshelf-list">
@@ -54,8 +54,46 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-lock.png" height="30px" width="25px">
 					<a href="/edit/bookshelf/2/">Изменить</a>
 				</div>
+
 			</div>
 			<hr>
+			<?php
+			session_start();
+			$nav = new \Bitrix\Main\UI\PageNavigation('page');
+			$nav->allowAllRecords(false)->setPageSize(4)->initFromUri();
+
+			$userBookshelfs = $arResult['userBookshelfApi']->getListOfUserBookshelf($arResult['userApi']->getUserId($_SESSION['NAME']),
+																					$nav->getLimit(), $nav->getOffset());
+
+			$nav->setRecordCount($arResult['userBookshelfApi']->getUserBookshelfCount($arResult['userApi']->getUserId($_SESSION['NAME'])));
+			foreach ($userBookshelfs as $userBookshelf):
+			$userBookshelf = $arResult['FormattingApi']->prepareText($userBookshelf);
+			?>
+			<div class="user-bookshelf">
+				<img height="200px" width="150px">
+				<div class="user-bookshelf-description">
+					<p><?=$userBookshelf['TITLE']?></p>
+					<span><?=$userBookshelf['DESCRIPTION']?></span>
+				</div>
+				<div class="user-bookshelf-buttons">
+					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-trash.png" height="30px" width="25px">
+					<a href="/edit/bookshelf/<?=$userBookshelf['ID']?>/">Изменить</a>
+				</div>
+			</div>
+			<hr>
+			<?php endforeach;?>
 		</div>
+
 	</div>
+	<?php
+	$APPLICATION->IncludeComponent(
+		"bitrix:main.pagenavigation",
+		"",
+		[
+			"NAV_OBJECT" => $nav,
+			"SEF_MODE" => "Y",
+		],
+		false
+	);
+	?>
 </main>
