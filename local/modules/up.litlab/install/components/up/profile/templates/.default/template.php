@@ -63,9 +63,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			$nav->allowAllRecords(false)->setPageSize(4)->initFromUri();
 
 			$userBookshelfs = $arResult['userBookshelfApi']->getListOfUserBookshelf($arResult['userApi']->getUserId($_SESSION['NAME']),
-																					$nav->getLimit(), $nav->getOffset(),);
+																					$nav->getLimit(), $nav->getOffset());
 
-			$nav->setRecordCount($arResult['userBookshelfApi']->getCount());
+			$nav->setRecordCount($arResult['userBookshelfApi']->getUserBookshelfCount($arResult['userApi']->getUserId($_SESSION['NAME'])));
 			foreach ($userBookshelfs as $userBookshelf):
 			$userBookshelf = $arResult['FormattingApi']->prepareText($userBookshelf);
 			?>
