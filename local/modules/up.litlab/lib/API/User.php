@@ -1,6 +1,7 @@
 <?php
 
 namespace Up\Litlab\API;
+<<<<<<< HEAD
 use Up\Litlab\Model\UserTable;
 
 class User
@@ -59,5 +60,32 @@ class User
 			return 'ERROR7';
 		}
 		return '';
+=======
+
+use Up\LitLab\Model\UserTable;
+
+class User
+{
+	public function getCreatorInfo(int $userId): bool|array
+	{
+		return UserTable::getByPrimary($userId)->fetch();
+	}
+
+	public function getUserNames(array $userIds)
+	{
+		$names = UserTable::query()
+			->setSelect(['ID', 'NAME'])
+			->where('ID', 'in', $userIds)
+			->fetchAll();
+
+		$result = [];
+
+		foreach ($names as $name)
+		{
+			$result[$name['ID']] = $name['NAME'];
+		}
+
+		return $result;
+>>>>>>> origin/dev
 	}
 }

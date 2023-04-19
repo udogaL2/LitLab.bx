@@ -70,6 +70,25 @@ class up_litlab extends CModule
 		);
 	}
 
+	public function installData(): void
+	{
+		global $DB;
+
+		$booksSQLScripts = explode(';', file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.litlab/install/data/books.sql'));
+		array_pop($booksSQLScripts);
+
+		foreach ($booksSQLScripts as $key => $booksSQLScript){
+			$img = ['img' => array_merge(CFile::MakeFileArray($_SERVER['DOCUMENT_ROOT'] . "/local/modules/up.litlab/install/data/img/bookIMG_{$key}.webp"), ["MODULE_ID" => "LitLab"])];
+			CFile::SaveForDB($img, 'img', 'img');
+			$originalName = "bookIMG_{$key}.webp";
+			$imgId = CFile::GetList(arFilter:["MODULE_ID" => "LitLab", 'ORIGINAL_NAME' => $originalName])->Fetch()['ID'];
+			$preparedBooksSQLScript = str_replace('%photo_id%', $imgId, $booksSQLScript);
+			$DB->Query($preparedBooksSQLScript);
+		}
+
+		$DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.litlab/install/data/data.sql');
+	}
+
 	public function uninstallFiles(): void
 	{
 	}
@@ -94,11 +113,13 @@ class up_litlab extends CModule
 		$this->installDB();
 		$this->installFiles();
 		$this->installEvents();
+		$this->installData();
 
 		$APPLICATION->IncludeAdminFile(
 			Loc::getMessage('UP_LITLAB_INSTALL_TITLE'),
 			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/' . $this->MODULE_ID . '/install/step.php'
 		);
+
 	}
 
 	public function doUninstall(): void

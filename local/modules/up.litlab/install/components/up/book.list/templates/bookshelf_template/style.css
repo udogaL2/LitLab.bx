@@ -1,0 +1,135 @@
+button{
+	border-radius: 10px;
+	font-family: Montserrat;
+}
+
+.book-list-main{
+	width: 95%;
+	margin: 50px auto 100px auto;
+	background-color: #ededed;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+
+
+}
+
+.main-header{
+	margin: 50px 30px 0 30px;
+	display: flex;
+	height: 70px;
+	justify-content: space-between;
+}
+
+.main-title{
+	font-size:36px;
+}
+
+.book-list-search{
+	display: flex;
+}
+
+.book-list-search>.book-list-search-wrapper.book-list-input-wrapper{
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.book-list-search-wrapper.input-wrapper{
+	margin-right: 25px;
+}
+
+.book-list-search-input{
+	box-shadow: inset 0 0.0625em 0.125em rgba(10,10,10,0.5);
+	/*max-width: 100%;*/
+	width: 100%;
+	padding: 10px 0px 10px 15px;
+	border-radius: 10px;
+	border:none;
+	font-size: 16px;
+}
+
+.button.book-list-is-info{
+	background-color: #2E3204;
+	background-color: rgba(46, 50, 4, 0.7);
+	border-color: transparent;
+	color: rgba(255, 255, 255, 0.8);
+	padding: 8px 10px;
+	font-family: Montserrat;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+/*Карточка книги*/
+
+/*в 905 делать в cards justify-content: center;*/
+
+.book-list-cards{
+	padding:30px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.book-list-card{
+	display: flex;
+	flex-direction: column;
+	width:350px;
+	background-color: #ced9b3;
+	padding: 30px 0;
+	border-radius: 10px;
+	margin-bottom: 50px;
+}
+
+.book-list-card p{
+	text-align: center;
+	padding: 0 35px;
+}
+
+.book-list-card-name{
+	font-size:20px;
+	color: #4f4f4f;
+	word-wrap: break-word;
+	text-decoration: none;
+}
+
+.book-list-card-comment{
+	padding: 15px 20px 15px 30px;
+	background-color: #fff;
+	border-radius: 15px;
+	margin-top: 410px;
+	margin-left: 50px;
+	position:absolute;
+	word-wrap: break-word;
+	width:300px;
+	box-shadow: 0 1px 3px #7f7f7f;
+}
+
+.no-comment{
+	display: none;
+}
+
+.comment{
+	display: none;
+}
+
+.book-list-card:hover .comment{
+	display: block;
+	transition: 1ms;
+}
+
+@media screen and (max-width: 480px){
+	html {
+		-webkit-text-size-adjust: none;
+		font-size: 90%;
+	}
+	.main-header{
+		flex-direction: column;
+	}
+	.main-title{
+		margin-bottom: 20px;
+	}
+	.book-list-cards{
+		margin-top: 50px;
+		padding:20px;
+	}
+}

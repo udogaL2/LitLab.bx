@@ -49,8 +49,6 @@ class BookTable extends DataManager
 				]
 			),
 
-			'IMAGE' => new Reference('IMAGE', ImageTable::class, Join::on('this.IMAGE_ID', 'ref.ID')),
-
 			'PUBLICATION_YEAR' => new StringField(
 				'PUBLICATION_YEAR',
 				[

@@ -36,6 +36,7 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		}
 
 		$this->arResult['Book'] = $bookInfo;
+		$this->arResult['Book']['IMG_PATH'] = CFile::GetPath($bookInfo['IMAGE_ID']);
 
 		$authorRawInfo = $bookAPI->getAuthors($this->arParams['BOOK_ID']);
 		$authorInfo = array_map(function ($array) { return $array['NAME'];}, $authorRawInfo);
@@ -47,6 +48,6 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		$genreRawInfo = $bookAPI->getGenres($this->arParams['BOOK_ID']);
 		$genreInfo = array_map(function ($array) { return $array['G_TITLE'];}, $genreRawInfo);
 
-		$this->arResult['GENRE'] = $genreInfo;
+		$this->arResult['Genre'] = $genreInfo;
 	}
 }
