@@ -1,5 +1,6 @@
 <?php
 
+use Bitrix\Main\Context;
 use Bitrix\Main\DI\ServiceLocator;
 
 class LitlabBookshelfListComponent extends CBitrixComponent
@@ -18,6 +19,7 @@ class LitlabBookshelfListComponent extends CBitrixComponent
 
 	protected function prepareTemplateParams()
 	{
+		$this->arResult['SEARCH'] = $this->arParams['SEARCH'];
 	}
 
 	protected function fetchBookshelfList()

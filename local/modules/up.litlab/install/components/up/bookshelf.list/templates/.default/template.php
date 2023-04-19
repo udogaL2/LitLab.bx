@@ -19,19 +19,20 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		<h1>Создайте свою виртуальную книжную полку и найдите подборки, которые подходят именно вам</h1>
 		<h3>Погрузись в мир литературы прямо сейчас</h3>
 	</div>
-
-	<div class="header-search">
-		<p class="header-search-wrapper header-input-wrapper">
-			<label>
-				<input class="header-search-input" type="text" placeholder="Найти полку...">
-			</label>
-		</p>
-		<p class="header-search-wrapper">
-			<button class="button header-is-info">
-				Поиск
-			</button>
-		</p>
-	</div>
+	<form action="/" method="get">
+		<div class="header-search">
+			<p class="header-search-wrapper header-input-wrapper">
+				<label>
+					<input class="header-search-input" type="text" name="search" placeholder="Найти полку...">
+				</label>
+			</p>
+			<p class="header-search-wrapper">
+				<button class="button header-is-info">
+					Поиск
+				</button>
+			</p>
+		</div>
+	</form>
 </div>
 
 <main class="shelf-list-main">
@@ -40,7 +41,13 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	$nav = new \Bitrix\Main\UI\PageNavigation('page');
 	$nav->allowAllRecords(false)->setPageSize(3)->initFromUri();
 
-	$bookshelves = $arResult['BookshelfApi']->getListOfBookshelf($nav->getLimit(), $nav->getOffset());
+	$bookshelves = $arResult['BookshelfApi']->getListOfBookshelf($nav->getLimit(), $nav->getOffset(), search: $arResult['SEARCH']);
+
+	if(!$bookshelves)
+	{
+		die();
+	}
+
 	$bookshelfIds = [];
 	$creatorIds = [];
 	foreach ($bookshelves as $bookshelf)
@@ -55,7 +62,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	$images = $arResult['BookApi']->getImages($bookshelfIds);
 	$creatorNames = $arResult['UserApi']->getUserNames($creatorIds);
 
-	$nav->setRecordCount($arResult['BookshelfApi']->getCount());
+	$nav->setRecordCount($arResult['BookshelfApi']->getCount($arResult['SEARCH']));
 	foreach ($bookshelves as $bookshelf):
 		$bookshelf = $arResult['FormattingApi']->prepareText($bookshelf);
 		?>
@@ -75,7 +82,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 					foreach ($images[$bookshelf['ID']] as $image):
 						?>
 						<img src="<?= CFile::GetPath($image) ?>" width="140px" height="180px">
-				<?php
+					<?php
 					endforeach;
 				endif;
 				?>

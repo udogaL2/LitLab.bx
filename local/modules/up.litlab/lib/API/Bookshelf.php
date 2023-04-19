@@ -2,20 +2,27 @@
 
 namespace Up\Litlab\API;
 
+use Bitrix\Main\Filter\Filter;
 use Up\Litlab\Model\BookshelfTable;
 use Up\LitLab\Model\UserTable;
 
 class Bookshelf
 {
-	public function getListOfBookshelf(?int $limit = 3, int $offset = 0, array $status = ['public']): array
+	public function getListOfBookshelf(?int $limit = 3, int $offset = 0, array $status = ['public'], string $search = null): array
 	{
-		return BookshelfTable::query()
+		$query = BookshelfTable::query()
 		 	->setSelect(['*'])
 			->whereIn('STATUS', $status)
 			->setLimit($limit)
 			->setOffset($offset)
-		 	->fetchAll()
 			;
+
+		if ($search)
+		{
+			$query = $query->whereLike('TITLE', '%' . $search . '%');
+		}
+
+		return $query->fetchAll();
 	}
 	public function getListOfUserBookshelf($userId, ?int $limit = 3, int $offset = 0): array
 	{
@@ -28,9 +35,18 @@ class Bookshelf
 			;
 	}
 
-	public function getCount(): int
+	public function getCount(string $search = null, array $status = ['public']): int
 	{
-		return BookshelfTable::getCount();
+		$query = BookshelfTable::query()
+			->whereIn('STATUS', $status)
+			;
+
+		if ($search)
+		{
+			$query = $query->whereLike('TITLE', '%' . $search . '%');
+		}
+
+		return count($query->fetchAll());
 	}
 
 	public function getUserBookshelfCount($userId): int
