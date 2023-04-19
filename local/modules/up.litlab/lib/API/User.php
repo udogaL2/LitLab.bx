@@ -1,7 +1,7 @@
 <?php
 
 namespace Up\Litlab\API;
-<<<<<<< HEAD
+
 use Up\Litlab\Model\UserTable;
 
 class User
@@ -43,7 +43,8 @@ class User
 	}
 
 
-	public function validateAuthForm($login, $password){
+	public function validateAuthForm($login, $password)
+	{
 		if (strlen($login) < 4)
 		{
 			return 'ERROR4';
@@ -52,20 +53,18 @@ class User
 		{
 			return 'ERROR5';
 		}
-		if (strlen($password) < 7){
+		if (strlen($password) < 7)
+		{
 			return 'ERROR6';
 		}
 		if (strlen($password) > 63)
 		{
 			return 'ERROR7';
 		}
+
 		return '';
-=======
+	}
 
-use Up\LitLab\Model\UserTable;
-
-class User
-{
 	public function getCreatorInfo(int $userId): bool|array
 	{
 		return UserTable::getByPrimary($userId)->fetch();
@@ -86,6 +85,5 @@ class User
 		}
 
 		return $result;
->>>>>>> origin/dev
 	}
 }
