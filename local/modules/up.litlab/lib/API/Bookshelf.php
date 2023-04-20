@@ -29,14 +29,15 @@ class Bookshelf
 
 		return $query->fetchAll();
 	}
-	public function getListOfUserBookshelf($userId, ?int $limit = 3, int $offset = 0): array
+	public function getListOfUserBookshelf($userId, ?int $limit = 3, int $offset = 0, array $status = ['public', 'private']): array
 	{
 		return BookshelfTable::query()
-			->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS'])
-			->setFilter(array(['CREATOR_ID'=>$userId]))
-			->setLimit($limit)
- 			->setOffset($offset)
-	 		->fetchAll()
+							 ->setSelect(['*'])
+							 ->setFilter(array(['CREATOR_ID'=>$userId]))
+							 ->wherein('STATUS', $status)
+							 ->setLimit($limit)
+							 ->setOffset($offset)
+							 ->fetchAll()
 			;
 	}
 
@@ -64,14 +65,14 @@ class Bookshelf
 		return BookshelfTable::getCount(['CREATOR_ID'=> $userId]);
 	}
 
-	public function getDetailsById(int $id, int $userId, string $status = 'public'): array|false
+	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private']): array|false
 	{
 		return BookshelfTable::query()
-			->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
-			->where('ID', $id)
-			->where('CREATOR_ID', $userId)
-			->where('STATUS', $status)
-			->fetch()
+							 ->setSelect(['*'])
+							 ->where('ID', $id)
+							 ->where('CREATOR_ID', $userId)
+							 ->where('STATUS', 'in', $status)
+							 ->fetch()
 			;
 	}
 
@@ -158,5 +159,26 @@ class Bookshelf
 
 	public function addBookshelf(array $params){
 		return BookshelfTable::add($params);
+	}
+
+	public function autoAddedUserBookshelfs(int $userId){
+		BookshelfTable::add([
+								'CREATOR_ID'=>$userId,
+								'TITLE' => 'Буду читать',
+								'DESCRIPTION' => 'Полка, в которую вы можете добавить понравившиеся вам книги.',
+								'LIKES' => 0,
+								'DATE_CREATED' => new \Bitrix\Main\Type\DateTime(),
+								'DATE_UPDATED' => new \Bitrix\Main\Type\DateTime(),
+								'STATUS' => 'private'
+							]);
+		BookshelfTable::add([
+								'CREATOR_ID'=>$userId,
+								'TITLE' => 'Прочитано',
+								'DESCRIPTION' => 'Полка, в которую вы можете добавить книги, которые уже прочитали.',
+								'LIKES' => 0,
+								'DATE_CREATED' => new \Bitrix\Main\Type\DateTime(),
+								'DATE_UPDATED' => new \Bitrix\Main\Type\DateTime(),
+								'STATUS' => 'private'
+							]);
 	}
 }

@@ -57,12 +57,14 @@ class LitlabRegisterComponent extends CBitrixComponent
 	}
 	protected function register(){
 		$userAPI = new User;
+		$userBookshelfApi = new \Up\Litlab\API\Bookshelf();
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if (empty($this->arParams['ERROR'])){
 			if ($userAPI->checkLogin($this->arResult['NAME']) && $request === "POST")
 			{
 
 				$response = $userAPI->registerUser($this->arResult);
+				$userBookshelfApi->autoAddedUserBookshelfs($userAPI->getUserId($this->arResult['NAME']));
 				if (!isset($response))
 					{
 						$this->arParams['ERROR'] = "ERROR3";

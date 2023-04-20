@@ -14,6 +14,56 @@ button{
 
 }
 
+.book-filter-genre{
+	width: 250px;
+}
+
+.book-filter-button{
+	display: flex;
+	align-items: center;
+	padding: 5px 15px;
+	font-size: 18px;
+	background-color: rgba(46, 50, 4, 0.7);
+	color: rgba(255, 255, 255, 0.8);
+	border:none;
+}
+
+.book-filter-button:hover{
+	background-color: rgba(46, 50, 4, 0.47);
+}
+
+.book-filter-genre:hover .book-filter-genre-list{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.book-filter-genre-list{
+
+	background-color: rgb(55, 60, 11);
+	height: 150px;
+	width: 250px;
+	z-index: 2;
+	position: relative;
+	border-radius: 10px;
+	margin-top:5px;
+	overflow-y: scroll;
+
+	display: none;
+}
+
+.book-filter-genre-list a{
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.8);
+	padding: 20px 0;
+	width: 100%;
+	text-align: center;
+}
+
+.book-filter-genre-list a:hover{
+	background-color: #828a58;
+}
+
 .main-header{
 	margin: 50px 30px 0 30px;
 	display: flex;
@@ -68,6 +118,7 @@ button{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	z-index: 0;
 }
 
 .book-list-card{
@@ -78,6 +129,7 @@ button{
 	padding: 30px 0;
 	border-radius: 10px;
 	margin-bottom: 50px;
+
 }
 
 .book-list-card p{

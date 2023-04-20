@@ -25,9 +25,20 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 	protected function fetchBookshelfDetail()
 	{
 		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
+		$userApi = ServiceLocator::getInstance()->get('User');
 
-		$bookshelfInfo = $bookshelfApi->getDetailsById($this->arParams['BOOKSHELF_ID'], $this->arParams['USER_ID']);
-
+		if (isset($_SESSION['NAME']) && $this->arParams['USER_ID'] === (int)$userApi->getUserId($_SESSION['NAME']))
+		{
+			$bookshelfInfo = $bookshelfApi->getDetailsById($this->arParams['BOOKSHELF_ID'], $this->arParams['USER_ID']);
+		}
+		else
+		{
+			$bookshelfInfo = $bookshelfApi->getDetailsById(
+				$this->arParams['BOOKSHELF_ID'],
+				$this->arParams['USER_ID'],
+				['public']
+			);
+		}
 		if (!$bookshelfInfo)
 		{
 			LocalRedirect('/404');
