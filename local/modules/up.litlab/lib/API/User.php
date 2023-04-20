@@ -70,6 +70,14 @@ class User
 		return UserTable::getByPrimary($userId)->fetch();
 	}
 
+	public function getUserName(int $userId){
+		$name = UserTable::query()
+			->setSelect(['NAME'])
+			->setFilter(['ID'=>$userId])
+			->fetch();
+		return $name['NAME'];
+	}
+
 	public function getUserNames(array $userIds)
 	{
 		$names = UserTable::query()

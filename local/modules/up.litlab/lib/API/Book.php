@@ -66,13 +66,23 @@ class Book
 						->fetchAll()
 			;
 	}
+	public function getImage($bookshelfId, $limit = 1){
+		$result = BookTable::query()
+			->setSelect(['BS_ID' => 'BOOK.BOOKSHELF_ID', 'IMAGE_ID'])
+			->setFilter(['BOOK.BOOKSHELF_ID' => $bookshelfId])
+			->setLimit($limit)
+			->fetchAll();
 
-	public function getImages(array $bookshelfId)
+		return $result[0]['IMAGE_ID'];
+
+	}
+
+	public function getImages(array $bookshelfId, int $limit = 3)
 	{
 		$images = BookTable::query()
 			->setSelect(['BS_ID' => 'BOOK.BOOKSHELF_ID', 'IMAGE_ID'])
 			->where('BOOK.BOOKSHELF_ID', 'in', $bookshelfId)
-			->setLimit(3)
+			->setLimit($limit)
 			->fetchAll()
 			;
 

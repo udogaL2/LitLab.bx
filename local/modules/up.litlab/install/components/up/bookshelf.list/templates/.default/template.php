@@ -70,7 +70,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<a class="move-to-shelf" href="/user/<?= $bookshelf['CREATOR_ID'] ?>/bookshelf/<?= $bookshelf['ID'] ?>/">Перейти</a>
 			<div class="shelf-card-description">
 				<div>
-					<a href="#" class="shelf-card-author"><?= $creatorNames[$bookshelf['CREATOR_ID']] ?></a><br>
+					<a href="/user/<?=$bookshelf['CREATOR_ID']?>/" class="shelf-card-author"><?= $creatorNames[$bookshelf['CREATOR_ID']] ?></a><br>
 					<p class="shelf-card-name">Книжная полка "<?= $bookshelf['TITLE'] ?>"</p>
 				</div>
 				<p class="shelf-card-book-count">книг<br><span style="font-size: 42px"><?= $booksCount[$bookshelf['ID']]
