@@ -20,7 +20,7 @@ $books = $arResult['BookApi']->getListOfBookByBookshelf($arResult['BOOKSHELF_ID'
 
 <main class="book-list-main">
 	<div class="main-header">
-		<p class="main-title"><?= $books[0] ? 'Книги на полке' : 'Книг на полке отсутствуют' ?></p>
+		<p class="main-title"><?= $books[0] ? 'Книги на полке' : 'Книги на полке отсутствуют' ?></p>
 	</div>
 	<div class="book-list-cards">
 		<?php

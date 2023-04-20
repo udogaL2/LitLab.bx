@@ -100,6 +100,7 @@ body{
 	display: flex;
 	justify-content: space-evenly;
 	margin-bottom: 30px;
+	flex-wrap: wrap;
 }
 
 .shelf-card-tags{

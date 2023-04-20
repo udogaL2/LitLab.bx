@@ -18,10 +18,11 @@ class LitlabBookListComponent extends CBitrixComponent
 
 	protected function prepareTemplateParams()
 	{
-		if ($this->arParams['BOOKSHELF_ID'])
-		{
+		if($this->arParams['BOOKSHELF_ID']){
 			$this->arResult['BOOKSHELF_ID'] = $this->arParams['BOOKSHELF_ID'];
 		}
+		$this->arResult['SEARCH'] = $this->arParams['SEARCH'] ? : '';
+		$this->arResult['GENRE_ID'] = $this->arParams['GENRE_ID'] ? : null;
 	}
 
 	protected function fetchBookList()

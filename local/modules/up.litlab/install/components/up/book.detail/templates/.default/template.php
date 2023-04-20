@@ -33,10 +33,16 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<div class="book-detail-card-description-genres">
 				<p style="margin-right: 20px">Жанры:</p>
 				<div class="book-detail-card-description-genres-links">
-					<?php foreach ($arResult['Genre'] as $genre): ?>
-					<a href=""><?= $genre ?></a>
+					<?php foreach ($arResult['Genre'] as $id => $genre): ?>
+					<a href="/books/?genre_id=<?= $id ?>"><?= $genre ?></a>
 					<?php endforeach; ?>
 				</div>
+			</div>
+			<div class="book-detail-card-description-ISBN">
+				<p style="margin-right: 20px">ISBN: <?= $arResult['Book']['ISBN'] ? : 'отсутствует' ?></p>
+			</div>
+			<div class="book-detail-card-description-publication-date">
+				<p style="margin:20px 0">Год публикации: <?= $arResult['Book']['PUBLICATION_YEAR'] ? : 'отсутствует' ?></p>
 			</div>
 		</div>
 	</div>

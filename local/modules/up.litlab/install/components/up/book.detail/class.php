@@ -45,8 +45,7 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 			join(', ', array_values($authorInfo))
 			: $authorInfo[0];
 
-		$genreRawInfo = $bookAPI->getGenres($this->arParams['BOOK_ID']);
-		$genreInfo = array_map(function ($array) { return $array['G_TITLE'];}, $genreRawInfo);
+		$genreInfo = $bookAPI->getGenres($this->arParams['BOOK_ID']);
 
 		$this->arResult['Genre'] = $genreInfo;
 	}

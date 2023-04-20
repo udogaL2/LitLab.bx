@@ -23,7 +23,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		<div class="header-search">
 			<p class="header-search-wrapper header-input-wrapper">
 				<label>
-					<input class="header-search-input" type="text" name="search" placeholder="Найти полку...">
+					<input class="header-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="Найти полку...">
 				</label>
 			</p>
 			<p class="header-search-wrapper">

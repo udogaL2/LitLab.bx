@@ -21,4 +21,22 @@ class Formatting
 
 		return $result;
 	}
+
+	public function createSearchRequest(int $tagId = null, string $searchSubstr = ''): string
+	{
+		if ($tagId && $searchSubstr)
+		{
+			return "genre_id={$tagId}" . "&search={$searchSubstr}";
+		}
+		elseif ($tagId)
+		{
+			return "genre_id={$tagId}";
+		}
+		elseif ($searchSubstr){
+			return "search=" . $searchSubstr;
+		}
+
+		return '';
+	}
+
 }
