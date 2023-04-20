@@ -25,14 +25,16 @@ $this->addExternalCss(
 			<a class="bookshelf-detail-author-name" href="/user/<?= $arResult['Bookshelf']['Creator']['ID'] ?>/"><?= $arResult['Bookshelf']['Creator']['NAME'] ?></a>
 		</p>
 		<p class="bookshelf-detail-description"><?= $arResult['Bookshelf']['DESCRIPTION'] ?></p>
-		<div class="book-detail-card-description-genres">
-			<p style="margin-right: 20px">Теги:</p>
-			<div class="book-detail-card-description-genres-links">
-				<?php foreach ($arResult['Bookshelf']['Tags'] as $tag):?>
-				<p><?= $tag ?></p>
-				<?php endforeach; ?>
+		<?php if($arResult['Bookshelf']['Tags'][0]): ?>
+			<div class="book-detail-card-description-genres">
+				<p style="margin-right: 20px">Теги:</p>
+				<div class="book-detail-card-description-genres-links">
+					<?php foreach ($arResult['Bookshelf']['Tags'] as $tag):?>
+					<p><?= $tag ?></p>
+					<?php endforeach; ?>
+				</div>
 			</div>
-		</div>
+		<?php endif; ?>
 		<div class="bookshelf-detail-info">
 			<p>Создано: <?= $arResult['Bookshelf']['DATE_CREATED'] ?></p>
 			<p>Последнее обновление: <?= $arResult['Bookshelf']['DATE_UPDATED'] ?></p>
@@ -44,7 +46,7 @@ $this->addExternalCss(
 		<input src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" type="image" height="25px" width="30px">
 		<p><?= $arResult['Bookshelf']['LIKES'] ?></p>
 		<img src="\local\modules\up.litlab\install\templates\litlab\images\icon-book.png" height="25px" width="25px">
-		<p><?= $arResult['Bookshelf']['BookCount'] ?></p>
+		<p><?= $arResult['Bookshelf']['BOOK_COUNT'] ?></p>
 	</div>
 </section>
 <section class="bookshelf-detail-card-list">

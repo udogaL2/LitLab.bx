@@ -32,9 +32,18 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	<div class="book-list-cards">
 		<?php
 		$nav = new \Bitrix\Main\UI\PageNavigation('page');
-		$nav->allowAllRecords(false)->setPageSize(4)->initFromUri();
+		$nav->allowAllRecords(false)->setPageSize(12)->initFromUri();
 
 		$books = $arResult['BookApi']->getListOfBook($nav->getLimit(), $nav->getOffset());
+
+		$bookIds = [];
+
+		foreach ($books as $book)
+		{
+			$bookIds[] = $book['ID'];
+		}
+
+		$authors = $arResult['FormattingApi']->prepareText($arResult['BookApi']->getAuthorForEachBook($bookIds));
 
 		$nav->setRecordCount($arResult['BookApi']->getCount());
 		foreach ($books as $book):
@@ -47,7 +56,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				</a>
 			</p>
 			<p><strong><a class="book-list-card-name" href="/book/<?= $book['ID'] ?>/"><?= $book['TITLE'] ?></a></strong></p><br>
-<!--			<p class="book-list-card-author">Автор</p>-->
+			<p class="book-list-card-author">Автор <?= $authors[$book['ID']] ?></p>
 		</div>
 		<?php endforeach; ?>
 	</div>

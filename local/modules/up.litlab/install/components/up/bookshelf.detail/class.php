@@ -36,7 +36,6 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 		$userApi = ServiceLocator::getInstance()->get('User');
 
 		$this->arResult['Bookshelf'] = $bookshelfInfo;
-		$this->arResult['Bookshelf']['BookCount'] = $bookshelfApi->getCountInBookshelf($this->arParams['BOOKSHELF_ID']);
 		$this->arResult['Bookshelf']['Tags'] = $bookshelfApi->getTags($this->arParams['BOOKSHELF_ID']);
 		$this->arResult['Bookshelf']['SavesCount'] = $bookshelfApi->getCountOfSavedBookshelves($this->arParams['BOOKSHELF_ID']);
 		$this->arResult['Bookshelf']['Creator'] = $userApi->getCreatorInfo($this->arParams['USER_ID']);

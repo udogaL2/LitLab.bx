@@ -60,6 +60,27 @@ class Book
 			;
 	}
 
+	public function getAuthorForEachBook(array $bookIds): array
+	{
+		$query = BookTable::query()
+			->setSelect(['ID', 'NAME' => 'AUTHORS.NAME'])
+			->whereIn('ID', $bookIds)
+			->fetchAll()
+			;
+
+		$result = [];
+
+		foreach ($query as $item)
+		{
+			if (!$result[$item['ID']])
+			{
+				$result[$item['ID']] = $item['NAME'];
+			}
+		}
+
+		return $result;
+	}
+
 	public function getGenres(int $bookId): array
 	{
 		return BookTable::getByPrimary($bookId, ['select' => ['G_TITLE' => 'GENRES.TITLE']])

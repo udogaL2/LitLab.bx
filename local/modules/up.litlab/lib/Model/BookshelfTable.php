@@ -3,6 +3,7 @@
 namespace Up\Litlab\Model;
 
 use Bitrix\Main\ORM\Data\DataManager, Bitrix\Main\ORM\Fields\DatetimeField, Bitrix\Main\ORM\Fields\IntegerField, Bitrix\Main\ORM\Fields\StringField, Bitrix\Main\ORM\Fields\TextField, Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main\ORM\Fields\ExpressionField;
 use Bitrix\Main\ORM\Fields\Relations\ManyToMany;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Bitrix\Main\ORM\Query\Join;
@@ -71,6 +72,10 @@ class BookshelfTable extends DataManager
 					'required' => true,
 					'validation' => [__CLASS__, 'validateStatus'],
 				]
+			),
+
+			'BOOK_COUNT' => new ExpressionField(
+				'BOOK_COUNT', '(select count(*) as `BOOK_COUNT` from up_LitLab_bookshelf_book where BOOKSHELF_ID = %s)', ['ID']
 			),
 
 			'BOOKSHELF' => new Reference('BOOKSHELF', BookBookshelfTable::class, Join::on('this.ID', 'ref.BOOKSHELF_ID')),

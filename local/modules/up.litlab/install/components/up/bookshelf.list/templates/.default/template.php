@@ -39,9 +39,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	<!--		Карточка полки-->
 	<?php
 	$nav = new \Bitrix\Main\UI\PageNavigation('page');
-	$nav->allowAllRecords(false)->setPageSize(3)->initFromUri();
+	$nav->allowAllRecords(false)->setPageSize(6)->initFromUri();
 
-	$bookshelves = $arResult['BookshelfApi']->getListOfBookshelf($nav->getLimit(), $nav->getOffset(), search: $arResult['SEARCH']);
+	$bookshelves = $arResult['BookshelfApi']->getListOfBookshelf($nav->getLimit(), $nav->getOffset(), search: $arResult['SEARCH'], notEmpty: true);
 
 	if(!$bookshelves)
 	{
@@ -56,13 +56,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		$creatorIds[] = $bookshelf['CREATOR_ID'];
 	}
 
-	$booksCount = $arResult['BookshelfApi']->getCountInEachBookshelf($bookshelfIds);
 	$savesCount = $arResult['BookshelfApi']->getCountOfSavedBookshelvesForEach($bookshelfIds);
 	$bookshelvesTag = $arResult['BookshelfApi']->getTagsInEachBookshelf($bookshelfIds);
 	$images = $arResult['BookApi']->getImages($bookshelfIds);
 	$creatorNames = $arResult['UserApi']->getUserNames($creatorIds);
 
-	$nav->setRecordCount($arResult['BookshelfApi']->getCount($arResult['SEARCH']));
+	$nav->setRecordCount($arResult['BookshelfApi']->getCount($arResult['SEARCH'], notEmpty: true));
 	foreach ($bookshelves as $bookshelf):
 		$bookshelf = $arResult['FormattingApi']->prepareText($bookshelf);
 		?>
@@ -70,11 +69,10 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<a class="move-to-shelf" href="/user/<?= $bookshelf['CREATOR_ID'] ?>/bookshelf/<?= $bookshelf['ID'] ?>/">Перейти</a>
 			<div class="shelf-card-description">
 				<div>
-					<a href="#" class="shelf-card-author"><?= $creatorNames[$bookshelf['CREATOR_ID']] ?></a><br>
+					<a href="/user/<?= $bookshelf['CREATOR_ID'] ?>/" class="shelf-card-author"><?= $creatorNames[$bookshelf['CREATOR_ID']] ?></a><br>
 					<p class="shelf-card-name">Книжная полка "<?= $bookshelf['TITLE'] ?>"</p>
 				</div>
-				<p class="shelf-card-book-count">книг<br><span style="font-size: 42px"><?= $booksCount[$bookshelf['ID']]
-							? count($booksCount[$bookshelf['ID']]) : 0 ?></span></p>
+				<p class="shelf-card-book-count">книг<br><span style="font-size: 42px"><?= $bookshelf['BOOK_COUNT'] ?></span></p>
 			</div>
 			<div class="shelf-card-images">
 				<?php

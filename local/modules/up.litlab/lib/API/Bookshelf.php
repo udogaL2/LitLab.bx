@@ -8,10 +8,10 @@ use Up\LitLab\Model\UserTable;
 
 class Bookshelf
 {
-	public function getListOfBookshelf(?int $limit = 3, int $offset = 0, array $status = ['public'], string $search = null): array
+	public function getListOfBookshelf(?int $limit = 3, int $offset = 0, array $status = ['public'], string $search = null, bool $notEmpty = false): array
 	{
 		$query = BookshelfTable::query()
-		 	->setSelect(['*'])
+		 	->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
 			->whereIn('STATUS', $status)
 			->setLimit($limit)
 			->setOffset($offset)
@@ -22,20 +22,25 @@ class Bookshelf
 			$query = $query->whereLike('TITLE', '%' . $search . '%');
 		}
 
+		if ($notEmpty)
+		{
+			$query = $query->where('BOOK_COUNT', '>', 0);
+		}
+
 		return $query->fetchAll();
 	}
 	public function getListOfUserBookshelf($userId, ?int $limit = 3, int $offset = 0): array
 	{
 		return BookshelfTable::query()
-							 ->setSelect(['*'])
-							 ->setFilter(array(['CREATOR_ID'=>$userId]))
-							 ->setLimit($limit)
-							 ->setOffset($offset)
-							 ->fetchAll()
+			->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS'])
+			->setFilter(array(['CREATOR_ID'=>$userId]))
+			->setLimit($limit)
+ 			->setOffset($offset)
+	 		->fetchAll()
 			;
 	}
 
-	public function getCount(string $search = null, array $status = ['public']): int
+	public function getCount(string $search = null, array $status = ['public'], bool $notEmpty = false): int
 	{
 		$query = BookshelfTable::query()
 			->whereIn('STATUS', $status)
@@ -44,6 +49,11 @@ class Bookshelf
 		if ($search)
 		{
 			$query = $query->whereLike('TITLE', '%' . $search . '%');
+		}
+
+		if ($notEmpty)
+		{
+			$query = $query->where('BOOK_COUNT', '>', 0);
 		}
 
 		return count($query->fetchAll());
@@ -57,41 +67,12 @@ class Bookshelf
 	public function getDetailsById(int $id, int $userId, string $status = 'public'): array|false
 	{
 		return BookshelfTable::query()
-			->setSelect(['*'])
+			->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
 			->where('ID', $id)
 			->where('CREATOR_ID', $userId)
 			->where('STATUS', $status)
 			->fetch()
 			;
-	}
-
-	public function getCountInBookshelf(int $bookshelfId, string $status = 'public'): int
-	{
-		return BookshelfTable::getCount(
-			[
-				'BOOKSHELF.BOOKSHELF_ID' => $bookshelfId,
-				'STATUS' => $status
-			]
-		);
-	}
-
-	public function getCountInEachBookshelf(array $bookshelfIds, array $status = ['public']): bool|array
-	{
-		$booksCount = BookshelfTable::query()
-			->setSelect(['BS_ID' => 'BOOKSHELF.BOOKSHELF_ID', 'B_ID' => 'BOOKSHELF.BOOK_ID'])
-		->where('STATUS', 'in', $status)
-		->where('BOOKSHELF.BOOKSHELF_ID', 'in', $bookshelfIds)
-		->fetchAll()
-		;
-
-		$result = [];
-
-		foreach ($booksCount as $value)
-		{
-			$result[$value['BS_ID']][] = $value['B_ID'];
-		}
-
-		return $result;
 	}
 
 	public function getTagsInEachBookshelf(array $bookshelfIds): bool|array
@@ -136,7 +117,7 @@ class Bookshelf
 			->where('ID', $bookshelfId)
 			->where('STATUS', $status)
 			->fetchAll()
-			;
+		;
 
 		$result = [];
 
@@ -153,7 +134,8 @@ class Bookshelf
 		return count(BookshelfTable::query()
 			->setSelect(['USER_BOOKSHELVES'])
 			->where('ID', $bookshelfId)
-			->fetchAll());
+			->fetchAll())
+			;
 	}
 
 	public function getCountOfSavedBookshelvesForEach(array $bookshelfId)
