@@ -68,7 +68,7 @@ class Bookshelf
 	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private']): array|false
 	{
 		return BookshelfTable::query()
-							 ->setSelect(['*'])
+							 ->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
 							 ->where('ID', $id)
 							 ->where('CREATOR_ID', $userId)
 							 ->where('STATUS', 'in', $status)
