@@ -30,6 +30,7 @@
 	border-left: 1px solid #000;
 	margin-bottom: 30px;
 	width:80%;
+	word-wrap: break-word;
 }
 
 .bookshelf-detail-info{

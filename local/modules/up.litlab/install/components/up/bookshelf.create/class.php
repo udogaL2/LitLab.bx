@@ -47,19 +47,22 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 	protected function createBookshelf()
 	{
 		session_start();
+		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		$BookshelfAPI = new \Up\Litlab\API\Bookshelf();
 		$userApi = new User;
-		if (empty($this->arParams['ERROR'])){
+		if (empty($this->arParams['ERROR']))
+		{
 			$this->arResult['CREATOR_ID'] = $userApi->getUserId($_SESSION['NAME']);
-			$response = $BookshelfAPI->addBookshelf($this->arResult);
-
-			if (!isset($response))
+			if ($request === 'POST')
 			{
-				$this->arParams['ERROR'] = "ERROR3";
-				$this->includeComponentTemplate();
+				$response = $BookshelfAPI->addBookshelf($this->arResult);
+				LocalRedirect(sprintf("/user/%s/", $userApi->getUserId($_SESSION['NAME'])));
+				if (!isset($response))
+				{
+					$this->arParams['ERROR'] = "ERROR3";
+					$this->includeComponentTemplate();
+				}
 			}
 		}
-
-		// LocalRedirect(sprintf("/user/%s/", $userApi->getUserId($_SESSION['NAME'])));
 	}
 }
