@@ -11,6 +11,16 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 {
 	die();
 }
+
+if($arResult['MESSEAGE'])
+{
+	$APPLICATION->IncludeComponent(
+		'up:system.messeage',
+		'',
+		['MESSEAGE' => $arResult['MESSEAGE']],
+	);
+}
+else{
 ?>
 
 <main class="book-detail-main">
@@ -47,3 +57,5 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		</div>
 	</div>
 </main>
+<?php
+}

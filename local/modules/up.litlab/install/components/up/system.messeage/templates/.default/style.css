@@ -1,0 +1,28 @@
+.system-messeage
+{
+	width: 30%;
+	margin: 70px auto 40px auto;
+	background-color: #ededed;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	align-content: center;
+	padding: 10px;
+	border: 12px rgb(235, 12, 12) inset;
+}
+
+.system-messeage-icon img
+{
+	height: 80px;
+}
+
+.system-messeage-text p
+{
+	text-align: center;
+	word-wrap: break-word;
+	font-weight: 500;
+	font-size: 22px;
+}

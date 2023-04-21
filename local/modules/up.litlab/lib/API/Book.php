@@ -149,9 +149,8 @@ class Book
 	public function getImages(array $bookshelfId, int $limit = 3)
 	{
 		$images = BookTable::query()
-			->setSelect(['BS_ID' => 'BOOK.BOOKSHELF_ID', 'IMAGE_ID'])
+			->setSelect(['B_ID' => 'BOOK.BOOK_ID','BS_ID' => 'BOOK.BOOKSHELF_ID', 'IMAGE_ID'])
 			->where('BOOK.BOOKSHELF_ID', 'in', $bookshelfId)
-			->setLimit($limit)
 			->fetchAll()
 			;
 
@@ -159,7 +158,12 @@ class Book
 
 		foreach ($images as $image)
 		{
-			$result[$image['BS_ID']][] = $image['IMAGE_ID'];
+			if ($result[$image['BS_ID']] && count($result[$image['BS_ID']]) >= 6)
+			{
+				continue;
+			}
+
+			$result[$image['BS_ID']][$image['B_ID']] = $image['IMAGE_ID'];
 		}
 
 		return $result;

@@ -41,7 +41,7 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 		}
 		if (!$bookshelfInfo)
 		{
-			LocalRedirect('/404');
+			$this->arResult['MESSEAGE'] = 'UP_LITLAB_BOOKSHELF_MISSING';
 		}
 
 		$userApi = ServiceLocator::getInstance()->get('User');

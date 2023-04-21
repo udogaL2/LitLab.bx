@@ -70,44 +70,55 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			genre_id: $arResult['GENRE_ID']
 		);
 
-		$bookIds = [];
-
-		foreach ($books as $book)
+		if (!$books[0])
 		{
-			$bookIds[] = $book['ID'];
+			$APPLICATION->IncludeComponent(
+				'up:system.messeage',
+				'',
+				['MESSEAGE' => 'UP_LITLAB_BOOKS_MISSING'],
+			);
 		}
+		else
+		{
+			$bookIds = [];
 
-		$authors = $arResult['FormattingApi']->prepareText($arResult['BookApi']->getAuthorForEachBook($bookIds));
+			foreach ($books as $book)
+			{
+				$bookIds[] = $book['ID'];
+			}
 
-		$nav->setRecordCount($arResult['BookApi']->getCount($arResult['SEARCH'], genre_id: $arResult['GENRE_ID']));
-		foreach ($books as $book):
-			$book = $arResult['FormattingApi']->prepareText($book);
-			?>
-			<div class="book-list-card">
-				<p>
-					<a href="/book/<?= $book['ID'] ?>/">
-						<img height="300px" width="250px" style="margin-bottom:20px" alt="" src="<?= CFile::GetPath(
-							$book['IMAGE_ID']
-						) ?>">
-					</a>
-				</p>
-				<p>
-					<strong><a class="book-list-card-name" href="/book/<?= $book['ID'] ?>/"><?= $book['TITLE'] ?></a></strong>
-				</p><br>
-				<p class="book-list-card-author">Автор <?= $authors[$book['ID']] ?></p>
+			$authors = $arResult['FormattingApi']->prepareText($arResult['BookApi']->getAuthorForEachBook($bookIds));
+
+			$nav->setRecordCount($arResult['BookApi']->getCount($arResult['SEARCH'], genre_id: $arResult['GENRE_ID']));
+			foreach ($books as $book):
+				$book = $arResult['FormattingApi']->prepareText($book);
+				?>
+				<div class="book-list-card">
+					<p>
+						<a href="/book/<?= $book['ID'] ?>/">
+							<img height="300px" width="250px" style="margin-bottom:20px" alt="" src="<?= CFile::GetPath(
+								$book['IMAGE_ID']
+							) ?>">
+						</a>
+					</p>
+					<p>
+						<strong><a class="book-list-card-name" href="/book/<?= $book['ID'] ?>/"><?= $book['TITLE'] ?></a></strong>
+					</p><br>
+					<p class="book-list-card-author">Автор <?= $authors[$book['ID']] ?></p>
+				</div>
+			<?php
+			endforeach; ?>
 			</div>
-		<?php
-		endforeach; ?>
-	</div>
-	<?php
-	$APPLICATION->IncludeComponent(
-		"bitrix:main.pagenavigation",
-		"",
-		[
-			"NAV_OBJECT" => $nav,
-			"SEF_MODE" => "Y",
-		],
-		false
-	);
+			<?php
+			$APPLICATION->IncludeComponent(
+				"bitrix:main.pagenavigation",
+				"",
+				[
+					"NAV_OBJECT" => $nav,
+					"SEF_MODE" => "Y",
+				],
+				false
+			);
+		}
 	?>
 </main>

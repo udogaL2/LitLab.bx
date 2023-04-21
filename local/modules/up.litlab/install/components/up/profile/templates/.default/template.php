@@ -49,28 +49,38 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 			if (isset($_SESSION['NAME']) && $userId===$arResult['userApi']->getUserId($_SESSION['NAME']))
 			{
-				$publicpage = 0;
-				$userBookshelfs = $arResult['userBookshelfApi']->getListOfUserBookshelf(
+				$publicPage = 0;
+				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
 					$userId,
 					$nav->getLimit(),
 					$nav->getOffset()
 				);
 			}
 			else{
-				$publicpage = 1;
-				$userBookshelfs = $arResult['userBookshelfApi']->getListOfUserBookshelf(
+				$publicPage = 1;
+				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
 					$userId,
 					$nav->getLimit(),
 					$nav->getOffset(),
 					['public']
 				);
 			}
+
+			if(!$userBookshelves[0])
+			{
+				$APPLICATION->IncludeComponent(
+					'up:system.messeage',
+					'',
+					['MESSEAGE' => 'UP_LITLAB_USER_BOOKSHELVES_MISSING'],
+				);
+			}
+			else{
 			$nav->setRecordCount($arResult['userBookshelfApi']->getUserBookshelfCount($userId));
-			foreach ($userBookshelfs as $userBookshelf):
+			foreach ($userBookshelves as $userBookshelf):
 				$userBookshelf = $arResult['FormattingApi']->prepareText($userBookshelf);
 				$image = $arResult['bookApi']->getImage($userBookshelf['ID']);
 			?>
-			<? if ($publicpage === 1):?>
+			<? if ($publicPage === 1):?>
 			<div class="user-bookshelf" style="width: 45%">
 			<?else:?>
 			<div class="user-bookshelf">
@@ -80,14 +90,14 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 					<a href="/user/<?=$userBookshelf['CREATOR_ID']?>/bookshelf/<?=$userBookshelf['ID']?>/"><?=$userBookshelf['TITLE']?></a>
 					<span><?=$userBookshelf['DESCRIPTION']?></span>
 				</div>
-				<? if ($publicpage === 0): ?>
+				<? if ($publicPage === 0): ?>
 				<div class="user-bookshelf-buttons">
 					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-lock.png" height="30px" width="25px">
 					<a href="/edit/bookshelf/<?=$userBookshelf['ID']?>/">Изменить</a>
 				</div>
 				<? endif;?>
 			</div>
-			<? if ($publicpage === 0): ?>
+			<? if ($publicPage === 0): ?>
 				<hr width="100%">
 			<? endif;?>
 			<?php endforeach;?>
@@ -104,5 +114,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		],
 		false
 	);
+	}
 	?>
 </main>

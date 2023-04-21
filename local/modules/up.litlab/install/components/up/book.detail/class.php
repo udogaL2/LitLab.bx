@@ -32,7 +32,7 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 
 		if (!$bookInfo)
 		{
-			LocalRedirect('/404');
+			$this->arResult['MESSEAGE'] = 'UP_LITLAB_BOOK_MISSING';
 		}
 
 		$this->arResult['Book'] = $bookInfo;
