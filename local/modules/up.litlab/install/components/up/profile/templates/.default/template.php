@@ -92,7 +92,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				</div>
 				<? if ($publicPage === 0): ?>
 				<div class="user-bookshelf-buttons">
+					<?if ($userBookshelf['STATUS'] === 'private'):?>
 					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-lock.png" height="30px" width="25px">
+					<?else:?>
+					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-unlock.png" height="30px" width="25px">
+					<?endif;?>
 					<a href="/edit/bookshelf/<?=$userBookshelf['ID']?>/"><?=Loc::getMessage('UP_LITLAB_EDIT')?></a>
 				</div>
 				<? endif;?>

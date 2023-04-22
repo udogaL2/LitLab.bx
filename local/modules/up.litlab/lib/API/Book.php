@@ -2,6 +2,7 @@
 
 namespace Up\Litlab\API;
 use Bitrix\Main\ORM\Query\Query;
+use Up\LitLab\Model\AuthorTable;
 use Up\Litlab\Model\BookTable;
 use Up\LitLab\Model\GenreTable;
 
@@ -135,7 +136,7 @@ class Book
 
 		return $result;
 	}
-	public function getImage($bookshelfId, $limit = 1){
+	public function getImage($bookshelfId, int $limit = 1){
 		$result = BookTable::query()
 			->setSelect(['BS_ID' => 'BOOK.BOOKSHELF_ID', 'IMAGE_ID'])
 			->setFilter(['BOOK.BOOKSHELF_ID' => $bookshelfId])
@@ -185,4 +186,9 @@ class Book
 
 		return $result;
 	}
+
+	public function addBook(array $params){
+		return BookTable::add($params);
+	}
+
 }

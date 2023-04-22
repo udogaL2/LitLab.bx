@@ -36,7 +36,8 @@ if (!empty($arResult['ERROR']))
 			<p><?= Loc::getMessage('UP_LITLAB_DESC') ?></p>
 			<input class="bookshelf-edit-descr" type="text" style="" name="input-bookshelf-description">
 		</div>
-			<input type="submit" value="<?= Loc::getMessage('UP_LITLAB_SAVE') ?>">
+			<input class="bookshelf-create-save" type="submit" value="<?= Loc::getMessage('UP_LITLAB_SAVE') ?>">
+
 	</form>
 </main>
 <?php

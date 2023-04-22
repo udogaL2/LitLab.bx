@@ -3,7 +3,9 @@
 namespace Up\Litlab\API;
 
 use Bitrix\Main\Filter\Filter;
+use Up\LitLab\Model\BookBookshelfTable;
 use Up\Litlab\Model\BookshelfTable;
+use Up\LitLab\Model\TagTable;
 use Up\LitLab\Model\UserTable;
 
 class Bookshelf
@@ -180,5 +182,54 @@ class Bookshelf
 								'DATE_UPDATED' => new \Bitrix\Main\Type\DateTime(),
 								'STATUS' => 'private'
 							]);
+	}
+
+	public function getBookshelfById(int $bookshelfId){
+		return BookshelfTable::getById($bookshelfId)->fetch();
+
+	}
+
+	public function getTagByName(string $tagName){
+		return TagTable::query()
+			->setSelect(['*'])
+			->setFilter(['TITLE'=>$tagName])
+			->fetch();
+	}
+
+	public function updateBookshelf(int $bookshelfId, array $updateFields){
+		return BookshelfTable::update($bookshelfId, ['TITLE'=>$updateFields[0], 'DESCRIPTION'=>$updateFields[1],
+			'DATE_UPDATED'=>$updateFields[2]]);
+
+	}
+
+	public function addTag(string $tagName){
+		return TagTable::add(['TITLE'=>$tagName]);
+	}
+
+	public function addTagsOfBookshelf(int $tagId, int $bookshelfId){
+		$bookshelf = BookshelfTable::getByPrimary($bookshelfId)->fetchObject();
+		$tag = TagTable::getByPrimary($tagId)->fetchObject();
+
+		$bookshelf->addToTags($tag);
+		$bookshelf->save();
+	}
+
+	public function deleteTagsOfBookshelf(array $tagsId, int $bookshelfId){
+		$bookshelf = BookshelfTable::getByPrimary($bookshelfId)->fetchObject();
+		foreach ($tagsId as $tagId)
+		{
+			$tag = TagTable::getByPrimary($tagId)->fetchObject();
+			$bookshelf->removeFromTags($tag);
+			$bookshelf->save();
+		}
+	}
+
+	public function addComments(int $bookshelfId, int $bookId, string $comment)
+	{
+		return BookBookshelfTable::update([
+									   'BOOKSHELF_ID' => $bookshelfId,
+									   'BOOK_ID' => $bookId
+								   ], ['COMMENT' => $comment]);
+
 	}
 }

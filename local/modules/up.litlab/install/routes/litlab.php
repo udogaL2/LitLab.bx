@@ -23,6 +23,7 @@ return function(RoutingConfigurator $routes) {
 	$routes->get('/book/{id}/', new PublicPageController('/local/modules/up.litlab/views/book-detail.php'));
 
 	$routes->get('/create/book/', new PublicPageController('/local/modules/up.litlab/views/book-create.php'));
+	$routes->post('/create/book/', new PublicPageController('/local/modules/up.litlab/views/book-create.php'));
 
 	$routes->get('/create/bookshelf/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-create.php'));
 	$routes->post('/create/bookshelf/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-create.php'));
@@ -30,6 +31,7 @@ return function(RoutingConfigurator $routes) {
 	$routes->get('/create/bookshelf/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-create.php'));
 
 	$routes->get('/edit/bookshelf/{id}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-edit.php'));
+	$routes->post('/edit/bookshelf/{id}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-edit.php'));
 
 	$routes->get('/register/', new PublicPageController('/local/modules/up.litlab/views/registration.php'));
 	$routes->post('/register/', new PublicPageController('/local/modules/up.litlab/views/registration.php'));

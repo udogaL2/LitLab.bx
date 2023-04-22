@@ -8,4 +8,3 @@ $MESS ['UP_LITLAB_COPYRIGHT'] = "Copyright 2023. Все права защище�
 $MESS ['UP_LITLAB_HOME'] = "Главная";
 $MESS ['UP_LITLAB_BOOKS'] = "Книги";
 
-
