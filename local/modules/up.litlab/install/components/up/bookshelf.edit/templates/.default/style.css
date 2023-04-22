@@ -7,7 +7,7 @@
 
 .bookshelf-edit-books{
 	width:90%;
-	margin: 50px auto 200px auto;
+	margin: 50px auto 0px auto;
 	padding: 40px;
 }
 
@@ -15,6 +15,7 @@
 	width: 80%;
 	padding: 10px 10px 80px 10px;
 	border-radius: 10px;
+	border: none;
 }
 
 .bookshelf-edit-descr{
@@ -24,7 +25,7 @@
 	padding: 10px;
 }
 
-.bookshelf-edit-books button{
+.bookshelf-edit-save{
 	padding: 10px 30px;
 	font-size: 16px;
 	background-color: #81b95e;
@@ -33,6 +34,35 @@
 	width: 200px;
 	margin: 50px auto;
 	border-radius: 10px;
+}
+
+.shelf-card-tags-list{
+	display: flex;
+	width: 80%;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.bookshelf-edit-tag{
+	width: 130px;
+	text-align: center;
+	margin-right: 10px
+}
+.button-add-tag{
+	padding: 0 10px;
+	border: 1px solid #81b95e;
+	border-radius: 10px;
+	background-color: #81b95e;
+	cursor: pointer;
+}
+.button-delete-tag{
+	padding: 0 10px;
+
+	margin-right: 20px;
+	border: 1px solid #81b95e;
+	border-radius: 10px;
+	background-color: #81b95e;
+	cursor: pointer;
 }
 
 @media screen and (max-width: 660px){

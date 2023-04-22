@@ -29,7 +29,7 @@ if (!empty($arParams['ERROR'])):?>
 			<p>Описание полки</p>
 			<input class="bookshelf-edit-descr" type="text" style="" name="input-bookshelf-description">
 		</div>
-			<input type="submit" value="Сохранить">
+			<input class="bookshelf-create-save" type="submit" value="Сохранить">
 	</form>
 </main>
 <?php

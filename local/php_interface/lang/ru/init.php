@@ -18,3 +18,4 @@ $MESS ['UP_LITLAB_ERROR6'] = "Введен пароль недостаточно
 $MESS ['UP_LITLAB_ERROR7'] = "Введите пароль меньшей длины";
 $MESS ['UP_LITLAB_ERROR8'] = "Логин занят";
 $MESS ['UP_LITLAB_ERROR9'] = "Введены неверные данные";
+$MESS ['UP_LITLAB_ERROR10'] = "Данные не были изменены";

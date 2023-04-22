@@ -52,11 +52,14 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 		$userApi = new User;
 		if (empty($this->arParams['ERROR']))
 		{
+			if (!isset($_SESSION['NAME'])){
+				LocalRedirect('/auth/');
+			}
 			$this->arResult['CREATOR_ID'] = $userApi->getUserId($_SESSION['NAME']);
 			if ($request === 'POST')
 			{
 				$response = $BookshelfAPI->addBookshelf($this->arResult);
-				LocalRedirect(sprintf("/user/%s/", $userApi->getUserId($_SESSION['NAME'])));
+				LocalRedirect(sprintf("/user/%s/", $this->arResult['CREATOR_ID']));
 				if (!isset($response))
 				{
 					$this->arParams['ERROR'] = "ERROR3";

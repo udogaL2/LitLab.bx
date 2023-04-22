@@ -30,6 +30,7 @@
 
 .bookshelf-create-main div p{
 	font-size: 20px;
+	width: 20%;
 }
 
 .bookshelf-create-main div input{
@@ -39,7 +40,7 @@
 	padding: 10px;
 }
 
-.bookshelf-create-main button{
+.bookshelf-create-main .book-create-save{
 	padding: 10px 30px;
 	font-size: 16px;
 	margin-top: 10px;
@@ -49,7 +50,7 @@
 	border-radius: 10px;
 }
 
-.bookshelf-edit-descr{
+.bookshelf-create-author{
 	height: 50px;
 	width:80%;
 	border-radius: 10px;

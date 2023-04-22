@@ -1,6 +1,7 @@
 <?php
 
 namespace Up\Litlab\API;
+use Up\LitLab\Model\AuthorTable;
 use Up\Litlab\Model\BookTable;
 
 class Book
@@ -66,7 +67,7 @@ class Book
 						->fetchAll()
 			;
 	}
-	public function getImage($bookshelfId, $limit = 1){
+	public function getImage($bookshelfId, int $limit = 1){
 		$result = BookTable::query()
 			->setSelect(['BS_ID' => 'BOOK.BOOKSHELF_ID', 'IMAGE_ID'])
 			->setFilter(['BOOK.BOOKSHELF_ID' => $bookshelfId])
@@ -95,4 +96,9 @@ class Book
 
 		return $result;
 	}
+
+	public function addBook(array $params){
+		return BookTable::add($params);
+	}
+
 }

@@ -88,7 +88,7 @@
 	align-items: flex-end;
 }
 
-.user-bookshelf-buttons a{
+.user-bookshelf-buttons button{
 	padding: 10px 15px;
 	border: none;
 	background-color: #75aa4a;
