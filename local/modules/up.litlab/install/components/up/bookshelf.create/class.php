@@ -28,15 +28,15 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 		{
 			if (!is_string($this->arParams['~TITLE']) && !is_string($this->arParams['~DESCRIPTION']))
 			{
-				$this->arParams['ERROR'] = "ERROR1";
+				$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
 			}
 			if (!$this->arParams['~TITLE'] && !$this->arParams['~DESCRIPTION'])
 			{
-				$this->arParams['ERROR'] = "ERROR2";
+				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
 
-			$this->arResult['TITLE'] = htmlspecialcharsbx($this->arParams['~TITLE']);
-			$this->arResult['DESCRIPTION'] = htmlspecialcharsbx($this->arParams['~DESCRIPTION']);
+			$this->arResult['TITLE'] = $this->arParams['~TITLE'];
+			$this->arResult['DESCRIPTION'] = $this->arParams['~DESCRIPTION'];
 			$this->arResult['LIKES'] = 0;
 			$this->arResult['DATE_CREATED'] = new \Bitrix\Main\Type\DateTime();
 			$this->arResult['DATE_UPDATED'] = new \Bitrix\Main\Type\DateTime();
@@ -50,7 +50,7 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		$BookshelfAPI = new \Up\Litlab\API\Bookshelf();
 		$userApi = new User;
-		if (empty($this->arParams['ERROR']))
+		if (empty($this->arResult['ERROR']))
 		{
 			$this->arResult['CREATOR_ID'] = $userApi->getUserId($_SESSION['NAME']);
 			if ($request === 'POST')
@@ -59,8 +59,7 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 				LocalRedirect(sprintf("/user/%s/", $userApi->getUserId($_SESSION['NAME'])));
 				if (!isset($response))
 				{
-					$this->arParams['ERROR'] = "ERROR3";
-					$this->includeComponentTemplate();
+					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 				}
 			}
 		}

@@ -19,22 +19,22 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		$userId = trim($uri, "/user/");
 	if (isset($_SESSION['NAME']) && $userId===$arResult['userApi']->getUserId($_SESSION['NAME'])):?>
 	<div class="user-header">
-		<p>Ваши книжные полки</p>
-		<a href="/create/bookshelf/">Добавить новую полку</a>
+		<p><?= Loc::getMessage('UP_LITLAB_YOURS_BOOKSHELVES') ?></p>
+		<a href="/create/bookshelf/"><?=Loc::getMessage('UP_LITLAB_CREATE_BOOKSHELF')?></a>
 	</div>
 	<div class="user-profile">
 		<div class="user-profile-card">
 			<p class="user-profile-card-nickname"><?=$arResult['userApi']->getUserName((int)$userId)?></p>
 			<hr>
-			<a href="/create/book/" style="text-decoration: none">Добавить свою книгу</a>
+			<a href="/create/book/" style="text-decoration: none"><?=Loc::getMessage('UP_LITLAB_ADD_BOOK')?></a>
 			<hr>
-			<a href="/logout/">Выйти</a>
+			<a href="/logout/"><?=Loc::getMessage('UP_LITLAB_LOGOUT')?></a>
 		</div>
 
 	<? else:
 		if ($arResult['userApi']->getCreatorInfo($userId)!==false):?>
 		<div class="user-header">
-			<p>Книжные полки автора <?=$arResult['userApi']->getUserName((int)$userId)?></p>
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['userApi']->getUserName((int)$userId)?></p>
 		</div>
 
 		<?// else:
@@ -93,7 +93,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				<? if ($publicPage === 0): ?>
 				<div class="user-bookshelf-buttons">
 					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-lock.png" height="30px" width="25px">
-					<a href="/edit/bookshelf/<?=$userBookshelf['ID']?>/">Изменить</a>
+					<a href="/edit/bookshelf/<?=$userBookshelf['ID']?>/"><?=Loc::getMessage('UP_LITLAB_EDIT')?></a>
 				</div>
 				<? endif;?>
 			</div>

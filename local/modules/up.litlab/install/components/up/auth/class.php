@@ -29,16 +29,15 @@ class LitlabAuthComponent extends CBitrixComponent
 		if($request === "POST"){
 			if (!is_string($this->arParams['~NAME']) && !is_string($this->arParams['~PASSWORD']))
 			{
-				$this->arParams['ERROR'] = "ERROR1";
+				$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
 			}
 			if (!$this->arParams['~NAME'] && !$this->arParams['~PASSWORD'])
 			{
-				$this->arParams['ERROR'] = "ERROR2";
-				$this->includeComponentTemplate();
+				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
 			$validForm = $userApi->validateAuthForm($this->arParams['~NAME'], $this->arParams['~PASSWORD']);
 			if ($validForm != ''){
-				$this->arParams['ERROR'] = $validForm;
+				$this->arResult['ERROR'] = $validForm;
 			}
 			$_SESSION['NAME'] = $this->arParams['~NAME'];
 			$_SESSION['PASSWORD'] = $this->arParams['~PASSWORD'];
@@ -51,7 +50,7 @@ class LitlabAuthComponent extends CBitrixComponent
 	protected function checkAuth(){
 		$userApi = new User;
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		if (empty($this->arParams['ERROR']))
+		if (empty($this->arResult['ERROR']))
 		{
 			if (
 				!$userApi->checkLogin($this->arResult['NAME'])
@@ -65,7 +64,7 @@ class LitlabAuthComponent extends CBitrixComponent
 			}
 			elseif ($request === "POST")
 			{
-				$this->arParams['ERROR'] = "ERROR9";
+				$this->arResult['ERROR'] = "UP_LITLAB_INPUT_INCORRECT_DATA";
 				$_SESSION = [];
 			}
 		}

@@ -16,19 +16,19 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 <div class="header-bookshelf">
 	<div class="title">
-		<h1>Создайте свою виртуальную книжную полку и найдите подборки, которые подходят именно вам</h1>
-		<h3>Погрузись в мир литературы прямо сейчас</h3>
+		<h1><?= Loc::getMessage('UP_LITLAB_TITLE')?> </h1>
+		<h3><?= Loc::getMessage('UP_LITLAB_UNDER_TITLE') ?></h3>
 	</div>
 	<form action="/" method="get">
 		<div class="header-search">
 			<p class="header-search-wrapper header-input-wrapper">
 				<label>
-					<input class="header-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="Найти полку...">
+					<input class="header-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="<?= Loc::getMessage('UP_LITLAB_PLACEHOLDER_FIND_BOOK') ?>">
 				</label>
 			</p>
 			<p class="header-search-wrapper">
 				<button class="button header-is-info">
-					Поиск
+					<?= Loc::getMessage('UP_LITLAB_SEARCH') ?>
 				</button>
 			</p>
 		</div>
@@ -41,9 +41,14 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	$nav = new \Bitrix\Main\UI\PageNavigation('page');
 	$nav->allowAllRecords(false)->setPageSize(6)->initFromUri();
 
-	$bookshelves = $arResult['BookshelfApi']->getListOfBookshelf($nav->getLimit(), $nav->getOffset(), search: $arResult['SEARCH'], notEmpty: true);
+	$bookshelves = $arResult['BookshelfApi']->getListOfBookshelf(
+				  $nav->getLimit(),
+				  $nav->getOffset(),
+		search:   $arResult['SEARCH'],
+		notEmpty: true
+	);
 
-	if(!$bookshelves[0])
+	if (!$bookshelves[0])
 	{
 		$APPLICATION->IncludeComponent(
 			'up:system.messeage',
@@ -51,7 +56,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			['MESSEAGE' => 'UP_LITLAB_BOOKSHELVES_MISSING'],
 		);
 	}
-	else{
+	else
+	{
 		$bookshelfIds = [];
 		$creatorIds = [];
 		foreach ($bookshelves as $bookshelf)
@@ -70,13 +76,14 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			$bookshelf = $arResult['FormattingApi']->prepareText($bookshelf);
 			?>
 			<div class="shelf-card">
-				<a class="move-to-shelf" href="/user/<?= $bookshelf['CREATOR_ID'] ?>/bookshelf/<?= $bookshelf['ID'] ?>/">Перейти</a>
+				<a class="move-to-shelf" href="/user/<?= $bookshelf['CREATOR_ID'] ?>/bookshelf/<?= $bookshelf['ID'] ?>/"><?= Loc::getMessage('UP_LITLAB_MOVE') ?></a>
 				<div class="shelf-card-description">
 					<div>
 						<a href="/user/<?= $bookshelf['CREATOR_ID'] ?>/" class="shelf-card-author"><?= $creatorNames[$bookshelf['CREATOR_ID']] ?></a><br>
-						<p class="shelf-card-name">Книжная полка "<?= $bookshelf['TITLE'] ?>"</p>
+						<p class="shelf-card-name"><?= Loc::getMessage('UP_LITLAB_BOOKSHELF') ?> "<?= $bookshelf['TITLE'] ?>"</p>
 					</div>
-					<p class="shelf-card-book-count">книг<br><span style="font-size: 42px"><?= $bookshelf['BOOK_COUNT'] ?></span></p>
+					<p class="shelf-card-book-count"><?= Loc::getMessage('UP_LITLAB_BOOKS') ?><br><span style="font-size: 42px"><?= $bookshelf['BOOK_COUNT'] ?></span>
+					</p>
 				</div>
 				<div class="shelf-card-images">
 					<?php
@@ -92,7 +99,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				<?php
 				if ($bookshelvesTag[$bookshelf['ID']][0]): ?>
 					<div class="shelf-card-tags">
-						<p>Теги:</p>
+						<p><?= Loc::getMessage('UP_LITLAB_TAGS') ?>:</p>
 						<?php
 						foreach ($arResult['FormattingApi']->prepareText($bookshelvesTag[$bookshelf['ID']]) as $tag): ?>
 							<div class="shelf-card-tags-list">
@@ -113,8 +120,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 					<div class="shelf-likes">
 						<input class="shelf-save-input" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="25px" width="20px">
 						<input class="saved" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save-saved.png" height="25px" width="20px">
-						<p class="save-amount"><?= $savesCount[$bookshelf['ID']][0] ? count($savesCount[$bookshelf['ID']])
-								: 0 ?></p>
+						<p class="save-amount"><?= $savesCount[$bookshelf['ID']][0] ? count(
+								$savesCount[$bookshelf['ID']]
+							) : 0 ?></p>
 					</div>
 				</div>
 			</div>

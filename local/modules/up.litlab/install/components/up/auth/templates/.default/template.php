@@ -21,16 +21,20 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 ?>
 
 <?php
-	if (!empty($arParams['ERROR'])):
+	if (!empty($arResult['ERROR']))
+	{
+		$APPLICATION->IncludeComponent(
+			'up:system.messeage',
+			'',
+			['MESSEAGE' => $arResult['ERROR']],
+		);
+	}
 ?>
-
-<p><?= Loc::getMessage('UP_LITLAB_' . $arParams['ERROR']) ?></p>
-<?php endif;?>
 <div class="auth-form">
 	<div class="auth-form-content">
-		<p class="title-form">Авторизация</p>
+		<p class="title-form"><?= Loc::getMessage('UP_LITLAB_LOGIN_TITLE') ?></p>
 		<form class="login-form" action="" method="post">
-			<label>Логин</label>
+			<label><?= Loc::getMessage('UP_LITLAB_LOGIN') ?></label>
 			<input required class="auth-input" name="login" type="text" id="auth-login" minlength="5" maxlength="62"
 				<?
 				if (isset($_SESSION['NAME'])):?>
@@ -38,13 +42,13 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 				<? endif;?>
 				>
 <!--			<p>--><?//=($_SESSION['NAME']++);?><!--"</p>-->
-			<label>Пароль</label>
+			<label><?= Loc::getMessage('UP_LITLAB_PASSWORD') ?></label>
 			<input required class="auth-input" name="pass" type="password" id="auth-pass" minlength="8" maxlength="62"
 				<?if (isset($_SESSION['PASSWORD'])):?>
 					value="<?=$_SESSION['PASSWORD']?>"
 				<? endif;?>>
 			<input type="submit"  class="auth-form-btn" value="Войти">
 		</form>
-		<a id="auth-page-btn" href="/register/">Зарегистрироваться</a>
+		<a id="auth-page-btn" href="/register/"><?= Loc::getMessage('UP_LITLAB_REGISTER') ?></a>
 	</div>
 </div>

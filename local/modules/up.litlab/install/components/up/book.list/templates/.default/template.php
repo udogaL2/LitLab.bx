@@ -15,12 +15,13 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 <main class="book-list-main">
 	<div class="main-header">
-		<p class="main-title">Книги</p>
+		<p class="main-title"><?= Loc::getMessage('UP_LITLAB_BOOKS') ?></p>
 		<div class="book-filter-block">
 			<div class="book-filter-genre">
 				<div class="book-filter-genre-header">
 					<button class="book-filter-button">
-						Жанры<img style="margin-left:10px" width="20px" height="20px" src="\local\modules\up.litlab\install\templates\litlab\images\icon-menu.png">
+						<?= Loc::getMessage('UP_LITLAB_GENRES') ?>
+						<img style="margin-left:10px" width="20px" height="20px" src="\local\modules\up.litlab\install\templates\litlab\images\icon-menu.png">
 					</button>
 				</div>
 				<div class="book-filter-genre-list">
@@ -46,12 +47,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				<div class="book-list-search">
 					<p class="book-list-search-wrapper input-wrapper">
 						<label>
-							<input class="book-list-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="Найти книги...">
+							<input class="book-list-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="<?= Loc::getMessage('UP_LITLAB_PLACEHOLDER_FIND_BOOK') ?>">
 						</label>
 					</p>
 					<p class="book-list-search-wrapper">
 						<button class="button book-list-is-info">
-							Поиск
+							<?= Loc::getMessage('UP_LITLAB_SEARCH') ?>
 						</button>
 					</p>
 				</div>
@@ -80,45 +81,47 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		}
 		else
 		{
-			$bookIds = [];
+		$bookIds = [];
 
-			foreach ($books as $book)
-			{
-				$bookIds[] = $book['ID'];
-			}
-
-			$authors = $arResult['FormattingApi']->prepareText($arResult['BookApi']->getAuthorForEachBook($bookIds));
-
-			$nav->setRecordCount($arResult['BookApi']->getCount($arResult['SEARCH'], genre_id: $arResult['GENRE_ID']));
-			foreach ($books as $book):
-				$book = $arResult['FormattingApi']->prepareText($book);
-				?>
-				<div class="book-list-card">
-					<p>
-						<a href="/book/<?= $book['ID'] ?>/">
-							<img height="300px" width="250px" style="margin-bottom:20px" alt="" src="<?= CFile::GetPath(
-								$book['IMAGE_ID']
-							) ?>">
-						</a>
-					</p>
-					<p>
-						<strong><a class="book-list-card-name" href="/book/<?= $book['ID'] ?>/"><?= $book['TITLE'] ?></a></strong>
-					</p><br>
-					<p class="book-list-card-author">Автор <?= $authors[$book['ID']] ?></p>
-				</div>
-			<?php
-			endforeach; ?>
-			</div>
-			<?php
-			$APPLICATION->IncludeComponent(
-				"bitrix:main.pagenavigation",
-				"",
-				[
-					"NAV_OBJECT" => $nav,
-					"SEF_MODE" => "Y",
-				],
-				false
-			);
+		foreach ($books as $book)
+		{
+			$bookIds[] = $book['ID'];
 		}
+
+		$authors = $arResult['FormattingApi']->prepareText($arResult['BookApi']->getAuthorForEachBook($bookIds));
+
+		$nav->setRecordCount($arResult['BookApi']->getCount($arResult['SEARCH'], genre_id: $arResult['GENRE_ID']));
+		foreach ($books as $book):
+			$book = $arResult['FormattingApi']->prepareText($book);
+			?>
+			<div class="book-list-card">
+				<p>
+					<a href="/book/<?= $book['ID'] ?>/">
+						<img height="300px" width="250px" style="margin-bottom:20px" alt="" src="<?= CFile::GetPath(
+							$book['IMAGE_ID']
+						) ?>">
+					</a>
+				</p>
+				<p>
+					<strong><a class="book-list-card-name" href="/book/<?= $book['ID'] ?>/"><?= $book['TITLE'] ?></a></strong>
+				</p><br>
+				<p class="book-list-card-author"><?= Loc::getMessage(
+						'UP_LITLAB_AUTHOR'
+					) ?> <?= $authors[$book['ID']] ?></p>
+			</div>
+		<?php
+		endforeach; ?>
+	</div>
+	<?php
+	$APPLICATION->IncludeComponent(
+		"bitrix:main.pagenavigation",
+		"",
+		[
+			"NAV_OBJECT" => $nav,
+			"SEF_MODE" => "Y",
+		],
+		false
+	);
+	}
 	?>
 </main>

@@ -32,14 +32,14 @@ else
 
 	<section class="bookshelf-detail-main">
 		<div class="bookshelf-detail-overview">
-			<p class="bookshelf-detail-name">Книжная полка "<?= $arResult['Bookshelf']['TITLE'] ?>" от
+			<p class="bookshelf-detail-name"><?= Loc::getMessage('UP_LITLAB_BOOKSHELF') ?> "<?= $arResult['Bookshelf']['TITLE'] ?>" <?= Loc::getMessage('UP_LITLAB_FROM')?>
 				<a class="bookshelf-detail-author-name" href="/user/<?= $arResult['Bookshelf']['Creator']['ID'] ?>/"><?= $arResult['Bookshelf']['Creator']['NAME'] ?></a>
 			</p>
 			<p class="bookshelf-detail-description"><?= $arResult['Bookshelf']['DESCRIPTION'] ?></p>
 			<?php
 			if ($arResult['Bookshelf']['Tags'][0]): ?>
 				<div class="book-detail-card-description-genres">
-					<p style="margin-right: 20px">Теги:</p>
+					<p style="margin-right: 20px"><?= Loc::getMessage('UP_LITLAB_TAGS') ?>:</p>
 					<div class="book-detail-card-description-genres-links">
 						<?php
 						foreach ($arResult['Bookshelf']['Tags'] as $tag): ?>
@@ -51,8 +51,8 @@ else
 			<?php
 			endif; ?>
 			<div class="bookshelf-detail-info">
-				<p>Создано: <?= $arResult['Bookshelf']['DATE_CREATED'] ?></p>
-				<p>Последнее обновление: <?= $arResult['Bookshelf']['DATE_UPDATED'] ?></p>
+				<p><?= Loc::getMessage('UP_LITLAB_CREATED') ?>: <?= $arResult['Bookshelf']['DATE_CREATED'] ?></p>
+				<p><?= Loc::getMessage('UP_LITLAB_LAST_UPDATE') ?>: <?= $arResult['Bookshelf']['DATE_UPDATED'] ?></p>
 			</div>
 		</div>
 		<div class="bookshelf-detail-buttons">

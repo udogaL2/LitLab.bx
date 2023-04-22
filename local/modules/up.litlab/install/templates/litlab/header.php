@@ -34,8 +34,8 @@ use Up\Litlab\API\User;
 		</div>
 
 		<div id="navbarBasicExample" class="navbar-menu">
-			<a href="/" class="navbar-item " >Книжные полки</a>
-			<a href="/books/" class="navbar-item" >Книги</a>
+			<a href="/" class="navbar-item "><?= Loc::getMessage('UP_LITLAB_BOOKSHELVES') ?></a>
+			<a href="/books/" class="navbar-item" ><?= Loc::getMessage('UP_LITLAB_BOOKS') ?></a>
 		</div>
 
 		<?php
@@ -48,13 +48,13 @@ use Up\Litlab\API\User;
 
 					<?if (isset($_SESSION['USER'])):?>
 					<a href="/user/<?=$userId?>/" class="button is-primary"><?=$_SESSION['USER']?></a>
-					<a href="/logout/" class="button is-light">Выйти</a>
+					<a href="/logout/" class="button is-light"><?= Loc::getMessage('UP_LITLAB_LOGOUT') ?></a>
 					<? else:?>
 					<a class="button is-primary" href="/auth/">
-						Войти
+						<?= Loc::getMessage('UP_LITLAB_LOGIN') ?>
 					</a>
 					<a class="button is-light" href="/register/">
-						Зарегистрироваться
+						<?= Loc::getMessage('UP_LITLAB_REGISTER') ?>
 					</a>
 					<?endif;?>
 				</div>

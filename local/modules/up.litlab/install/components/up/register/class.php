@@ -22,32 +22,30 @@ class LitlabRegisterComponent extends CBitrixComponent
 	protected function prepareTemplateParams()
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		$userApi = new User;
-		if($request === "POST")
+		$userApi = new User();
+		if ($request === "POST")
 		{
 			if (
-				!is_string($this->arParams['~NAME']) && !is_string($this->arParams['~PASSWORD'])
-				&& !is_string(
-					$this->arParams['~USERNAME']
-				)
+				!is_string($this->arParams['~NAME'])
+				&& !is_string($this->arParams['~PASSWORD'])
+				&& !is_string($this->arParams['~USERNAME'])
 			)
 			{
-				$this->arParams['ERROR'] = "ERROR1";
+				$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
 
 			}
-			if (!$this->arParams['~NAME'] && !$this->arParams['~PASSWORD'] && !$this->arParams['~USERNAME'])
+			if (!$this->arParams['~NAME'] || !$this->arParams['~PASSWORD'] || !$this->arParams['~USERNAME'])
 			{
-				$this->arParams['ERROR'] = "ERROR2";
-
+				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
 			$validForm = $userApi->validateAuthForm($this->arParams['~NAME'], $this->arParams['~PASSWORD']);
-			if ($validForm != ''){
-				$this->arParams['ERROR'] = $validForm;
+			if ($validForm != '')
+			{
+				$this->arResult['ERROR'] = $validForm;
 			}
-			$_SESSION['NAME'] = htmlspecialcharsbx($this->arParams['~NAME']);
-			$_SESSION['USERNAME'] = htmlspecialcharsbx($this->arParams['~USERNAME']);
-			$_SESSION['PASSWORD'] = htmlspecialcharsbx($this->arParams['~PASSWORD']);
-
+			$_SESSION['NAME'] = $this->arParams['~NAME'];
+			$_SESSION['USERNAME'] = $this->arParams['~USERNAME'];
+			$_SESSION['PASSWORD'] = $this->arParams['~PASSWORD'];
 
 			$this->arResult['NAME'] = $_SESSION['NAME'];
 			$this->arResult['USERNAME'] = $_SESSION['USERNAME'];
@@ -55,27 +53,29 @@ class LitlabRegisterComponent extends CBitrixComponent
 			$this->arResult['ROLE'] = 'user';
 		}
 	}
-	protected function register(){
-		$userAPI = new User;
+
+	protected function register()
+	{
+		$userAPI = new User();
 		$userBookshelfApi = new \Up\Litlab\API\Bookshelf();
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		if (empty($this->arParams['ERROR'])){
+		if (empty($this->arResult['ERROR']))
+		{
 			if ($userAPI->checkLogin($this->arResult['NAME']) && $request === "POST")
 			{
-
 				$response = $userAPI->registerUser($this->arResult);
 				$userBookshelfApi->autoAddedUserBookshelfs($userAPI->getUserId($this->arResult['NAME']));
 				if (!isset($response))
-					{
-						$this->arParams['ERROR'] = "ERROR3";
-						$this->includeComponentTemplate();
-					}
+				{
+					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
+				}
 				LocalRedirect("/auth/");
 			}
-			elseif($request==="POST"){
-					$this->arParams['ERROR'] = "ERROR8";
-					$_SESSION = [];
-				}
+			elseif ($request === "POST")
+			{
+				$this->arResult['ERROR'] = "UP_LITLAB_LOGIN_IS_BUSY";
+				$_SESSION = [];
 			}
+		}
 	}
 }

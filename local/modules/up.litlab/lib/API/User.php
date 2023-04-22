@@ -47,19 +47,19 @@ class User
 	{
 		if (strlen($login) < 4)
 		{
-			return 'ERROR4';
+			return 'UP_LITLAB_INSUFFICIENT_LOGIN_LENGTH';
 		}
 		if (strlen($login) > 63)
 		{
-			return 'ERROR5';
+			return 'UP_LITLAB_EXCEEDING_LOGIN_LENGTH';
 		}
 		if (strlen($password) < 7)
 		{
-			return 'ERROR6';
+			return 'UP_LITLAB_INSUFFICIENT_PASSWORD_LENGTH';
 		}
 		if (strlen($password) > 63)
 		{
-			return 'ERROR7';
+			return 'UP_LITLAB_EXCEEDING_PASSWORD_LENGTH';
 		}
 
 		return '';
