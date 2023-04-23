@@ -83,7 +83,6 @@ class Bookshelf
 		$bookshelvesTag = BookshelfTable::query()
 			->setSelect(['BS_ID' => 'ID', 'T_TITLE' => 'TAGS.TITLE'])
 			->where('ID', 'in', $bookshelfIds)
-			->setLimit(4)
 			->fetchAll()
 		;
 
@@ -91,6 +90,11 @@ class Bookshelf
 
 		foreach ($bookshelvesTag as $value)
 		{
+			if ($result[$value['BS_ID']] && count($result[$value['BS_ID']]) >= 4)
+			{
+				continue;
+			}
+
 			$result[$value['BS_ID']][] = $value['T_TITLE'];
 		}
 
