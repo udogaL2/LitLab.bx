@@ -78,9 +78,9 @@ class up_litlab extends CModule
 		array_pop($booksSQLScripts);
 
 		foreach ($booksSQLScripts as $key => $booksSQLScript){
-			$img = ['img' => array_merge(CFile::MakeFileArray($_SERVER['DOCUMENT_ROOT'] . "/local/modules/up.litlab/install/data/img/bookIMG_{$key}.webp"), ["MODULE_ID" => "LitLab"])];
+			$img = ['img' => array_merge(CFile::MakeFileArray($_SERVER['DOCUMENT_ROOT'] . "/local/modules/up.litlab/install/data/img/bookIMG_{$key}.jpg"), ["MODULE_ID" => "LitLab"])];
 			CFile::SaveForDB($img, 'img', 'img');
-			$originalName = "bookIMG_{$key}.webp";
+			$originalName = "bookIMG_{$key}.jpg";
 			$imgId = CFile::GetList(arFilter:["MODULE_ID" => "LitLab", 'ORIGINAL_NAME' => $originalName])->Fetch()['ID'];
 			$preparedBooksSQLScript = str_replace('%photo_id%', $imgId, $booksSQLScript);
 			$DB->Query($preparedBooksSQLScript);
