@@ -1,8 +1,9 @@
 <?php
 
+use Bitrix\Main\Context;
 use Bitrix\Main\DI\ServiceLocator;
 
-class LitlabBookshelDetailfComponent extends CBitrixComponent
+class LitlabBookshelfDetailComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
@@ -34,9 +35,7 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 		else
 		{
 			$bookshelfInfo = $bookshelfApi->getDetailsById(
-				$this->arParams['BOOKSHELF_ID'],
-				$this->arParams['USER_ID'],
-				['public']
+				$this->arParams['BOOKSHELF_ID'], $this->arParams['USER_ID'], ['public']
 			);
 		}
 		if (!$bookshelfInfo)
@@ -48,7 +47,19 @@ class LitlabBookshelDetailfComponent extends CBitrixComponent
 
 		$this->arResult['Bookshelf'] = $bookshelfInfo;
 		$this->arResult['Bookshelf']['Tags'] = $bookshelfApi->getTags($this->arParams['BOOKSHELF_ID']);
-		$this->arResult['Bookshelf']['SavesCount'] = $bookshelfApi->getCountOfSavedBookshelves($this->arParams['BOOKSHELF_ID']);
+		$this->arResult['Bookshelf']['SavesCount'] = $bookshelfApi->getCountOfSavedBookshelves(
+			$this->arParams['BOOKSHELF_ID']
+		);
 		$this->arResult['Bookshelf']['Creator'] = $userApi->getCreatorInfo($this->arParams['USER_ID']);
+
+		if ($_SESSION['NAME'])
+		{
+			$bookshelfId = $this->arParams['BOOKSHELF_ID'];
+			$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);
+			$likedFlag = $bookshelfApi->isLiked($bookshelfId, $userId);
+			$savedFlag = $bookshelfApi->isSaved($bookshelfId, $userId);
+			$this->arResult['Bookshelf']['LIKED'] = $likedFlag;
+			$this->arResult['Bookshelf']['SAVED'] = $savedFlag;
+		}
 	}
 }

@@ -56,6 +56,12 @@
 	margin: 50px auto 100px auto;
 	display: flex;
 }
+
+.shelf-likes, .shelf-saves{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 /*в мобильной изменить padding:10px*/
 .bookshelf-list-cards{
 	padding:30px;

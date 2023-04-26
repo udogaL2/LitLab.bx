@@ -44,6 +44,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				</div>
 			</div>
 			<form action="/books/" method="get">
+				<?= $arResult['GENRE_ID'] ? "<input type=\"hidden\" name=\"genre_id\" value=\"{$arResult['GENRE_ID']}\">" : '' ?>
 				<div class="book-list-search">
 					<p class="book-list-search-wrapper input-wrapper">
 						<label>
@@ -62,7 +63,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	<div class="book-list-cards">
 		<?php
 		$nav = new \Bitrix\Main\UI\PageNavigation('page');
-		$nav->allowAllRecords(false)->setPageSize(12)->initFromUri();
+		$nav->allowAllRecords(false)->setPageSize(16)->initFromUri();
 
 		$books = $arResult['BookApi']->getListOfBook(
 					  $nav->getLimit(),

@@ -5,6 +5,7 @@ namespace Up\Litlab\API;
 use Bitrix\Main\Filter\Filter;
 use Up\LitLab\Model\BookBookshelfTable;
 use Up\Litlab\Model\BookshelfTable;
+use Up\LitLab\Model\LikesTable;
 use Up\LitLab\Model\TagTable;
 use Up\LitLab\Model\UserTable;
 
@@ -17,6 +18,7 @@ class Bookshelf
 			->whereIn('STATUS', $status)
 			->setLimit($limit)
 			->setOffset($offset)
+			->setOrder(['LIKES'=>'DESC'])
 			;
 
 		if ($search)
@@ -139,7 +141,7 @@ class Bookshelf
 	public function getCountOfSavedBookshelves(int $bookshelfId)
 	{
 		return count(BookshelfTable::query()
-			->setSelect(['USER_BOOKSHELVES'])
+			->setSelect(['USERS'])
 			->where('ID', $bookshelfId)
 			->fetchAll())
 			;
@@ -148,7 +150,7 @@ class Bookshelf
 	public function getCountOfSavedBookshelvesForEach(array $bookshelfId)
 	{
 		$counts = BookshelfTable::query()
-		   ->setSelect(['ID', 'U_ID' => 'USER_BOOKSHELVES.ID'])
+		   ->setSelect(['ID', 'U_ID' => 'USERS.ID'])
 		   ->where('ID', 'in', $bookshelfId)
 		   ->fetchAll()
 			;
@@ -235,5 +237,69 @@ class Bookshelf
 									   'BOOK_ID' => $bookId
 								   ], ['COMMENT' => $comment]);
 
+	}
+
+	public function getLikesCount(int $bookshelfId): int
+	{
+		return BookshelfTable::query()
+			->setSelect(['LIKES'])
+			->where('ID', $bookshelfId)
+			->fetchAll()[0]['LIKES'];
+	}
+
+	public function isLiked(int $bookshelfId, int $userId): bool
+	{
+		return (bool)LikesTable::query()
+			->setSelect(['*'])
+			->where('USER_ID', $userId)
+			->where('BOOKSHELF_ID', $bookshelfId)
+			->fetchAll()[0]
+			;
+	}
+
+	public function addLike(int $bookshelfId, int $userId): void
+	{
+		LikesTable::add(['USER_ID' => $userId, 'BOOKSHELF_ID' => $bookshelfId]);
+	}
+
+	public function deleteLike(int $bookshelfId, int $userId): void
+	{
+		LikesTable::delete(['USER_ID' => $userId, 'BOOKSHELF_ID' => $bookshelfId]);
+	}
+
+	public function getSavesCount(int $bookshelfId): int
+	{
+		return BookshelfTable::query()
+							 ->setSelect(['SAVES'])
+							 ->where('ID', $bookshelfId)
+							 ->fetchAll()[0]['SAVES'];
+	}
+
+	public function isSaved(int $bookshelfId, int $userId): bool
+	{
+		return (bool)BookshelfTable::query()
+							   	->setSelect(['ID'])
+							   ->where('USERS.ID', $userId)
+							   ->where('ID', $bookshelfId)
+							   ->fetchAll()[0]
+			;
+	}
+
+	public function saveBookshelfToUserCollection(int $bookshelfId, int $userId): void
+	{
+		$bookshelf = BookshelfTable::getByPrimary($bookshelfId)->fetchObject();
+		$user = UserTable::getByPrimary($userId)->fetchObject();
+
+		$bookshelf->addToUsers($user);
+		$bookshelf->save();
+	}
+
+	public function deleteBookshelfToUserCollection(int $bookshelfId, int $userId): void
+	{
+		$bookshelf = BookshelfTable::getByPrimary($bookshelfId)->fetchObject();
+		$user = UserTable::getByPrimary($userId)->fetchObject();
+
+		$bookshelf->removeFromUsers($user);
+		$bookshelf->save();
 	}
 }

@@ -11,7 +11,6 @@ class User
 	}
 
 	public function getUserId($name){
-		$name = htmlspecialcharsbx($name);
 		$result = UserTable::query()
 						   ->setSelect(array('ID'))
 						   ->setFilter(array('NAME'=>$name))

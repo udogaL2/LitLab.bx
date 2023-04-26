@@ -3,8 +3,8 @@
  * @var CMain $APPLICATION
  */
 
-
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+CJSCore::Init(array('ajax'));
 $APPLICATION->SetTitle("LitLab");
 
 $APPLICATION->IncludeComponent(

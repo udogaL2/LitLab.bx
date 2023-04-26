@@ -113,13 +113,13 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				<div class="shelf-card-rating">
 					<!--				нужно будет организовать кнопку, а не картинки-->
 					<div class="shelf-likes">
-						<input class="shelf-likes-input" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" height="25px" width="30px">
-						<input class="liked" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like-liked.png" height="25px" width="30px">
+						<img class="shelf-likes-input" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" height="25px" width="30px">
+<!--						<input class="liked" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like-liked.png" height="25px" width="30px">-->
 						<p class="likes-amount"><?= $bookshelf['LIKES'] ?></p>
 					</div>
 					<div class="shelf-likes">
-						<input class="shelf-save-input" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="25px" width="20px">
-						<input class="saved" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save-saved.png" height="25px" width="20px">
+						<img class="shelf-save-input" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="25px" width="20px">
+<!--						<input class="saved" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save-saved.png" height="25px" width="20px">-->
 						<p class="save-amount"><?= $savesCount[$bookshelf['ID']][0] ? count(
 								$savesCount[$bookshelf['ID']]
 							) : 0 ?></p>
