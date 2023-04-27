@@ -40,4 +40,9 @@ return function(RoutingConfigurator $routes) {
 	$routes->post('/auth/', new PublicPageController('/local/modules/up.litlab/views/auth.php'));
 
 	$routes->get('/logout/', new PublicPageController('/local/modules/up.litlab/views/auth.php'));
+
+
+	// admin zone_____
+
+	$routes->get('/bookshelves/moderation/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-moderation.php'));
 };

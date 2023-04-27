@@ -182,9 +182,9 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			{
 
 				$response = $bookshelfApi->updateBookshelf((int)$this->arResult['BOOKSHELF_ID'], [
-					$this->arResult['TITLE'],
-					$this->arResult['DESCRIPTION'],
-					$this->arResult['DATE_UPDATED']]);
+					'TITLE'=>$this->arResult['TITLE'],
+					'DESCRIPTION'=>$this->arResult['DESCRIPTION'],
+					'DATE_UPDATED'=>$this->arResult['DATE_UPDATED']]);
 				if (!isset($response))
 				{
 					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";

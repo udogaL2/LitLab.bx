@@ -18,8 +18,16 @@ class User
 		return $result[0]['ID'];
 	}
 
+	public function getUserRole(int $id){
+		return UserTable::query()
+		   ->setSelect(['ROLE'])
+		   ->setFilter(['ID' => $id])
+		   ->fetchAll()
+		   [0]['ROLE']
+		;
+	}
+
 	public function checkLogin($login){
-		$login = htmlspecialcharsbx($login);
 		$result = UserTable::query()
 						   ->setSelect(array('ID'))
 						   ->setFilter(array('NAME'=>$login))
@@ -30,7 +38,6 @@ class User
 		return true;
 	}
 	public function checkPass($pass){
-		$pass = htmlspecialcharsbx($pass);
 		$result = UserTable::query()
 						   ->setSelect(array('ID'))
 						   ->setFilter(array('PASSWORD'=>$pass))

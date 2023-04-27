@@ -70,3 +70,55 @@ function saveBookshelf(bookshelfId)
 		});
 }
 
+function publishBookshelf(bookshelfId)
+{
+	BX.ajax.runComponentAction('up:bookshelf.detail', 'publish', {
+			mode: 'ajax',
+			data:
+				{
+					action: 'publish',
+					bookshelfId: bookshelfId,
+				},
+		})
+		.then((response) => {
+			if (!response.data.result)
+			{
+				console.error('Error');
+				return;
+			}
+
+			const buttonPublishButton = document.querySelector('.bookshelf-detail-admin-section .publication-button');
+
+			if (buttonPublishButton)
+			{
+				buttonPublishButton.remove();
+			}
+
+			const statusInfoP = document.querySelector('.bookshelf-detail-admin-section .status-info');
+			if (statusInfoP)
+			{
+				statusInfoP.innerText = response.data.status;
+			}
+		});
+}
+
+function modificationBookshelf(bookshelfId)
+{
+	BX.ajax.runComponentAction('up:bookshelf.detail', 'modification', {
+			mode: 'ajax',
+			data:
+				{
+					action: 'modification',
+					bookshelfId: bookshelfId,
+				},
+		})
+		.then((response) => {
+			if (!response.data.result)
+			{
+				console.error('Error');
+				return;
+			}
+
+			location.reload();
+		});
+}

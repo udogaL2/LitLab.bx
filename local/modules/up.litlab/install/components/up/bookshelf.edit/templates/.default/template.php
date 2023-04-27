@@ -58,7 +58,7 @@ if (!empty($arResult['ERROR']))
 
 			</section>
 		<? else:?>
-			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?>>
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?>
 				<a class="button-add-tag" onclick="return createTag()">+</a></p>
 			<section class="shelf-card-tags-list">
 			<?php
@@ -97,7 +97,7 @@ if ($booksOfBookshelf !== []):?>
 			<hr>
 			<?endforeach;?>
 			<? endif;?>
-	<div style="width: 100%; text-align: center"><button type="submit" class="bookshelf-edit-save"><?=Loc::getMessage('UP_LITLAB_SAVE')?>></button></div>
+	<div style="width: 100%; text-align: center"><button type="submit" class="bookshelf-edit-save"><?=Loc::getMessage('UP_LITLAB_SAVE')?></button></div>
 	</section>
 </div>
 </form>

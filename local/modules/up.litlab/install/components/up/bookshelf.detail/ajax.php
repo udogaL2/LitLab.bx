@@ -15,7 +15,17 @@ class BookshelfDetailAjaxController extends \Bitrix\Main\Engine\Controller
 			[
 				'prefilters' => [],
 				'postfilters' => []
-			]
+			],
+			'publish' =>
+				[
+					'prefilters' => [],
+					'postfilters' => []
+				],
+			'modification' =>
+				[
+					'prefilters' => [],
+					'postfilters' => []
+				]
 		];
 	}
 
@@ -37,7 +47,7 @@ class BookshelfDetailAjaxController extends \Bitrix\Main\Engine\Controller
 
 			$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 
-			if (!$bookshelfApi->getBookshelfById($bookshelfId))
+			if ($bookshelfApi->getStatus($bookshelfId) !== 'public')
 			{
 				return ['result' => false];
 			}
@@ -70,15 +80,14 @@ class BookshelfDetailAjaxController extends \Bitrix\Main\Engine\Controller
 			return ['result' => false];
 		}
 
-
 		if ($action === 'save')
 		{
-			$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);
+			$userId = (int)$_SESSION['USER_ID'];
 			$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 
 			$savedFlag = $bookshelfApi->isSaved($bookshelfId, $userId);
 
-			if (!$bookshelfApi->getBookshelfById($bookshelfId))
+			if ($bookshelfApi->getStatus($bookshelfId) !== 'public')
 			{
 				return ['result' => false];
 			}
@@ -100,6 +109,71 @@ class BookshelfDetailAjaxController extends \Bitrix\Main\Engine\Controller
 
 
 			return ['result' => true, 'savedFlag' => !$savedFlag, 'savesCount' => (int)$savesCount];
+		}
+
+		return ['result' => false];
+	}
+
+	public function publishAction(string $action, int $bookshelfId)
+	{
+		if (!$_SESSION['USER_ID'] || !$action || !$bookshelfId)
+		{
+			return ['result' => false];
+		}
+
+		if ($action === 'publish')
+		{
+			$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
+			$userApi = ServiceLocator::getInstance()->get('User');
+
+			if ($userApi->getUserRole($_SESSION['USER_ID']) !== 'admin')
+			{
+				return ['result' => false];
+			}
+
+			if ($bookshelfApi->getStatus($bookshelfId) !== 'moderation')
+			{
+				return ['result' => false];
+			}
+
+			$bookshelfApi->updateBookshelf($bookshelfId, ['STATUS' => 'public']);
+
+			return ['result' => true, 'status' => 'public'];
+		}
+
+		return ['result' => false];
+	}
+
+	public function modificationAction(string $action, int $bookshelfId)
+	{
+		if (!$_SESSION['USER_ID'] || !$action || !$bookshelfId)
+		{
+			return ['result' => false];
+		}
+
+		if ($action === 'modification')
+		{
+			$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
+			$userApi = ServiceLocator::getInstance()->get('User');
+
+			if ($userApi->getUserRole($_SESSION['USER_ID']) !== 'admin')
+			{
+				return ['result' => false];
+			}
+
+			if (!$bookshelfApi->getBookshelfById($bookshelfId))
+			{
+				return ['result' => false];
+			}
+
+			if (!in_array($bookshelfApi->getStatus($bookshelfId), ['public', 'moderation']))
+			{
+				return ['result' => false];
+			}
+
+			$bookshelfApi->updateBookshelf($bookshelfId, ['STATUS' => 'modification']);
+
+			return ['result' => true, 'status' => 'modification'];
 		}
 
 		return ['result' => false];

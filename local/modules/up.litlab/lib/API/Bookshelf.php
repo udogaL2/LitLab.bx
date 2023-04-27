@@ -203,8 +203,7 @@ class Bookshelf
 	}
 
 	public function updateBookshelf(int $bookshelfId, array $updateFields){
-		return BookshelfTable::update($bookshelfId, ['TITLE'=>$updateFields[0], 'DESCRIPTION'=>$updateFields[1],
-			'DATE_UPDATED'=>$updateFields[2]]);
+		return BookshelfTable::update($bookshelfId, $updateFields);
 
 	}
 
@@ -237,6 +236,15 @@ class Bookshelf
 									   'BOOK_ID' => $bookId
 								   ], ['COMMENT' => $comment]);
 
+	}
+
+	public function getStatus(int $bookshelfId): ?string
+	{
+		return BookshelfTable::query()
+							 ->setSelect(['STATUS'])
+							 ->where('ID', $bookshelfId)
+							 ->fetchAll()[0]['STATUS']
+			;
 	}
 
 	public function getLikesCount(int $bookshelfId): int

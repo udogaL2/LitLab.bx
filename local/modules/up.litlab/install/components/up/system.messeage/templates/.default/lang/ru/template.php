@@ -2,10 +2,12 @@
 $MESS ['UP_LITLAB_BOOKS_ON_BOOKSHELF_MISSING'] = "Книги на полке не найдены."; //
 $MESS ['UP_LITLAB_USER_BOOKSHELVES_MISSING'] = "Полки, созданные данным пользователем, не найдены."; //
 $MESS ['UP_LITLAB_BOOKSHELVES_MISSING'] = "Книжные полки не найдены."; //
+$MESS ['UP_LITLAB_BOOKSHELVES_ON_MODERATION_MISSING'] = "Книжные полки, которые требуют модерации, не найдены."; //
 $MESS ['UP_LITLAB_BOOK_MISSING'] = "Книга не найдена."; //
 $MESS ['UP_LITLAB_BOOKS_MISSING'] = "Книги не найдены."; //
 $MESS ['UP_LITLAB_BOOKSHELF_MISSING'] = "Книжная полка не найдена.";
 $MESS ['UP_LITLAB_PAGE_NOT_FOUND'] = "Страница не найдена."; //
+$MESS ['UP_LITLAB_ACCESS_IS_RESTRICTED'] = "Доступ ограничен."; //
 
 $MESS ['UP_LITLAB_SAVING_ERROR'] = "При сохранении произошла ошибка. Проверьте правильность введенных данных и повторите попытку позже."; //ERROR3
 $MESS ['UP_LITLAB_TYPE_ERROR'] = "Получен неверный тип переданных параметров. Попробуйте ещё раз."; //ERROR1

@@ -29,7 +29,6 @@ if ($arResult['MESSEAGE'])
 else
 {
 	?>
-
 	<section class="bookshelf-detail-main">
 		<div class="bookshelf-detail-overview">
 			<p class="bookshelf-detail-name"><?= Loc::getMessage(
@@ -56,6 +55,23 @@ else
 				<p><?= Loc::getMessage('UP_LITLAB_CREATED') ?>: <?= $arResult['Bookshelf']['DATE_CREATED'] ?></p>
 				<p><?= Loc::getMessage('UP_LITLAB_LAST_UPDATE') ?>: <?= $arResult['Bookshelf']['DATE_UPDATED'] ?></p>
 			</div>
+
+			<?php
+			if ($arResult['USER']['ID'] && $arResult['USER']['ROLE'] === 'admin'):
+			?>
+				<div class="bookshelf-detail-admin-section">
+					<?php
+					if ($arResult['Bookshelf']['STATUS'] !== 'modification'):
+					if ($arResult['Bookshelf']['STATUS'] === 'moderation'): ?>
+						<button class="publication-button" onclick="publishBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_PUBLICATION')?></button>
+					<?php endif;?>
+					<button class="modification-button" onclick="modificationBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_MODIFICATION')?></button>
+					<?php endif;?>
+					<p><?= Loc::getMessage('UP_LITLAB_STATUS') ?>:<p class="status-info"><?= $arResult['Bookshelf']['STATUS'] ?></p></p>
+				</div>
+			<?php
+			endif;
+			?>
 		</div>
 		<div class="bookshelf-detail-buttons">
 			<?php
