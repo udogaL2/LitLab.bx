@@ -31,32 +31,31 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		{
 			foreach ($this->arParams['~TAGS'] as $tag){
 				if (!is_string($tag)){
-					$this->arParams['ERROR'] = "ERROR1";
+					$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
 				}
 				if (!$tag){
-					$this->arParams['ERROR'] = "ERROR2";
+					$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 				}
 			}
 			foreach ($this->arParams['~TAGS-CREATED'] as $tag){
 				if (!is_string($tag)){
-					$this->arParams['ERROR'] = "ERROR1";
+					$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
 				}
 				if (!$tag){
-					$this->arParams['ERROR'] = "ERROR2";
+					$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 				}
 			}
 			if (!is_string($this->arParams['~TITLE']) && !is_string($this->arParams['~DESCRIPTION']))
 			{
-				$this->arParams['ERROR'] = "ERROR1";
+				$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
 			}
 			if (!$this->arParams['~TITLE'] && !$this->arParams['~DESCRIPTION'] )
 			{
-				$this->arParams['ERROR'] = "ERROR2";
+				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
 			if (!$currentBookshelf = $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID']))
-			{    // такого проекта не существует
-				$this->arParams['ERROR'] = "ERROR5";
-
+			{
+				$this->arResult['ERROR'] = "UP_LITLAB_BOOKSHELF_NOT_FOUND";
 			}
 			if (
 				$currentBookshelf['TITLE'] === $this->arParams['~TITLE']
@@ -64,9 +63,8 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 				&& $bookshelfApi->getTags((int)$currentBookshelf['ID']) === $this->arParams['~TAGS-CREATED']
 				&& !$this->arParams['~TAGS'] && !$this->arParams['COMMENT']
 			)
-			{    // данные не были как-либо отредактированы
-				$this->arParams['ERROR'] = "ERROR10";
-
+			{
+				$this->arResult['ERROR'] = "UP_LITLAB_DATA_NOT_BEEN_EDITED";
 			}
 
 			$this->arResult['COMMENT'] = $this->arParams['~COMMENT'];
@@ -84,7 +82,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 
 		$bookshelfApi = new Bookshelf();
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		if (empty($this->arParams['ERROR']))
+		if (empty($this->arResult['ERROR']))
 		{
 			if ($request === 'POST')
 			{
@@ -148,7 +146,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$this->arResult['formattingApi'] = $formattingApi;
 		$books = $bookApi->getListOfBookByBookshelf($this->arResult['BOOKSHELF_ID'], null);
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		if (empty($this->arParams['ERROR']))
+		if (empty($this->arResult['ERROR']))
 		{
 			if ($request === 'POST')
 			{
@@ -174,7 +172,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$this->arResult['bookApi'] = $bookApi;
 		$this->arResult['formattingApi'] = $formattingApi;
 
-		if (empty($this->arParams['ERROR']))
+		if (empty($this->arResult['ERROR']))
 		{
 			if (!isset($_SESSION['NAME']))
 			{
@@ -189,7 +187,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 					$this->arResult['DATE_UPDATED']]);
 				if (!isset($response))
 				{
-					$this->arParams['ERROR'] = "ERROR3";
+					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 					$this->includeComponentTemplate();
 				}
 
