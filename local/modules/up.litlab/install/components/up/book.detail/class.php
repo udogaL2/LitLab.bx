@@ -48,5 +48,16 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		$genreInfo = $bookAPI->getGenres($this->arParams['BOOK_ID']);
 
 		$this->arResult['Genre'] = $genreInfo;
+
+		if ($_SESSION['NAME'])
+		{
+			$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);
+			$this->arResult['Book']['RATING_NUMBER'] = (int)$bookAPI->getUserEstimation($userId, $bookInfo['ID']);
+		}
+		else
+		{
+			$this->arResult['Book']['RATING_NUMBER'] = (int)$this->arResult['Book']['BOOK_RATING'];
+		}
+
 	}
 }

@@ -92,7 +92,7 @@ class Bookshelf
 
 		foreach ($bookshelvesTag as $value)
 		{
-			if ($result[$value['BS_ID']] && count($result[$value['BS_ID']]) >= 4)
+			if ($result[$value['BS_ID']] && count($result[$value['BS_ID']]) >= 3)
 			{
 				continue;
 			}
@@ -141,7 +141,7 @@ class Bookshelf
 	public function getCountOfSavedBookshelves(int $bookshelfId)
 	{
 		return count(BookshelfTable::query()
-			->setSelect(['USERS'])
+			->setSelect(['USERS.ID'])
 			->where('ID', $bookshelfId)
 			->fetchAll())
 			;

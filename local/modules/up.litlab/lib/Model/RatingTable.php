@@ -19,14 +19,14 @@ class RatingTable extends DataManager
 			'BOOK_ID' => new IntegerField(
 				'BOOK_ID',
 				[
-					'required' => true,
+					'primary' => true,
 				]
 			),
 
 			'USER_ID' => new IntegerField(
 				'USER_ID',
 				[
-					'required' => true,
+					'primary' => true,
 				]
 			),
 

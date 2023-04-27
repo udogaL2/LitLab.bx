@@ -5,6 +5,7 @@ use Bitrix\Main\ORM\Query\Query;
 use Up\LitLab\Model\AuthorTable;
 use Up\Litlab\Model\BookTable;
 use Up\LitLab\Model\GenreTable;
+use Up\LitLab\Model\RatingTable;
 
 class Book
 {
@@ -86,7 +87,7 @@ class Book
 	public function getDetailsById(int $id, string $status = 'public'): array|false
 	{
 		return BookTable::query()
-			->setSelect(['ID', 'TITLE', 'DESCRIPTION', 'IMAGE_ID', 'PUBLICATION_YEAR', 'ISBN', 'STATUS', 'DATE_CREATED'])
+			->setSelect(['ID', 'TITLE', 'DESCRIPTION', 'IMAGE_ID', 'PUBLICATION_YEAR', 'ISBN', 'STATUS', 'DATE_CREATED', 'BOOK_RATING'])
 			->where('ID', $id)
 			->where('STATUS', $status)
 			->fetch()
@@ -191,4 +192,43 @@ class Book
 		return BookTable::add($params);
 	}
 
+	public function isMadeEstimation(int $bookId, int $userId): bool
+	{
+		return (bool)RatingTable::query()
+								   ->setSelect(['BOOK_ID'])
+								   ->where('USER_ID', $userId)
+								   ->where('BOOK_ID', $bookId)
+								   ->fetchAll()[0]
+			;
+	}
+
+	public function getUserEstimation(int $userId, int $bookId)
+	{
+		$result = RatingTable::query()
+						   ->setSelect(['ESTIMATION'])
+						   ->where('USER_ID', $userId)
+						   ->where('BOOK_ID', $bookId)
+						   ->fetchAll();
+
+		return $result[0]['ESTIMATION'];
+	}
+
+	public function addEstimation(int $userId, int $bookId, int $estimation)
+	{
+		RatingTable::add(['BOOK_ID' => $bookId, 'USER_ID' => $userId, 'ESTIMATION' => $estimation]);
+	}
+
+	public function deleteEstimation(int $userId, int $bookId): void
+	{
+		RatingTable::delete(['USER_ID' => $userId, 'BOOK_ID' => $bookId]);
+	}
+
+	public function getEstimation(int $book)
+	{
+		return BookTable::query()
+							 ->setSelect(['BOOK_RATING'])
+							 ->where('ID', $book)
+							 ->fetchAll()[0]['BOOK_RATING']
+			;
+	}
 }

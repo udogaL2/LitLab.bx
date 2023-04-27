@@ -47,7 +47,7 @@ class LitlabBookshelfDetailComponent extends CBitrixComponent
 
 		$this->arResult['Bookshelf'] = $bookshelfInfo;
 		$this->arResult['Bookshelf']['Tags'] = $bookshelfApi->getTags($this->arParams['BOOKSHELF_ID']);
-		$this->arResult['Bookshelf']['SavesCount'] = $bookshelfApi->getCountOfSavedBookshelves(
+		$this->arResult['Bookshelf']['SavesCount'] = $bookshelfApi->getSavesCount(
 			$this->arParams['BOOKSHELF_ID']
 		);
 		$this->arResult['Bookshelf']['Creator'] = $userApi->getCreatorInfo($this->arParams['USER_ID']);

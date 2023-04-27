@@ -60,6 +60,7 @@ class LitlabAuthComponent extends CBitrixComponent
 			{
 				$userId = $userApi->getUserId($this->arResult['NAME']);
 				$_SESSION['USER'] = $this->arResult['NAME'];
+				$_SESSION['USER_ID'] = $userId;
 				LocalRedirect(sprintf("/user/%s/", $userId));
 			}
 			elseif ($request === "POST")

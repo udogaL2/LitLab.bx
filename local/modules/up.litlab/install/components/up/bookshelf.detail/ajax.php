@@ -26,11 +26,22 @@ class BookshelfDetailAjaxController extends \Bitrix\Main\Engine\Controller
 			return ['result' => false];
 		}
 
-		$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);
-
 		if ($action === 'like')
 		{
+			$userId = (int)$_SESSION['USER_ID'];
+
+			if (!$userId)
+			{
+				return ['result' => false];
+			}
+
 			$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
+
+			if (!$bookshelfApi->getBookshelfById($bookshelfId))
+			{
+				return ['result' => false];
+			}
+
 			$likedFlag = $bookshelfApi->isLiked($bookshelfId, $userId);
 			if ($likedFlag === false)
 			{
@@ -59,13 +70,18 @@ class BookshelfDetailAjaxController extends \Bitrix\Main\Engine\Controller
 			return ['result' => false];
 		}
 
-		$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);
 
 		if ($action === 'save')
 		{
+			$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);
 			$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 
 			$savedFlag = $bookshelfApi->isSaved($bookshelfId, $userId);
+
+			if (!$bookshelfApi->getBookshelfById($bookshelfId))
+			{
+				return ['result' => false];
+			}
 
 			if ($savedFlag === false)
 			{

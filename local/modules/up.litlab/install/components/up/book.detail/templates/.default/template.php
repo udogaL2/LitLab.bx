@@ -35,6 +35,21 @@ else{
 		</div>
 		<div class="book-detail-card-description">
 			<p class="book-detail-card-description-name"> <?= $arResult['Book']['TITLE'] ?> </p>
+			<p class="book-detail-card-rating-title"> <?= Loc::getMessage('UP_LITLAB_RATING') ?> </p>
+			<div class="book-detail-card-rating">
+				<div class="r-boxes">
+					<?php
+						$divType = isset($_SESSION['NAME']) ? 'button' : 'div';
+						for($rating = 5; $rating > $arResult['Book']['RATING_NUMBER']; $rating--):?>
+							<<?= $divType ?> <?= isset($_SESSION['NAME']) ? "onclick=\"makeEstimation({$arResult['Book']['ID']}, {$rating})\"" : '' ?> class="r-box<?= isset($_SESSION['NAME']) ? '-lu' : '' ?>-<?=$rating?>"> </<?= $divType ?>>
+						<?php endfor;?>
+						<?php
+						for($rating = $arResult['Book']['RATING_NUMBER']; $rating > 0; $rating--):?>
+							<<?= $divType ?> <?= isset($_SESSION['NAME']) ? "onclick=\"makeEstimation({$arResult['Book']['ID']}, {$rating})\"" : '' ?> class="r-box<?= isset($_SESSION['NAME']) ? '-lu' : '' ?>-<?=$rating?>-active"> </<?= $divType ?>>
+						<?php endfor; ?>
+				</div>
+				<div class="rating-num"><?= $arResult['Book']['BOOK_RATING'] ? number_format((float)$arResult['Book']['BOOK_RATING'], 2, '.', '') : Loc::getMessage('UP_LITLAB_NULL_RATING') ?></div>
+			</div>
 			<p class="book-detail-card-description-author"><?= $arResult['Authors']['NAME'] ?></p>
 			<div class="book-detail-card-description-rating"></div>
 			<p class="book-detail-card-description-overview">
