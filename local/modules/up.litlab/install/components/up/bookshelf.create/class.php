@@ -23,16 +23,16 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 	protected function prepareTemplateParams()
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		$userApi = new User;
+		$validApi = new \Up\Litlab\API\Validating();
 		if($request === "POST")
 		{
-			if (!is_string($this->arParams['~TITLE']) && !is_string($this->arParams['~DESCRIPTION']))
-			{
-				$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
+			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
+			if (!$isValidTitle){
+				$this->arResult['ERROR'] = $isValidTitle;
 			}
-			if (!$this->arParams['~TITLE'] && !$this->arParams['~DESCRIPTION'])
-			{
-				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
+			$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 5000);
+			if (!$isValidDescription){
+				$this->arResult['ERROR'] = $isValidDescription;
 			}
 
 			$this->arResult['TITLE'] = $this->arParams['~TITLE'];

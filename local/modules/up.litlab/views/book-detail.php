@@ -11,7 +11,7 @@ $APPLICATION->IncludeComponent(
 	'up:book.detail',
 	'',
 	[
-		'BOOK_ID' => (int)$_REQUEST['id']
+		'BOOK_ID' => (int)$_REQUEST['id'],
 	]
 );
 

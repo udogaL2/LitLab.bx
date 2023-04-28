@@ -25,7 +25,7 @@ class LitlabAuthComponent extends CBitrixComponent
 	protected function prepareTemplateParams()
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		$userApi = new User;
+		$validApi = new \Up\Litlab\API\Validating();
 		if($request === "POST"){
 			if (!is_string($this->arParams['~NAME']) && !is_string($this->arParams['~PASSWORD']))
 			{
@@ -35,9 +35,9 @@ class LitlabAuthComponent extends CBitrixComponent
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
-			$validForm = $userApi->validateAuthForm($this->arParams['~NAME'], $this->arParams['~PASSWORD']);
-			if ($validForm != ''){
-				$this->arResult['ERROR'] = $validForm;
+			$isValidForm = $validApi->validateAuthForm($this->arParams['~NAME'], $this->arParams['~PASSWORD']);
+			if (!$isValidForm){
+				$this->arResult['ERROR'] = $isValidForm;
 			}
 			$_SESSION['NAME'] = $this->arParams['~NAME'];
 			$_SESSION['PASSWORD'] = $this->arParams['~PASSWORD'];

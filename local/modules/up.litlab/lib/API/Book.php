@@ -3,6 +3,7 @@
 namespace Up\Litlab\API;
 use Bitrix\Main\ORM\Query\Query;
 use Up\LitLab\Model\AuthorTable;
+use Up\LitLab\Model\BookBookshelfTable;
 use Up\Litlab\Model\BookTable;
 use Up\LitLab\Model\GenreTable;
 
@@ -35,6 +36,16 @@ class Book
 
 		return $query->fetchAll();
 	}
+	public function checkBookInBookshelf(int $bookId, int $bookshelfId):bool
+	{
+		return (bool)BookBookshelfTable::query()
+							   ->setSelect(['*'])
+						 	   ->where('BOOK_ID', $bookId)
+						 	   ->where('BOOKSHELF_ID', $bookshelfId)
+							   ->fetchAll()[0];
+
+	}
+
 
 	public function getListOfBookByBookshelf(int $bookshelfId, ?int $limit = 3, int $offset = 0, string $status = 'public'): array
 	{

@@ -43,7 +43,7 @@ else
 					<div class="book-detail-card-description-genres-links">
 						<?php
 						foreach ($arResult['Bookshelf']['Tags'] as $tag): ?>
-							<p><?= $tag ?></p>
+							<p><?= htmlspecialcharsbx($tag) ?></p>
 						<?php
 						endforeach; ?>
 					</div>

@@ -30,11 +30,11 @@ if (!empty($arResult['ERROR']))
 	<form class="bookshelf-add-form" action="" method="post">
 		<div class="bookshelf-create-name">
 			<p><?= Loc::getMessage('UP_LITLAB_TITLE') ?></p>
-			<input type="text" name="input-bookshelf-name">
+			<input required type="text" name="input-bookshelf-name">
 		</div>
 		<div class="bookshelf-create-description">
 			<p><?= Loc::getMessage('UP_LITLAB_DESC') ?></p>
-			<input class="bookshelf-edit-descr" type="text" style="" name="input-bookshelf-description">
+			<input required class="bookshelf-edit-descr" type="text" style="" name="input-bookshelf-description">
 		</div>
 			<input class="bookshelf-create-save" type="submit" value="<?= Loc::getMessage('UP_LITLAB_SAVE') ?>">
 

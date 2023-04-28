@@ -4,9 +4,10 @@
  */
 
 use Bitrix\Main\Context;
+$request = Context::getCurrent()->getRequest()->getRequestMethod();
 
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("LitLab");
+	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+	$APPLICATION->SetTitle("LitLab");
 
 $APPLICATION->IncludeComponent(
 	'up:bookshelf.edit', '',[
@@ -16,9 +17,12 @@ $APPLICATION->IncludeComponent(
 	'TAGS' => Context::getCurrent()->getRequest()->getPost('tags'),
 	'TAGS-CREATED' => Context::getCurrent()->getRequest()->getPost('tags-created'),
 	'COMMENT' => Context::getCurrent()->getRequest()->getPost('comment'),
+	'STATUS' => Context::getCurrent()->getRequest()->getPost('status'),
+	'ITEM_ID' => Context::getCurrent()->getRequest()->getPost('item'),
+	'DELETED' => Context::getCurrent()->getRequest()->getPost('delete'),
 ]);
 
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");
 ?>
 
 

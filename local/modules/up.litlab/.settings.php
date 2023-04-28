@@ -15,6 +15,9 @@ return [
 			'User' => [
 				'className' => \Up\LitLab\API\User::class,
 			],
+			'Validating' => [
+				'className' => \Up\LitLab\API\Validating::class,
+			],
 		],
 		'readonly' => true,
 	],

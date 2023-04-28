@@ -15,8 +15,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 <main class="profile-main">
 	<?
-		$uri = $APPLICATION->GetCurUri();
-		$userId = trim($uri, "/user/");
+		$userId = (string)$arResult['USER_ID'];
 	if (isset($_SESSION['NAME']) && $userId===$arResult['userApi']->getUserId($_SESSION['NAME'])):?>
 	<div class="user-header">
 		<p><?= Loc::getMessage('UP_LITLAB_YOURS_BOOKSHELVES') ?></p>
@@ -32,7 +31,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		</div>
 
 	<? else:
-		if ($arResult['userApi']->getCreatorInfo($userId)!==false):?>
+		if ($arResult['userApi']->getCreatorInfo((int)$userId)!==false):?>
 		<div class="user-header">
 			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['userApi']->getUserName((int)$userId)?></p>
 		</div>
@@ -52,23 +51,25 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				$publicPage = 0;
 				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
 					$userId,
+					['public', 'private', 'moderated'],
 					$nav->getLimit(),
-					$nav->getOffset()
+					$nav->getOffset(),
 				);
 			}
 			else{
 				$publicPage = 1;
 				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
 					$userId,
+					['public'],
 					$nav->getLimit(),
 					$nav->getOffset(),
-					['public']
+
 				);
 			}
-
 			if(!$userBookshelves[0])
 			{
 				$APPLICATION->IncludeComponent(
+
 					'up:system.messeage',
 					'',
 					['MESSEAGE' => 'UP_LITLAB_USER_BOOKSHELVES_MISSING'],
@@ -92,11 +93,18 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				</div>
 				<? if ($publicPage === 0): ?>
 				<div class="user-bookshelf-buttons">
+					<div class="user-bookshelf-buttons-status">
 					<?if ($userBookshelf['STATUS'] === 'private'):?>
-					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-lock.png" height="30px" width="25px">
+					<input class="status" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-lock.png" height="30px" width="25px">
+					<p class="status-descr">Доступна только вам</p>
+					<?elseif ($userBookshelf['STATUS'] === 'public'):?>
+					<input class="status" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-unlock.png" height="30px" width="25px">
+					<p class="status-descr">Видна всем</p>
 					<?else:?>
-					<input type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-unlock.png" height="30px" width="25px">
+						<input class="status" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-moderated.png" height="30px" width="30px">
+						<p class="status-descr">На модерации</p>
 					<?endif;?>
+					</div>
 					<a href="/edit/bookshelf/<?=$userBookshelf['ID']?>/"><?=Loc::getMessage('UP_LITLAB_EDIT')?></a>
 				</div>
 				<? endif;?>

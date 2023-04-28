@@ -22,7 +22,7 @@ class LitlabRegisterComponent extends CBitrixComponent
 	protected function prepareTemplateParams()
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		$userApi = new User();
+		$validApi = new \Up\Litlab\API\Validating();
 		if ($request === "POST")
 		{
 			if (
@@ -38,10 +38,10 @@ class LitlabRegisterComponent extends CBitrixComponent
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
-			$validForm = $userApi->validateAuthForm($this->arParams['~NAME'], $this->arParams['~PASSWORD']);
-			if ($validForm != '')
+			$isValidForm = $validApi->validateRegisterForm($this->arParams['~NAME'], $this->arParams['~USERNAME'], $this->arParams['~PASSWORD']);
+			if (!$isValidForm)
 			{
-				$this->arResult['ERROR'] = $validForm;
+				$this->arResult['ERROR'] = $isValidForm;
 			}
 			$_SESSION['NAME'] = $this->arParams['~NAME'];
 			$_SESSION['USERNAME'] = $this->arParams['~USERNAME'];
@@ -49,7 +49,7 @@ class LitlabRegisterComponent extends CBitrixComponent
 
 			$this->arResult['NAME'] = $_SESSION['NAME'];
 			$this->arResult['USERNAME'] = $_SESSION['USERNAME'];
-			$this->arResult['PASSWORD'] = hash('md5', $_SESSION['PASSWORD']);
+			$this->arResult['PASSWORD'] = $_SESSION['PASSWORD'];
 			$this->arResult['ROLE'] = 'user';
 		}
 	}
@@ -63,6 +63,7 @@ class LitlabRegisterComponent extends CBitrixComponent
 		{
 			if ($userAPI->checkLogin($this->arResult['NAME']) && $request === "POST")
 			{
+				$this->arResult['PASSWORD'] = hash('md5', $this->arResult['PASSWORD']);
 				$response = $userAPI->registerUser($this->arResult);
 				$userBookshelfApi->autoAddedUserBookshelfs($userAPI->getUserId($this->arResult['NAME']));
 				if (!isset($response))

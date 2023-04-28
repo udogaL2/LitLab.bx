@@ -96,6 +96,15 @@
 	text-decoration: none;
 }
 
+.status-descr{
+	display: none;
+}
+.user-bookshelf-buttons-status:hover .status-descr{
+	display: block;
+	position: absolute;
+	width: 100px;
+}
+
 .user-bookshelf-description{
 	width:65%;
 	margin-left: 10px;

@@ -43,27 +43,7 @@ class User
 	}
 
 
-	public function validateAuthForm($login, $password)
-	{
-		if (strlen($login) < 4)
-		{
-			return 'UP_LITLAB_INSUFFICIENT_LOGIN_LENGTH';
-		}
-		if (strlen($login) > 63)
-		{
-			return 'UP_LITLAB_EXCEEDING_LOGIN_LENGTH';
-		}
-		if (strlen($password) < 7)
-		{
-			return 'UP_LITLAB_INSUFFICIENT_PASSWORD_LENGTH';
-		}
-		if (strlen($password) > 63)
-		{
-			return 'UP_LITLAB_EXCEEDING_PASSWORD_LENGTH';
-		}
 
-		return '';
-	}
 
 	public function getCreatorInfo(int $userId): bool|array
 	{

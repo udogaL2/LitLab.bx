@@ -5,6 +5,7 @@ namespace Up\Litlab\API;
 use Bitrix\Main\Filter\Filter;
 use Up\LitLab\Model\BookBookshelfTable;
 use Up\Litlab\Model\BookshelfTable;
+use Up\LitLab\Model\BookTable;
 use Up\LitLab\Model\TagTable;
 use Up\LitLab\Model\UserTable;
 
@@ -31,7 +32,7 @@ class Bookshelf
 
 		return $query->fetchAll();
 	}
-	public function getListOfUserBookshelf($userId, ?int $limit = 3, int $offset = 0, array $status = ['public', 'private']): array
+	public function getListOfUserBookshelf(int $userId, array $status = ['public', 'private', 'moderated'], ?int $limit = 3, int $offset = 0): array
 	{
 		return BookshelfTable::query()
 							 ->setSelect(['*'])
@@ -62,12 +63,12 @@ class Bookshelf
 		return count($query->fetchAll());
 	}
 
-	public function getUserBookshelfCount($userId): int
+	public function getUserBookshelfCount($userId, array $status = ['public', 'private', 'moderated']): int
 	{
-		return BookshelfTable::getCount(['CREATOR_ID'=> $userId]);
+		return BookshelfTable::getCount(['CREATOR_ID'=> $userId, 'STATUS'=> $status]);
 	}
 
-	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private']): array|false
+	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private', 'moderated']): array|false
 	{
 		return BookshelfTable::query()
 							 ->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
@@ -108,7 +109,6 @@ class Bookshelf
 		foreach ($tags as $tag){
 			$result[] = $tag['T_TITLE'];
 		}
-
 		return $result;
 	}
 
@@ -202,6 +202,10 @@ class Bookshelf
 
 	}
 
+	public function updateStatus(int $bookshelfId, string $status){
+		return BookshelfTable::update($bookshelfId, ['STATUS'=>$status]);
+	}
+
 	public function addTag(string $tagName){
 		return TagTable::add(['TITLE'=>$tagName]);
 	}
@@ -223,6 +227,12 @@ class Bookshelf
 			$bookshelf->save();
 		}
 	}
+	public function deleteTagOfBookshelf(int $tagId, int $bookshelfId){
+		$bookshelf = BookshelfTable::getByPrimary($bookshelfId)->fetchObject();
+			$tag = TagTable::getByPrimary($tagId)->fetchObject();
+			$bookshelf->removeFromTags($tag);
+			$bookshelf->save();
+	}
 
 	public function addComments(int $bookshelfId, int $bookId, string $comment)
 	{
@@ -232,4 +242,33 @@ class Bookshelf
 								   ], ['COMMENT' => $comment]);
 
 	}
+
+	public function deleteBookshelf(int $bookshelfId){
+		return BookshelfTable::delete($bookshelfId);
+	}
+
+	public function deleteBookOfBookshelf(array $booksId, int $bookshelfId){
+		foreach ($booksId as $bookId)
+		{
+			BookBookshelfTable::delete(['BOOKSHELF_ID'=>$bookshelfId, 'BOOK_ID'=>$bookId]);
+		}
+	}
+
+	public function getBookshelfIdByTitle(int $userId, string $bookshelfTitle){
+		$result = BookshelfTable::query()
+							 ->setSelect(['ID'])
+							 ->setFilter(array(['CREATOR_ID'=>$userId]))
+							 ->wherein('TITLE', $bookshelfTitle)
+							 ->fetchAll()
+			;
+		return $result[0]['ID'];
+	}
+
+	public function addBookToBookshelf(int $bookId, int $bookshelfId){
+		return BookBookshelfTable::add([
+			'BOOK_ID'=>$bookId,
+			'BOOKSHELF_ID'=>$bookshelfId
+		]);
+	}
+
 }

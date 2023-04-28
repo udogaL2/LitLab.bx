@@ -21,18 +21,16 @@ class LitlabProfileComponent extends CBitrixComponent
 
 	protected function prepareTemplateParams()
 	{
+		$this->arResult['USER_ID'] = $this->arParams['USER_ID'];
 	}
 
-	protected function fetchBookshelfList()
-	{
-
-	}
 	protected function fetchUserBookshelfList()
 	{
 		$userBookshelfApi = new \Up\Litlab\API\Bookshelf();
 		$bookApi = new \Up\Litlab\API\Book();
 		$formattingApi = ServiceLocator::getInstance()->get('Formatting');
 		$userApi = new User;
+
 
 		$this->arResult['userApi'] = $userApi;
 		$this->arResult['bookApi'] = $bookApi;

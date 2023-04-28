@@ -31,6 +31,7 @@
 .bookshelf-create-main div p{
 	font-size: 20px;
 	width: 20%;
+	margin-right: 20px;
 }
 
 .bookshelf-create-main div input{
@@ -41,10 +42,10 @@
 }
 
 .bookshelf-create-main button{
-	padding: 10px 30px;
+	padding: 10px 15px;
 	font-size: 16px;
-	margin-top: 10px;
-	background-color: #81b95e;
+	/*margin-top: 10px;*/
+	background-color: #7bb753;
 	border: none;
 	cursor:pointer;
 	border-radius: 10px;

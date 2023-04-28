@@ -6,8 +6,8 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
-		$this->fetchBookDetail();
 		$this->prepareTemplateParams();
+		$this->fetchBookDetail();
 		$this->includeComponentTemplate();
 	}
 
@@ -19,6 +19,12 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 	protected function prepareTemplateParams()
 	{
 		$formattingAPI = ServiceLocator::getInstance()->get('Formatting');
+		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
+		$userApi = ServiceLocator::getInstance()->get('User');
+		$bookApi = ServiceLocator::getInstance()->get('Book');
+		$this->arResult['bookApi'] = $bookApi;
+		$this->arResult['bookshelfApi'] = $bookshelfApi;
+		$this->arResult['userApi'] = $userApi;
 		$this->arResult['Book'] = $formattingAPI->prepareText($this->arResult['Book']);
 		$this->arResult['Authors'] = $formattingAPI->prepareText($this->arResult['Authors']);
 		$this->arResult['GENRE'] = $formattingAPI->prepareText($this->arResult['GENRE']);
@@ -48,5 +54,27 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		$genreInfo = $bookAPI->getGenres($this->arParams['BOOK_ID']);
 
 		$this->arResult['Genre'] = $genreInfo;
+
+		$this->arResult['bookApi'] = $bookAPI;
+
+		if ($_SESSION['NAME'])
+		{
+			$userApi = ServiceLocator::getInstance()->get('User');
+			$userId = $userApi->getUserId($_SESSION['NAME']);
+			$bookshelfIdWillRead = $this->arResult['bookshelfApi']->getBookshelfIdByTitle($userId, 'Буду читать');
+			$bookshelfIdRead = $this->arResult['bookshelfApi']->getBookshelfIdByTitle($userId, 'Прочитано');
+
+			$this->arResult['Bookshelf']['ADDED']= $this->arResult['bookApi']->checkBookInBookshelf($this->arResult['Book']['ID'], $bookshelfIdWillRead);
+			$this->arResult['USER_ID'] = $userId;
+			$this->arResult['WILL_READ_ID'] = $bookshelfIdWillRead;
+			$this->arResult['READ_ID'] = $bookshelfIdRead;
+		}
 	}
 }
+
+
+
+
+
+
+

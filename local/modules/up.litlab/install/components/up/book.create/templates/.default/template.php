@@ -19,11 +19,11 @@ $this->addExternalCss("\local\modules\up.litlab\install\components\up\book.creat
 	<form class="bookshelf-add-form" action="" method="post">
 		<div class="bookshelf-create-name">
 			<p>Название книги</p>
-			<input type="text"  name="input-book-title">
+			<input required type="text" name="input-book-title">
 		</div>
 		<div class="bookshelf-create-description">
 			<p>Автор книги</p>
-			<input class="bookshelf-create-author" type="text"  name="input-book-author">
+			<input required class="bookshelf-create-author" type="text"  name="input-book-author">
 		</div>
 		<input class="book-create-save" type="submit" value="Сохранить">
 	</form>

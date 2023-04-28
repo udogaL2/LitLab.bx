@@ -28,7 +28,7 @@
 .bookshelf-edit-save{
 	padding: 10px 30px;
 	font-size: 16px;
-	background-color: #81b95e;
+	background-color: #7bb753;
 	border: none;
 	cursor: pointer;
 	width: 200px;
@@ -41,6 +41,7 @@
 	width: 80%;
 	justify-content: flex-start;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 .bookshelf-edit-tag{
@@ -50,19 +51,29 @@
 }
 .button-add-tag{
 	padding: 0 10px;
-	border: 1px solid #81b95e;
+	border: 1px solid #7bb753;
 	border-radius: 10px;
-	background-color: #81b95e;
+	background-color: #7bb753;
 	cursor: pointer;
 }
 .button-delete-tag{
 	padding: 0 10px;
 
 	margin-right: 20px;
-	border: 1px solid #81b95e;
+	border: 1px solid #7bb753;
 	border-radius: 10px;
-	background-color: #81b95e;
+	background-color: #7bb753;
 	cursor: pointer;
+}
+
+.button-add-comment{
+	padding: 10px 30px;
+	font-size: 16px;
+	background-color: #7bb753;
+	border: none;
+	cursor: pointer;
+	width: 200px;
+	border-radius: 10px;
 }
 
 @media screen and (max-width: 660px){
