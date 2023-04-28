@@ -225,10 +225,33 @@ __litlabMigrate(13, function($updater, $DB) {
 });
 
 __litlabMigrate(15, function($updater, $DB) {
-	if ($updater->CanUpdateDatabase() && !$updater->TableExists('up_LitLab_book'))
+	if ($updater->CanUpdateDatabase() && $updater->TableExists('up_LitLab_book'))
 	{
 		$DB->query(
 			'alter table up_LitLab_book modify ISBN varchar(20) null;'
+		);
+	}
+});
+
+__litlabMigrate(18, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase() && $updater->TableExists('up_LitLab_bookshelf'))
+	{
+		$DB->query(
+			'ALTER TABLE up_LitLab_bookshelf DROP COLUMN LIKES;'
+		);
+	}
+});
+
+__litlabMigrate(19, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase() && !$updater->TableExists('up_LitLab_likes'))
+	{
+		$DB->query(
+			'CREATE TABLE IF NOT EXISTS up_LitLab_likes
+			(
+				USER_ID      INT NOT NULL,
+				BOOKSHELF_ID INT NOT NULL,
+				PRIMARY KEY (USER_ID, BOOKSHELF_ID)
+			);'
 		);
 	}
 });

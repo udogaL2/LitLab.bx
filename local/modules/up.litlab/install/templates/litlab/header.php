@@ -4,7 +4,6 @@
  */
 use Bitrix\Main\Localization\Loc;
 use Up\Litlab\API\User;
-
 ?>
 <!doctype html>
 <html lang="<?= LANGUAGE_ID; ?>">
@@ -14,7 +13,6 @@ use Up\Litlab\API\User;
 		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link href="/local/templates/litlab/template_styles.css" rel="stylesheet" type="text/css">
-
 	<title><?php $APPLICATION->ShowTitle(); ?></title>
 
 	<?php

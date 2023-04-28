@@ -92,6 +92,81 @@
 	background-color: #DDDDDD;
 	text-decoration: none;
 }
+.book-detail-card-rating {
+	margin-bottom: 30px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.book-detail-card-rating-title
+{
+	font-size: 25px;
+	margin-right: 10px;
+	margin-bottom: 30px;
+}
+
+.r-boxes {
+	display: flex;
+	flex-direction: row-reverse;
+}
+.rating-num{
+	font-size: 25px;
+	margin-left: 10px;
+}
+
+.r-box-1, .r-box-2, .r-box-3, .r-box-4, .r-box-5, .r-box-lu-1, .r-box-lu-2, .r-box-lu-3, .r-box-lu-4, .r-box-lu-5 {
+	width: 25px;
+	height: 25px;
+	background: #f2f2f2;
+	margin-right: 10px;
+	border: rgb(171, 171, 171) 1px solid;
+	border-radius: 10px;
+}
+
+.r-box-1-active, .r-box-2-active, .r-box-3-active,
+.r-box-4-active, .r-box-5-active,
+.r-box-lu-1-active, .r-box-lu-2-active, .r-box-lu-3-active,
+.r-box-lu-4-active, .r-box-lu-5-active{
+	width: 25px;
+	height: 25px;
+	background: #ffe349;
+	margin-right: 10px;
+	border: rgb(171, 171, 171) 1px solid;
+	border-radius: 10px;
+}
+
+.r-box-lu-1:hover {
+	background: #ffe349;
+	transition: 0.5s;
+}
+
+.r-box-lu-2:hover, .r-box-lu-2:hover + .r-box-lu-1 {
+	background: #ffe349;
+	transition: 0.5s;
+}
+
+.r-box-lu-3:hover, .r-box-lu-3:hover + .r-box-lu-2,
+.r-box-lu-3:hover + .r-box-lu-2 + .r-box-lu-1 {
+	background: #ffe349;
+	transition: 0.5s;
+}
+
+.r-box-lu-4:hover, .r-box-lu-4:hover + .r-box-lu-3,
+.r-box-lu-4:hover + .r-box-lu-3 + .r-box-lu-2,
+.r-box-lu-4:hover + .r-box-lu-3 + .r-box-lu-2 + .r-box-lu-1{
+	background: #ffe349;
+	transition: 0.5s;
+}
+
+.r-box-lu-5:hover, .r-box-lu-5:hover + .r-box-lu-4,
+.r-box-lu-5:hover + .r-box-lu-4 + .r-box-lu-3,
+.r-box-lu-5:hover + .r-box-lu-4 + .r-box-lu-3 + .r-box-lu-2,
+.r-box-lu-5:hover + .r-box-lu-4 + .r-box-lu-3 + .r-box-lu-2 + .r-box-lu-1{
+	background: #ffe349;
+	transition: 0.5s;
+}
 
 .list-user-bookshelf{
 	width:400px;

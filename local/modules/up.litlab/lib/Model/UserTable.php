@@ -4,6 +4,8 @@ namespace Up\LitLab\Model;
 
 use Bitrix\Main\ORM\Data\DataManager, Bitrix\Main\ORM\Fields\IntegerField, Bitrix\Main\ORM\Fields\StringField, Bitrix\Main\ORM\Fields\Validators\LengthValidator;
 use Bitrix\Main\ORM\Fields\Relations\ManyToMany;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
 
 class UserTable extends DataManager
 {
@@ -52,6 +54,8 @@ class UserTable extends DataManager
 
 			'BOOKSHELVES' => (new ManyToMany('BOOKSHELVES', BookshelfTable::class))
 				->configureTableName('up_LitLab_user_bookshelf'),
+
+			'LIKES' => new Reference('LIKES', LikesTable::class, Join::on('this.ID', 'ref.USER_ID')),
 		];
 	}
 	public static function validateName()

@@ -1,3 +1,62 @@
+function makeEstimation(bookId, estimation)
+{
+	BX.ajax.runComponentAction('up:book.detail', 'addRating', {
+			mode: 'ajax',
+			data:
+				{
+					action: 'estimation',
+					bookId: bookId,
+					estimation: estimation
+				},
+		})
+		.then((response) => {
+			if (!response.data.result)
+			{
+				console.error('Error');
+				return;
+			}
+
+			const ratingDiv = document.querySelector('.book-detail-card-description .r-boxes');
+
+			if (response.data.estimationFlag)
+			{
+				if (ratingDiv)
+				{
+					let rating = ``;
+					for (let i = 5; i > estimation; i--)
+					{
+						rating += `<button onclick="makeEstimation(${bookId}, ${i})" class="r-box-lu-${i}">`;
+					}
+					for (let i = estimation; i > 0; i--)
+					{
+						rating += `<button onclick="makeEstimation(${bookId}, ${i})" class="r-box-lu-${i}-active">`;
+					}
+					ratingDiv.innerHTML = rating;
+				}
+			}
+			else
+			{
+				if (ratingDiv)
+				{
+					let rating = ``;
+					for (let i = 5; i > 0; i--)
+					{
+						rating += `<button onclick="makeEstimation(${bookId}, ${i})" class="r-box-lu-${i}">`;
+					}
+					ratingDiv.innerHTML = rating;
+				}
+			}
+			const ratingNumber = document.querySelector('.book-detail-card-description .rating-num');
+			if (ratingNumber)
+			{
+				ratingNumber.innerHTML = response.data.averageEstimation;
+			}
+			else{
+				console.log(123);
+			}
+		});
+}
+
 function addBookToWillReadBookshelf(bookId, bookshelfId)
 {
 	BX.ajax.runComponentAction('up:book.detail', 'addBookToUserBookshelf', {
@@ -8,31 +67,31 @@ function addBookToWillReadBookshelf(bookId, bookshelfId)
 				action: 'add',
 			},
 		})
-	.then((response)=> {
-		console.log(response);
-		if (!response.data.result)
-		{
-			console.log('Error');
-			return;
-		}
+		.then((response)=> {
+			console.log(response);
+			if (!response.data.result)
+			{
+				console.log('Error');
+				return;
+			}
 
-		if (!response.data.addedFlag)
-		{
-			const buttonWillRead = document.getElementById('button-add-willread');
-			if(buttonWillRead)
+			if (!response.data.addedFlag)
 			{
-				buttonWillRead.style.backgroundColor="#ededed";
+				const buttonWillRead = document.getElementById('button-add-willread');
+				if(buttonWillRead)
+				{
+					buttonWillRead.style.backgroundColor="#ededed";
+				}
 			}
-		}
-		else
-		{
-			const buttonWillRead = document.getElementById('button-add-willread');
-			if(buttonWillRead)
+			else
 			{
-				buttonWillRead.style.backgroundColor="#84c25c";
+				const buttonWillRead = document.getElementById('button-add-willread');
+				if(buttonWillRead)
+				{
+					buttonWillRead.style.backgroundColor="#84c25c";
+				}
 			}
-		}
-	});
+		});
 }
 
 
@@ -46,30 +105,30 @@ function addBookToReadBookshelf(bookId, bookshelfId)
 				action: 'add',
 			},
 		})
-	.then((response)=> {
-		if (!response.data.result)
-		{
-			console.log('Error');
-			return;
-		}
+		.then((response)=> {
+			if (!response.data.result)
+			{
+				console.log('Error');
+				return;
+			}
 
-		if (!response.data.addedFlag)
-		{
-			const buttonRead = document.getElementById('button-add-read');
-			if(buttonRead)
+			if (!response.data.addedFlag)
 			{
-				buttonRead.style.backgroundColor="#ededed";
+				const buttonRead = document.getElementById('button-add-read');
+				if(buttonRead)
+				{
+					buttonRead.style.backgroundColor="#ededed";
+				}
 			}
-		}
-		else
-		{
-			const buttonRead = document.getElementById('button-add-read');
-			if(buttonRead)
+			else
 			{
-				buttonRead.style.backgroundColor="#84c25c";
+				const buttonRead = document.getElementById('button-add-read');
+				if(buttonRead)
+				{
+					buttonRead.style.backgroundColor="#84c25c";
+				}
 			}
-		}
-	})
+		})
 }
 
 function addBook(bookId, bookshelfId){
@@ -83,33 +142,33 @@ function addBook(bookId, bookshelfId){
 				//данные будут автоматически замаплены на параметры метода
 			},
 		})
-	.then((response)=> {
-		console.log(response);
-		if (!response.data.result)
-		{
-			console.log('Error');
-			return;
-		}
+		.then((response)=> {
+			console.log(response);
+			if (!response.data.result)
+			{
+				console.log('Error');
+				return;
+			}
 
-		if (!response.data.addedFlag)
-		{
-			const button = document.getElementById(bookshelfId);
-			if(button)
+			if (!response.data.addedFlag)
 			{
-				button.style.backgroundColor="#ededed";
-				button.textContent='Добавить в полку';
+				const button = document.getElementById(bookshelfId);
+				if(button)
+				{
+					button.style.backgroundColor="#ededed";
+					button.textContent='Добавить в полку';
+				}
 			}
-		}
-		else
-		{
-			const button = document.getElementById(bookshelfId);
-			if(button)
+			else
 			{
-				button.style.backgroundColor="#84c25c";
-				button.textContent='Добавлено';
+				const button = document.getElementById(bookshelfId);
+				if(button)
+				{
+					button.style.backgroundColor="#84c25c";
+					button.textContent='Добавлено';
+				}
 			}
-		}
-	})
+		})
 }
 
 window.addEventListener('load', () => {

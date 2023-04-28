@@ -22,6 +22,23 @@ body{
 
 /*Основная часть*/
 
+.moderation-link p
+{
+	font-size: 22px;
+	text-decoration: none;
+}
+
+.moderation-link
+{
+	text-decoration: none;
+	margin: 30px 40px 0;
+	border-radius: 15px;
+	background-color: rgba(46, 50, 4, 0.7);
+	padding: 5px 15px;
+	color: #e3e9d3;
+	width: fit-content;
+}
+
 .shelf-list-main{
 	width: 95%;
 	margin: -20px auto 200px auto;
@@ -105,8 +122,10 @@ body{
 
 .shelf-card-tags{
 	display: flex;
-	align-items: baseline;
-	margin-bottom:20px;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: flex-start;
 }
 
 .shelf-card-tags p{
@@ -115,9 +134,6 @@ body{
 
 .shelf-card-tags-list{
 	display: flex;
-	width: 100%;
-	justify-content: flex-start;
-	flex-wrap: wrap;
 }
 
 .shelf-card-tags-list p{

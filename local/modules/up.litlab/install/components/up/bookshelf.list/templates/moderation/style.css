@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+*{
+	padding: 0;
+	margin: 0;
+	font-family: Montserrat;
+}
+body{
+	background-color: #DEDEDE;
+	height: 100%;
+
+}
+.button{
+	border-radius: 10px;
+	font-family: Montserrat;
+}
+.header-bookshelf{
+	background-color: #75903a;
+
+}
+
+/*Основная часть*/
+
+.shelf-list-main{
+	width: 95%;
+	margin: -20px auto 200px auto;
+	background-color: #EDEDED;
+	border-radius: 10px;
+	display: flex;
+	/*min-height: calc(100vh);*/
+	flex-direction: column;
+
+
+}
+.shelf-card{
+	background-color: #ced9b3;
+	border-radius: 10px;
+	/*height: 600px;*/
+	width: 50%;
+	margin: 50px auto;
+	padding: 0 50px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.move-to-shelf {
+	position:absolute;
+	width: 150px;
+	left: 0; right: 0;
+	margin:0 auto;
+	padding: 15px 25px;
+	background-color: #e3e3e3;
+	text-align: center;
+	font-size: 24px;
+	text-decoration: none;
+	color: rgba(0, 0, 0, 0.78);
+	display: none;
+	border-radius: 10px;
+}
+
+.shelf-card:hover{
+	background-color: #a9b888;
+}
+
+.shelf-card:hover .move-to-shelf{
+	display: block;
+}
+
+
+.shelf-card-description{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin:25px 0 35px 0;
+}
+
+.shelf-card-author{
+	color: #434343;
+	display: block;
+
+}
+.shelf-card-name{
+	word-wrap: break-word;
+	font-weight: 500;
+	font-size: 22px;
+}
+
+.shelf-card-name a{
+	color: #434343;
+	text-decoration: none;
+}
+
+.shelf-card-book-count{
+	text-align: center;
+}
+
+.shelf-card-images{
+	display: flex;
+	justify-content: space-evenly;
+	margin-bottom: 30px;
+	flex-wrap: wrap;
+}
+
+.shelf-card-tags{
+	display: flex;
+	align-items: baseline;
+	margin-bottom:20px;
+}
+
+.shelf-card-tags p{
+	margin-right: 20px;
+}
+
+.shelf-card-tags-list{
+	display: flex;
+	width: 100%;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.shelf-card-tags-list p{
+	border: 1px solid #f0f0f0;
+	border-radius: 10px;
+	padding: 10px;
+	text-decoration: none;
+	background-color: #f0f0f0;
+	margin: 0 10px 10px 0;
+	box-shadow: 0 1px 3px #7f7f7f;
+	color: #000;
+}
+
+.shelf-card-rating{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.shelf-card-rating p{
+	display: flex;
+	align-items: center;
+}
+.shelf-card-rating p img{
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.shelf-likes{
+	display: flex;
+}
+
+.likes-amount{
+	margin-left:10px;
+}
+
+.save-amount{
+	margin-left: 10px;
+}
+
+@media screen and (max-width: 480px){
+	html {
+		-webkit-text-size-adjust: none;
+		font-size: 90%;
+	}
+	.shelf-card-image2, .shelf-card-image3{
+		display: none;
+	}
+}

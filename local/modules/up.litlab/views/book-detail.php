@@ -6,7 +6,7 @@
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("LitLab");
-
+CJSCore::Init(array('ajax'));
 $APPLICATION->IncludeComponent(
 	'up:book.detail',
 	'',

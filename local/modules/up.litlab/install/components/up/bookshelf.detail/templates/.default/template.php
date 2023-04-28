@@ -29,10 +29,11 @@ if ($arResult['MESSEAGE'])
 else
 {
 	?>
-
 	<section class="bookshelf-detail-main">
 		<div class="bookshelf-detail-overview">
-			<p class="bookshelf-detail-name"><?= Loc::getMessage('UP_LITLAB_BOOKSHELF') ?> "<?= $arResult['Bookshelf']['TITLE'] ?>" <?= Loc::getMessage('UP_LITLAB_FROM')?>
+			<p class="bookshelf-detail-name"><?= Loc::getMessage(
+					'UP_LITLAB_BOOKSHELF'
+				) ?> "<?= $arResult['Bookshelf']['TITLE'] ?>" <?= Loc::getMessage('UP_LITLAB_FROM') ?>
 				<a class="bookshelf-detail-author-name" href="/user/<?= $arResult['Bookshelf']['Creator']['ID'] ?>/"><?= $arResult['Bookshelf']['Creator']['NAME'] ?></a>
 			</p>
 			<p class="bookshelf-detail-description"><?= $arResult['Bookshelf']['DESCRIPTION'] ?></p>
@@ -54,12 +55,65 @@ else
 				<p><?= Loc::getMessage('UP_LITLAB_CREATED') ?>: <?= $arResult['Bookshelf']['DATE_CREATED'] ?></p>
 				<p><?= Loc::getMessage('UP_LITLAB_LAST_UPDATE') ?>: <?= $arResult['Bookshelf']['DATE_UPDATED'] ?></p>
 			</div>
+
+			<?php
+			if ($arResult['USER']['ID'] && $arResult['USER']['ROLE'] === 'admin'):
+			?>
+				<div class="bookshelf-detail-admin-section">
+					<?php
+					if ($arResult['Bookshelf']['STATUS'] !== 'modification'):
+					if ($arResult['Bookshelf']['STATUS'] === 'moderation'): ?>
+						<button class="publication-button" onclick="publishBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_PUBLICATION')?></button>
+					<?php endif;?>
+					<button class="modification-button" onclick="modificationBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_MODIFICATION')?></button>
+					<?php endif;?>
+					<p><?= Loc::getMessage('UP_LITLAB_STATUS') ?>:<p class="status-info"><?= $arResult['Bookshelf']['STATUS'] ?></p></p>
+				</div>
+			<?php
+			endif;
+			?>
 		</div>
 		<div class="bookshelf-detail-buttons">
-			<input src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" type="image" height="25px" width="20px">
-			<p><?= $arResult['Bookshelf']['SavesCount'] ?></p>
-			<input src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" type="image" height="25px" width="30px">
-			<p><?= $arResult['Bookshelf']['LIKES'] ?></p>
+			<?php
+			if (isset($_SESSION['NAME'])):?>
+				<div class="shelf-saves">
+					<?php
+					if ($arResult['Bookshelf']['SAVED']):
+						?>
+						<input name="unsave" class="saved" onclick="saveBookshelf(<?= $arResult['Bookshelf']['ID'] ?>)" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save-saved.png" height="25px" width="20px">
+					<?php
+					else:
+						?>
+						<input name="save" onclick="saveBookshelf(<?= $arResult['Bookshelf']['ID'] ?>)" class="shelf-save-input" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="25px" width="20px">
+					<?php
+					endif;
+					?>
+					<p class="save-amount"><?= $arResult['Bookshelf']['SavesCount'] ?></p>
+				</div>
+				<div class="shelf-likes">
+					<?php
+					if ($arResult['Bookshelf']['LIKED']):
+						?>
+						<input class="liked" onclick="likeBookshelf(<?= $arResult['Bookshelf']['ID'] ?>)" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like-liked.png" height="25px" width="30px">
+					<?php
+					else:
+						?>
+						<input class="shelf-likes-input" onclick="likeBookshelf(<?= $arResult['Bookshelf']['ID'] ?>)" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" height="25px" width="30px">
+					<?php
+					endif;
+					?>
+					<p class="likes-amount"><?= $arResult['Bookshelf']['LIKES'] ?></p>
+				</div>
+			<?php
+			else:
+				?>
+				<img src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="25px" width="20px">
+				<p><?= $arResult['Bookshelf']['SavesCount'] ?></p>
+				<img src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" height="25px" width="30px">
+				<p><?= $arResult['Bookshelf']['LIKES'] ?></p>
+			<?php
+			endif;
+			?>
 			<img src="\local\modules\up.litlab\install\templates\litlab\images\icon-book.png" height="25px" width="25px">
 			<p><?= $arResult['Bookshelf']['BOOK_COUNT'] ?></p>
 		</div>
@@ -73,6 +127,5 @@ else
 			?>
 		</div>
 	</section>
-
 	<?php
 }

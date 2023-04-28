@@ -55,12 +55,9 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 
 		$this->arResult['Genre'] = $genreInfo;
 
-		$this->arResult['bookApi'] = $bookAPI;
-
 		if ($_SESSION['NAME'])
 		{
-			$userApi = ServiceLocator::getInstance()->get('User');
-			$userId = $userApi->getUserId($_SESSION['NAME']);
+			$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);
 			$bookshelfIdWillRead = $this->arResult['bookshelfApi']->getBookshelfIdByTitle($userId, 'Буду читать');
 			$bookshelfIdRead = $this->arResult['bookshelfApi']->getBookshelfIdByTitle($userId, 'Прочитано');
 
@@ -68,13 +65,12 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 			$this->arResult['USER_ID'] = $userId;
 			$this->arResult['WILL_READ_ID'] = $bookshelfIdWillRead;
 			$this->arResult['READ_ID'] = $bookshelfIdRead;
+			$this->arResult['Book']['RATING_NUMBER'] = (int)$bookAPI->getUserEstimation($userId, $bookInfo['ID']);
 		}
+		else
+		{
+			$this->arResult['Book']['RATING_NUMBER'] = (int)$this->arResult['Book']['BOOK_RATING'];
+		}
+
 	}
 }
-
-
-
-
-
-
-

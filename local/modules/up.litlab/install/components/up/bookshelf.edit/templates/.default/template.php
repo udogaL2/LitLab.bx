@@ -39,21 +39,21 @@ CJSCore::Init(array('ajax'));
 ?>
 
 <section class="bookshelf-create-main">
-	<p class="bookshelf-create-main-title">Редактирование полки</p>
+	<p class="bookshelf-create-main-title"><?=Loc::getMessage('UP_LITLAB_EDIT_BOOKSHELF')?></p>
 	<form class="bookshelf-add-form" action="" method="post">
 
 		<?if($bookshelf['TITLE']==='Буду читать' || $bookshelf['TITLE']==='Прочитано'):?>
 		<div class="bookshelf-create-name" style="justify-content: flex-start">
-			<p style="margin-right:20px">Название полки</p>
+			<p style="margin-right:20px"><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TITLE')?></p>
 			<p><?=$bookshelf['TITLE']?></p>
 			<?else:?>
 			<div class="bookshelf-create-name" style="justify-content: flex-start">
-				<p>Название полки</p>
+				<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TITLE')?></p>
 				<input name="title" required type="text" value="<?=$bookshelf['TITLE']?>">
 			<?endif;?>
 		</div>
 		<div class="bookshelf-create-description">
-			<p>Описание полки</p>
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_DESC')?></p>
 			<input required class="bookshelf-edit-descr" type="text" value="<?=$bookshelf['DESCRIPTION']?>" name="description">
 		</div>
 		<div style="justify-content: space-evenly;">
@@ -78,7 +78,7 @@ CJSCore::Init(array('ajax'));
 		<div class="bookshelf-create-description two" style="">
 		<?
 		if (!$bookshelfTags[0]):?>
-			<p>Теги
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?>
 				<a class="button-add-tag" onclick="return createTag()">+</a>
 			</p>
 
@@ -86,7 +86,7 @@ CJSCore::Init(array('ajax'));
 
 			</section>
 		<? else:?>
-			<p>Теги
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?>
 			<a class="button-add-tag" onclick="return createTag()">+</a></p>
 			<section class="shelf-card-tags-list">
 				<?php
@@ -151,6 +151,3 @@ if ($booksOfBookshelf !== []):?>
 	</div>
 <?endif;?>
 </section>
-
-
-

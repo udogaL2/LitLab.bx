@@ -19,72 +19,73 @@ class BookshelfTable extends DataManager
 	{
 		return [
 			'ID' => new IntegerField(
-				'ID',
-				[
-					'primary' => true,
-					'autocomplete' => true,
-				]
+				'ID', [
+						'primary' => true,
+						'autocomplete' => true,
+					]
 			),
 			'CREATOR_ID' => new IntegerField(
-				'CREATOR_ID',
-				[
-					'required' => true,
-				]
+				'CREATOR_ID', [
+								'required' => true,
+							]
 			),
 
 			'CREATOR' => new Reference('CREATOR', UserTable::class, Join::on('this.BOOK_ID', 'ref.ID')),
 
 			'TITLE' => new StringField(
-				'TITLE',
-				[
-					'required' => true,
-					'validation' => [__CLASS__, 'validateTitle'],
-				]
+				'TITLE', [
+						   'required' => true,
+						   'validation' => [__CLASS__, 'validateTitle'],
+					   ]
 			),
 
 			'DESCRIPTION' => new TextField(
-				'DESCRIPTION',
-				[
-					'required' => true,
-				]
+				'DESCRIPTION', [
+								 'required' => true,
+							 ]
 			),
-			'LIKES' => new IntegerField(
-				'LIKES',
-				[
-					'required' => true,
-				]
+			'LIKES' => new ExpressionField(
+				'LIKES', '(select count(*) from up_LitLab_likes where BOOKSHELF_ID = %s)', ['ID'],
 			),
+
+			'SAVES' => new ExpressionField(
+				'SAVES', '(select count(*) from up_LitLab_user_bookshelf where BOOKSHELF_ID = %s)', ['ID'],
+			),
+
+			'TLIKES' => new Reference('LIKES_TABLE', LikesTable::class, Join::on('this.ID', 'ref.BOOKSHELF_ID')),
+
 			'DATE_CREATED' => new DatetimeField(
-				'DATE_CREATED',
-				[
-					'required' => true,
-				]
+				'DATE_CREATED', [
+								  'required' => true,
+							  ]
 			),
 			'DATE_UPDATED' => new DatetimeField(
-				'DATE_UPDATED',
-				[
-					'required' => true,
-				]
+				'DATE_UPDATED', [
+								  'required' => true,
+							  ]
 			),
 			'STATUS' => new StringField(
-				'STATUS',
-				[
-					'required' => true,
-					'validation' => [__CLASS__, 'validateStatus'],
-				]
+				'STATUS', [
+							'required' => true,
+							'validation' => [__CLASS__, 'validateStatus'],
+						]
 			),
 
 			'BOOK_COUNT' => new ExpressionField(
-				'BOOK_COUNT', '(select count(*) as `BOOK_COUNT` from up_LitLab_bookshelf_book where BOOKSHELF_ID = %s)', ['ID']
+				'BOOK_COUNT',
+				'(select count(*) as `BOOK_COUNT` from up_LitLab_bookshelf_book where BOOKSHELF_ID = %s)',
+				['ID']
 			),
 
-			'BOOKSHELF' => new Reference('BOOKSHELF', BookBookshelfTable::class, Join::on('this.ID', 'ref.BOOKSHELF_ID')),
+			'BOOKSHELF' => new Reference(
+				'BOOKSHELF', BookBookshelfTable::class, Join::on('this.ID', 'ref.BOOKSHELF_ID')
+			),
 
-			'TAGS' => (new ManyToMany('TAGS', TagTable::class))
-				->configureTableName('up_LitLab_tag_bookshelf'),
+			'TAGS' => (new ManyToMany('TAGS', TagTable::class))->configureTableName('up_LitLab_tag_bookshelf'),
 
-			'USER_BOOKSHELVES' => (new ManyToMany('USER_BOOKSHELVES', UserTable::class))
-				->configureTableName('up_LitLab_user_bookshelf'),
+			'USERS' => (new ManyToMany('USERS', UserTable::class))->configureTableName(
+					'up_LitLab_user_bookshelf'
+				),
 		];
 	}
 
@@ -94,6 +95,7 @@ class BookshelfTable extends DataManager
 			new LengthValidator(null, 30),
 		];
 	}
+
 	public static function validateTitle()
 	{
 		return [

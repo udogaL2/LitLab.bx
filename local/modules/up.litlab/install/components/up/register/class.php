@@ -70,12 +70,11 @@ class LitlabRegisterComponent extends CBitrixComponent
 				{
 					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 				}
-				LocalRedirect("/auth/");
+                LocalRedirect("/auth/");
 			}
 			elseif ($request === "POST")
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_LOGIN_IS_BUSY";
-				$_SESSION = [];
 			}
 		}
 	}

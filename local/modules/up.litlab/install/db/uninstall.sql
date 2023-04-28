@@ -11,3 +11,4 @@ DROP TABLE IF EXISTS up_LitLab_user_bookshelf;
 DROP TABLE IF EXISTS up_LitLab_bookshelf_book;
 DROP TABLE IF EXISTS up_LitLab_tag;
 DROP TABLE IF EXISTS up_LitLab_tag_bookshelf;
+DROP TABLE IF EXISTS up_LitLab_likes;

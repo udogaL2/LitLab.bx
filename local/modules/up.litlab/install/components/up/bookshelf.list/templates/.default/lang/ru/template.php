@@ -6,4 +6,5 @@ $MESS ['UP_LITLAB_BOOKSHELF'] = "Книжная полка";
 $MESS ['UP_LITLAB_BOOKS'] = "книги";
 $MESS ['UP_LITLAB_MOVE'] = "Перейти";
 $MESS ['UP_LITLAB_TAGS'] = "Теги";
+$MESS ['UP_LITLAB_TO_MODERATION_PAGE'] = "На страницу модерации";
 $MESS ['UP_LITLAB_PLACEHOLDER_FIND_BOOK'] = "Найти полку...";

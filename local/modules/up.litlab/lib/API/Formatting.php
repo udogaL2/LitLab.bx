@@ -14,6 +14,10 @@ class Formatting
 			{
 				$result[$key] = htmlspecialcharsbx($param);
 			}
+			else if (gettype($param) == 'array')
+			{
+				$result[$key] = $this->prepareText($param);
+			}
 			else{
 				$result[$key] = $param;
 			}

@@ -8,7 +8,8 @@ class LitlabBookshelfListComponent extends CBitrixComponent
 	public function executeComponent()
 	{
 		$this->prepareTemplateParams();
-		$this->fetchBookshelfList();
+		$this->prepareApis();
+		$this->prepareSession();
 		$this->includeComponentTemplate();
 	}
 
@@ -20,9 +21,22 @@ class LitlabBookshelfListComponent extends CBitrixComponent
 	protected function prepareTemplateParams()
 	{
 		$this->arResult['SEARCH'] = $this->arParams['SEARCH'];
+		if ($this->arParams['STATUS'])
+		{
+			$this->arResult['STATUS'] = $this->arParams['STATUS'];
+		}
 	}
 
-	protected function fetchBookshelfList()
+	protected function prepareSession()
+	{
+		if($_SESSION['USER_ID'])
+		{
+			$this->arResult['USER']['ID'] = $_SESSION['USER_ID'];
+			$this->arResult['USER']['ROLE'] = $this->arResult['UserApi']->getUserRole($_SESSION['USER_ID']);
+		}
+	}
+
+	protected function prepareApis()
 	{
 		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 		$bookApi = ServiceLocator::getInstance()->get('Book');
@@ -33,5 +47,6 @@ class LitlabBookshelfListComponent extends CBitrixComponent
 		$this->arResult['UserApi'] = $userApi;
 		$this->arResult['BookApi'] = $bookApi;
 		$this->arResult['FormattingApi'] = $formattingApi;
+
 	}
 }

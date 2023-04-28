@@ -4,3 +4,5 @@ $MESS ['UP_LITLAB_READ_BUTTON'] = 'прочитано';
 $MESS ['UP_LITLAB_ADD_BUTTON'] = 'добавить';
 $MESS ['UP_LITLAB_GENRES'] = 'Жанры';
 $MESS ['UP_LITLAB_PUBLICATION_YEAR'] = 'Год публикации';
+$MESS ['UP_LITLAB_NULL_RATING'] = 'оценок нет';
+$MESS ['UP_LITLAB_RATING'] = 'Рейтинг книги';
