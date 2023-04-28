@@ -174,7 +174,6 @@ class Bookshelf
 								'CREATOR_ID'=>$userId,
 								'TITLE' => 'Буду читать',
 								'DESCRIPTION' => 'Полка, в которую вы можете добавить понравившиеся вам книги.',
-								'LIKES' => 0,
 								'DATE_CREATED' => new \Bitrix\Main\Type\DateTime(),
 								'DATE_UPDATED' => new \Bitrix\Main\Type\DateTime(),
 								'STATUS' => 'private'
@@ -183,7 +182,6 @@ class Bookshelf
 								'CREATOR_ID'=>$userId,
 								'TITLE' => 'Прочитано',
 								'DESCRIPTION' => 'Полка, в которую вы можете добавить книги, которые уже прочитали.',
-								'LIKES' => 0,
 								'DATE_CREATED' => new \Bitrix\Main\Type\DateTime(),
 								'DATE_UPDATED' => new \Bitrix\Main\Type\DateTime(),
 								'STATUS' => 'private'

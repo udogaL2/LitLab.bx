@@ -8,9 +8,10 @@ use Bitrix\Main\Context;
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("LitLab");
 
+
 if($_SESSION['NAME'] && $_SERVER['REQUEST_URI'] !== '/logout/')
 {
-	LocalRedirect("/user/{$_SESSION['USER_ID']}/");
+    LocalRedirect("/user/{$_SESSION['USER_ID']}/");
 }
 
 $APPLICATION->IncludeComponent('up:auth', '',[

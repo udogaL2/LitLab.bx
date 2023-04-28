@@ -43,13 +43,9 @@ class LitlabRegisterComponent extends CBitrixComponent
 			{
 				$this->arResult['ERROR'] = $validForm;
 			}
-			$_SESSION['NAME'] = $this->arParams['~NAME'];
-			$_SESSION['USERNAME'] = $this->arParams['~USERNAME'];
-			$_SESSION['PASSWORD'] = $this->arParams['~PASSWORD'];
-
-			$this->arResult['NAME'] = $_SESSION['NAME'];
-			$this->arResult['USERNAME'] = $_SESSION['USERNAME'];
-			$this->arResult['PASSWORD'] = hash('md5', $_SESSION['PASSWORD']);
+			$this->arResult['NAME'] = $this->arParams['~NAME'];
+			$this->arResult['USERNAME'] = $this->arParams['~USERNAME'];
+			$this->arResult['PASSWORD'] = hash('md5', $this->arParams['~PASSWORD']);
 			$this->arResult['ROLE'] = 'user';
 		}
 	}
@@ -69,12 +65,11 @@ class LitlabRegisterComponent extends CBitrixComponent
 				{
 					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 				}
-				LocalRedirect("/auth/");
+                LocalRedirect("/auth/");
 			}
 			elseif ($request === "POST")
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_LOGIN_IS_BUSY";
-				$_SESSION = [];
 			}
 		}
 	}
