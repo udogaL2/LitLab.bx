@@ -5,29 +5,14 @@ namespace Up\Litlab\API;
 class Validating{
 	public function validateRegisterForm($login, $nickname, $password)
 	{
-		if (strlen($login) < 4)
-		{
-			return 'UP_LITLAB_INSUFFICIENT_LOGIN_LENGTH';
+		if ($this->validate($login, 5, 63)!==true){
+			return $this->validate($login, 5, 63);
 		}
-		if (strlen($login) > 63)
-		{
-			return 'UP_LITLAB_EXCEEDING_LOGIN_LENGTH';
+		if ($this->validate($nickname, 5, 30)!==true){
+			return $this->validate($nickname, 5, 30);
 		}
-		if (strlen($nickname) < 4)
-		{
-			return 'UP_LITLAB_INSUFFICIENT_NICKNAME_LENGTH';
-		}
-		if (strlen($nickname) > 30)
-		{
-			return 'UP_LITLAB_EXCEEDING_NICKNAME_LENGTH';
-		}
-		if (strlen($password) < 7)
-		{
-			return 'UP_LITLAB_INSUFFICIENT_PASSWORD_LENGTH';
-		}
-		if (strlen($password) > 63)
-		{
-			return 'UP_LITLAB_EXCEEDING_PASSWORD_LENGTH';
+		if ($this->validate($password, 8, 63)!==true){
+			return $this->validate($password, 8, 63);
 		}
 
 		return true;
@@ -35,22 +20,11 @@ class Validating{
 
 	public function validateAuthForm($login, $password)
 	{
-		if (strlen($login) < 4)
-		{
-			return 'UP_LITLAB_INSUFFICIENT_LOGIN_LENGTH';
+		if ($this->validate($login, 5, 63)!==true){
+			return $this->validate($login, 5, 63);
 		}
-		if (strlen($login) > 63)
-		{
-			return 'UP_LITLAB_EXCEEDING_LOGIN_LENGTH';
-		}
-
-		if (strlen($password) < 7)
-		{
-			return 'UP_LITLAB_INSUFFICIENT_PASSWORD_LENGTH';
-		}
-		if (strlen($password) > 63)
-		{
-			return 'UP_LITLAB_EXCEEDING_PASSWORD_LENGTH';
+		if ($this->validate($password, 8, 63)!==true){
+			return $this->validate($password, 8, 63);
 		}
 
 		return true;

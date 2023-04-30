@@ -36,7 +36,7 @@ class LitlabAuthComponent extends CBitrixComponent
 				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
 			$isValidForm = $validApi->validateAuthForm($this->arParams['~NAME'], $this->arParams['~PASSWORD']);
-			if (!$isValidForm){
+			if ($isValidForm!==true){
 				$this->arResult['ERROR'] = $isValidForm;
 			}
 			$_SESSION['NAME'] = $this->arParams['~NAME'];

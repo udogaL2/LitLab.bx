@@ -27,11 +27,11 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 		if($request === "POST")
 		{
 			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
-			if (!$isValidTitle){
+			if ($isValidTitle!==true){
 				$this->arResult['ERROR'] = $isValidTitle;
 			}
 			$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 2000);
-			if (!$isValidDescription){
+			if ($isValidDescription!==true){
 				$this->arResult['ERROR'] = $isValidDescription;
 			}
 
@@ -58,11 +58,12 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 			if ($request === 'POST')
 			{
 				$response = $BookshelfAPI->addBookshelf($this->arResult);
-				LocalRedirect(sprintf("/user/%s/", $this->arResult['CREATOR_ID']));
+
 				if (!isset($response))
 				{
 					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 				}
+				LocalRedirect(sprintf("/user/%s/", $this->arResult['CREATOR_ID']));
 			}
 		}
 	}

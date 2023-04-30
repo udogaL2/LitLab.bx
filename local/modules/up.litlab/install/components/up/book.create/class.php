@@ -26,20 +26,12 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if($request === "POST")
 		{
-			if (!is_string($this->arParams['~TITLE']) && !is_string($this->arParams['~AUTHOR']))
-			{
-				$this->arParams['ERROR'] = "UP_LITLAB_TYPE_ERROR";
-			}
-			if (!$this->arParams['~TITLE'] && !$this->arParams['~AUTHOR'])
-			{
-				$this->arParams['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
-			}
-			$isValidTitle = $validApi->validateLength($this->arParams['~TITLE'], 1, 255);
-			if (!$isValidTitle){
+			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
+			if ($isValidTitle!==true){
 				$this->arResult['ERROR'] = $isValidTitle;
 			}
-			$isValidAuthor = $validApi->validateLength($this->arParams['~AUTHOR'], 1, 255);
-			if (!$isValidAuthor){
+			$isValidAuthor = $validApi->validate($this->arParams['~AUTHOR'], 1, 255);
+			if ($isValidAuthor!==true){
 				$this->arResult['ERROR'] = $isValidAuthor;
 			}
 

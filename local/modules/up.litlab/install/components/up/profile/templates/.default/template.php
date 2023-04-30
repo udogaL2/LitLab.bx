@@ -23,6 +23,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	</div>
 	<div class="user-profile">
 		<div class="user-profile-card">
+
 			<p class="user-profile-card-nickname"><?=$arResult['userApi']->getUserNickname($userId)?></p>
 			<hr>
 			<a href="/create/book/" style="text-decoration: none"><?=Loc::getMessage('UP_LITLAB_ADD_BOOK')?></a>
@@ -33,7 +34,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	<? else:
 		if ($arResult['userApi']->getCreatorInfo((int)$userId)!==false):?>
 		<div class="user-header">
-			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['USERNAME']?></p>
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['userApi']->getUserNickname($userId)?></p>
 		</div>
 
 		<?// else:

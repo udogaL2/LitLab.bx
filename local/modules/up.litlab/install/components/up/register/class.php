@@ -38,7 +38,7 @@ class LitlabRegisterComponent extends CBitrixComponent
 				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
 			}
 			$isValidForm = $validApi->validateRegisterForm($this->arParams['~NAME'], $this->arParams['~USERNAME'], $this->arParams['~PASSWORD']);
-			if (!$isValidForm)
+			if ($isValidForm!==true)
 			{
 				$this->arResult['ERROR'] = $isValidForm;
 			}
