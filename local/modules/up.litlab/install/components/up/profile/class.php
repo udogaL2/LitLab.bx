@@ -31,7 +31,6 @@ class LitlabProfileComponent extends CBitrixComponent
 		$formattingApi = ServiceLocator::getInstance()->get('Formatting');
 		$userApi = new User;
 
-
 		$this->arResult['userApi'] = $userApi;
 		$this->arResult['bookApi'] = $bookApi;
 		$this->arResult['userBookshelfApi'] = $userBookshelfApi;

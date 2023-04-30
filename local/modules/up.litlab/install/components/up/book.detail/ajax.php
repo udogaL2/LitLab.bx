@@ -10,11 +10,13 @@ class BookDetailAjaxController extends \Bitrix\Main\Engine\Controller
 	public function configureActions()
 	{
 		return[
-			'addBookToUserBookshelf'=>[
+			'addBookToUserBookshelf'=>
+			[
 				'prefilters' =>[],
 				'postfilters'=>[]
 			],
-			'addRating' => [
+			'addRating' =>
+			[
 				'prefilters' => [],
 				'postfilters' => []
 			],
@@ -28,7 +30,6 @@ class BookDetailAjaxController extends \Bitrix\Main\Engine\Controller
 		{
 			return ['result' => false];
 		}
-
 
 		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 		$bookApi = ServiceLocator::getInstance()->get('Book');

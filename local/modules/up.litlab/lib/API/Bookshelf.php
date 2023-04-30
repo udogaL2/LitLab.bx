@@ -45,6 +45,27 @@ class Bookshelf
 							 ->fetchAll()
 			;
 	}
+	public function getListOfSavedBookshelf(int $userId, ?int $limit = 3, int $offset = 0)
+	{
+
+		$bookshelves = UserTable::query()
+					  ->setSelect(['BS_ID' => 'BOOKSHELVES.ID', 'STATUS'=>'BOOKSHELVES.STATUS', 'CREATOR_ID'=>'BOOKSHELVES.CREATOR_ID'])
+					  ->setFilter(array(['ID'=>$userId]))
+					  ->setLimit($limit)
+					  ->setOffset($offset)
+					  ->fetchAll();
+
+		$result = [];
+
+		foreach ($bookshelves as $bookshelf){
+			if($bookshelf['STATUS'] === 'public' && $bookshelf['CREATOR_ID']!==(string)$userId)
+			{
+				$result[] = $this->getBookshelfById($bookshelf['BS_ID']);
+			}
+		}
+		return $result;
+
+	}
 
 	public function getCount(string $search = null, array $status = ['public'], bool $notEmpty = false): int
 	{
@@ -121,11 +142,11 @@ class Bookshelf
 	public function getComments(int $bookshelfId, string $status = 'public'): array|false
 	{
 		$comments = BookshelfTable::query()
-			->setSelect(['B_COMMENT' => 'BOOKSHELF.COMMENT',
-						 'B_BOOK_ID' => 'BOOKSHELF.BOOK_ID'])
-			->where('ID', $bookshelfId)
-			->where('STATUS', $status)
-			->fetchAll()
+								  ->setSelect(['B_COMMENT' => 'BOOKSHELF.COMMENT',
+											   'B_BOOK_ID' => 'BOOKSHELF.BOOK_ID'])
+								  ->where('ID', $bookshelfId)
+								  ->where('STATUS', $status)
+								  ->fetchAll()
 		;
 
 		$result = [];
@@ -145,6 +166,16 @@ class Bookshelf
 			->where('ID', $bookshelfId)
 			->fetchAll())
 			;
+	}
+
+	public function getCountOfSavedUserBookshelves(int $userId)
+	{
+		$result = count(UserTable::query()
+								   ->setSelect(['BOOKSHELVES.ID'])
+								   ->where('ID', $userId)
+								   ->fetchAll())
+			;
+		return $result;
 	}
 
 	public function getCountOfSavedBookshelvesForEach(array $bookshelfId)

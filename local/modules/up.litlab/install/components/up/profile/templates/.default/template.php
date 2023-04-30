@@ -23,7 +23,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	</div>
 	<div class="user-profile">
 		<div class="user-profile-card">
-			<p class="user-profile-card-nickname"><?=$arResult['userApi']->getUserName((int)$userId)?></p>
+			<p class="user-profile-card-nickname"><?=$arResult['userApi']->getUserNickname($userId)?></p>
 			<hr>
 			<a href="/create/book/" style="text-decoration: none"><?=Loc::getMessage('UP_LITLAB_ADD_BOOK')?></a>
 			<hr>
@@ -33,7 +33,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	<? else:
 		if ($arResult['userApi']->getCreatorInfo((int)$userId)!==false):?>
 		<div class="user-header">
-			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['userApi']->getUserName((int)$userId)?></p>
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['USERNAME']?></p>
 		</div>
 
 		<?// else:
@@ -78,14 +78,14 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			else{
 			$nav->setRecordCount($arResult['userBookshelfApi']->getUserBookshelfCount($userId));
 			foreach ($userBookshelves as $userBookshelf):
-				$userBookshelf = $arResult['FormattingApi']->prepareText($userBookshelf);
-				$image = $arResult['bookApi']->getImage($userBookshelf['ID']);
+					$userBookshelf = $arResult['FormattingApi']->prepareText($userBookshelf);
+					$image = $arResult['bookApi']->getImage($userBookshelf['ID']);
 			?>
-			<? if ($publicPage === 1):?>
-			<div class="user-bookshelf" style="width: 45%">
-			<?else:?>
-			<div class="user-bookshelf">
-			<? endif;?>
+				<? if ($publicPage === 1):?>
+				<div class="user-bookshelf" style="width: 45%">
+				<?else:?>
+				<div class="user-bookshelf">
+				<? endif;?>
 				<img src="<?= CFile::GetPath($image) ?>" height="200px" width="150px">
 				<div class="user-bookshelf-description">
 					<a href="/user/<?=$userBookshelf['CREATOR_ID']?>/bookshelf/<?=$userBookshelf['ID']?>/"><?=$userBookshelf['TITLE']?></a>
@@ -112,9 +112,35 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<? if ($publicPage === 0): ?>
 				<hr width="100%">
 			<? endif;?>
-			<?php endforeach;?>
-		</div>
+		<?php endforeach;?>
+		<?}?>
 
+		<?php
+		//
+		// 	$savedBookshelves = $arResult['userBookshelfApi']->getListOfSavedBookshelf(
+		// 		$userId,
+		// 		$nav->getRecordCount()%$nav->getLimit(),
+		// 		$nav->getOffset()
+		// 	);
+		// if($savedBookshelves[0]):
+		// foreach ($savedBookshelves as $savedBookshelf):
+		// 	$savedBookshelf = $arResult['FormattingApi']->prepareText($savedBookshelf);
+		// 	$image = $arResult['bookApi']->getImage($savedBookshelf['ID']);
+		// 	?>
+		<!--	<div class="user-bookshelf">-->
+		<!--		<img src="--><?//= CFile::GetPath($image) ?><!--" height="200px" width="150px">-->
+		<!--		<div class="user-bookshelf-description">-->
+		<!--			<a href="/user/--><?//=$savedBookshelf['CREATOR_ID']?><!--/bookshelf/--><?//=$savedBookshelf['ID']?><!--/">--><?//=$savedBookshelf['TITLE']?><!--</a>-->
+		<!--			<span>--><?//=$savedBookshelf['DESCRIPTION']?><!--</span>-->
+		<!--		</div>-->
+		<!--	<div class="user-bookshelf-buttons">-->
+		<!--		<input style="margin-left: 90px;" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="30px" width="25px">-->
+		<!--	</div>-->
+		<!--	</div>-->
+		<!--	<hr width="100%">-->
+		<!--	--><?php //endforeach;?>
+		<?//endif;?>
+		</div>
 	</div>
 	<?php
 	$APPLICATION->IncludeComponent(
@@ -126,6 +152,5 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		],
 		false
 	);
-	}
 	?>
 </main>

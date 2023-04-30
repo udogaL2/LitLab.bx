@@ -25,6 +25,7 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		$this->arResult['bookApi'] = $bookApi;
 		$this->arResult['bookshelfApi'] = $bookshelfApi;
 		$this->arResult['userApi'] = $userApi;
+		$this->arResult['formattingApi'] = $formattingAPI;
 		$this->arResult['Book'] = $formattingAPI->prepareText($this->arResult['Book']);
 		$this->arResult['Authors'] = $formattingAPI->prepareText($this->arResult['Authors']);
 		$this->arResult['GENRE'] = $formattingAPI->prepareText($this->arResult['GENRE']);

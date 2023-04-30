@@ -67,14 +67,18 @@ class Validating{
 		}
 
 		if ($min !== null){
-			if ($value < $min){
+			if (strlen($value) < $min){
 				return 'UP_LITLAB_INSUFFICIENT_VALUE_LENGTH';
 			}
 		}
 		if ($max !== null){
-			if ($value > $max){
+			if (strlen($value) > $max){
 				return 'UP_LITLAB_EXCEEDING_VALUE_LENGTH';
 			}
+		}
+		$value = str_replace(" ", "", $value);
+		if($value === ""){
+			return "UP_LITLAB_EMPTY_ERROR";
 		}
 		return true;
 	}

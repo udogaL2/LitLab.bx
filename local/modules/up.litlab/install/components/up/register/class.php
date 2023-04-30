@@ -8,7 +8,6 @@ class LitlabRegisterComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
-		session_start();
 		$this->prepareTemplateParams();
 		$this->register();
 		$this->includeComponentTemplate();
@@ -43,14 +42,12 @@ class LitlabRegisterComponent extends CBitrixComponent
 			{
 				$this->arResult['ERROR'] = $isValidForm;
 			}
-			$_SESSION['NAME'] = $this->arParams['~NAME'];
-			$_SESSION['USERNAME'] = $this->arParams['~USERNAME'];
-			$_SESSION['PASSWORD'] = $this->arParams['~PASSWORD'];
 
-			$this->arResult['NAME'] = $_SESSION['NAME'];
-			$this->arResult['USERNAME'] = $_SESSION['USERNAME'];
-			$this->arResult['PASSWORD'] = $_SESSION['PASSWORD'];
+			$this->arResult['NAME'] = $this->arParams['~NAME'];
+			$this->arResult['USERNAME'] = $this->arParams['~USERNAME'];
+			$this->arResult['PASSWORD'] = hash('md5', $this->arParams['~PASSWORD']);
 			$this->arResult['ROLE'] = 'user';
+
 		}
 	}
 
@@ -63,7 +60,6 @@ class LitlabRegisterComponent extends CBitrixComponent
 		{
 			if ($userAPI->checkLogin($this->arResult['NAME']) && $request === "POST")
 			{
-				$this->arResult['PASSWORD'] = hash('md5', $this->arResult['PASSWORD']);
 				$response = $userAPI->registerUser($this->arResult);
 				$userBookshelfApi->autoAddedUserBookshelfs($userAPI->getUserId($this->arResult['NAME']));
 				if (!isset($response))

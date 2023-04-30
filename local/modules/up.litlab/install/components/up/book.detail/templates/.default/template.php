@@ -66,6 +66,7 @@ else{
 			<main id="listUserBookshelves" class="list-user-bookshelf" style="display: none; flex-direction: column">
 				<input style="width: 20px; margin:-20px 0 20px 400px" type="submit" value="✖">
 				<?foreach ($bookshelves as $bookshelf):
+					$bookshelf = $arResult['formattingApi']->prepareText($bookshelf);
 					$arResult['Bookshelf']['ADDED']= $arResult['bookApi']->checkBookInBookshelf($arResult['Book']['ID'], $bookshelf['ID']);?>
 					<div style="display: flex" class="user-bookshelf">
 						<p><?=$bookshelf['TITLE']?></p>

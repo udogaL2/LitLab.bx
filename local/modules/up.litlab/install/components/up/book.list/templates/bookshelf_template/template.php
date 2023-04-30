@@ -45,7 +45,6 @@ $books = $arResult['BookApi']->getListOfBookByBookshelf($arResult['BOOKSHELF_ID'
 
 			$nav->setRecordCount($arResult['BookApi']->getCountInBookshelf($arResult['BOOKSHELF_ID']));
 			$comments = $arResult['FormattingApi']->prepareText($arResult['BookshelfApi']->getComments($arResult['BOOKSHELF_ID']));
-
 			foreach ($books as $book):
 			$book = $arResult['FormattingApi']->prepareText($book);
 			?>
@@ -57,7 +56,8 @@ $books = $arResult['BookApi']->getListOfBookByBookshelf($arResult['BOOKSHELF_ID'
 				</p>
 				<p><strong><a class="book-list-card-name" href="/book/<?= $book['ID'] ?>/"><?= $book['TITLE'] ?></a></strong></p><br>
 				<p class="book-list-card-author"><?= Loc::getMessage('UP_LITLAB_AUTHOR') ?> <?= $authors[$book['ID']] ?></p>
-				<?php if($comments[$book['ID']]):?>
+				<?php
+				if($comments[$book['ID']]):?>
 					<div class="book-list-card-comment comment"><?= $comments[$book['ID']] ?></div>
 				<?php endif;?>
 			</div>

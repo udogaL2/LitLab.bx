@@ -38,7 +38,7 @@ class LitlabBookshelfDetailComponent extends CBitrixComponent
 	{
 		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 
-		if (isset($this->arResult['USER']) && $this->arParams['USER_ID'] === $this->arResult['USER']['ID'])
+		if (isset($this->arResult['USER']) && $this->arParams['USER_ID'] === (int)$this->arResult['USER']['ID'])
 		{
 			$bookshelfInfo = $bookshelfApi->getDetailsById($this->arParams['BOOKSHELF_ID'], $this->arParams['USER_ID']);
 		}

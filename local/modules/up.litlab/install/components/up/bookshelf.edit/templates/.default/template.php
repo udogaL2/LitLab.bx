@@ -18,12 +18,12 @@ $this->addExternalCss("\local\modules\up.litlab\install\components\up\bookshelf.
 CJSCore::Init(array('ajax'));
 ?>
 <?php
-	if (!empty($arParams['ERROR']))
+	if (!empty($arResult['ERROR']))
 	{
 		$APPLICATION->IncludeComponent(
 			'up:system.messeage',
 			'',
-			['MESSEAGE' => $arParams['ERROR']],
+			['MESSEAGE' => $arResult['ERROR']],
 		);
 	}
 ?>
@@ -36,6 +36,14 @@ CJSCore::Init(array('ajax'));
 
 	$booksComments = $arResult['bookshelfApi']->getComments($bookshelfId, $bookshelf['STATUS']);
 	$bookshelf = $arResult['formattingApi']->prepareText($bookshelf);
+
+	if(!(isset($_SESSION['USER_ID']) && $_SESSION['USER_ID']==$bookshelf['CREATOR_ID'])):
+		$APPLICATION->IncludeComponent(
+			'up:system.messeage',
+			'',
+			['MESSEAGE' => 'UP_LITLAB_BOOKSHELF_MISSING'],
+		);
+	else:
 ?>
 
 <section class="bookshelf-create-main">
@@ -90,7 +98,7 @@ CJSCore::Init(array('ajax'));
 			<a class="button-add-tag" onclick="return createTag()">+</a></p>
 			<section class="shelf-card-tags-list">
 				<?php
-				foreach ($bookshelfTags as $tag):
+				foreach ($arResult['formattingApi']->prepareText($bookshelfTags) as $tag):
 					$tagId = $arResult['bookshelfApi']->getTagByName($tag)['ID']?>
 				<section id="<?=$tagId?>">
 					<input required class="bookshelf-edit-tag" type="text" value="<?= $tag ?>" name="tags-created[]" style="
@@ -99,8 +107,8 @@ CJSCore::Init(array('ajax'));
 				</section>
 				<?php
 				endforeach; ?>
+			</section>
 		<?endif;?>
-		</section>
 	</div>
 		<div style="width: 100%; text-align: center"><button type="submit" class="bookshelf-edit-save">Сохранить</button></div>
 	</form>
@@ -146,8 +154,9 @@ if ($booksOfBookshelf !== []):?>
 <?if($bookshelf['TITLE']!=='Буду читать' && $bookshelf['TITLE']!=='Прочитано'):?>
 	<div style="width: 100%; text-align: center; display: block;">
 		<form method="post">
-			<button type="submit" onclick="removeBookshelf(<?=$arResult['BOOKSHELF_ID']?>)" class="bookshelf-edit-save" style="background-color: rgba(216,0,0,0.83)">Удалить полку</button>
+			<button type="submit" onclick="removeBookshelf(<?=$arResult['BOOKSHELF_ID']?>, <?=$bookshelf['CREATOR_ID']?>)" class="bookshelf-edit-save" style="background-color: rgba(216,0,0,0.83)">Удалить полку</button>
 		</form>
 	</div>
 <?endif;?>
 </section>
+<?php endif;?>

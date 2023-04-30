@@ -30,14 +30,13 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 			if (!$isValidTitle){
 				$this->arResult['ERROR'] = $isValidTitle;
 			}
-			$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 5000);
+			$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 2000);
 			if (!$isValidDescription){
 				$this->arResult['ERROR'] = $isValidDescription;
 			}
 
 			$this->arResult['TITLE'] = $this->arParams['~TITLE'];
 			$this->arResult['DESCRIPTION'] = $this->arParams['~DESCRIPTION'];
-			$this->arResult['LIKES'] = 0;
 			$this->arResult['DATE_CREATED'] = new \Bitrix\Main\Type\DateTime();
 			$this->arResult['DATE_UPDATED'] = new \Bitrix\Main\Type\DateTime();
 			$this->arResult['STATUS'] = 'private';

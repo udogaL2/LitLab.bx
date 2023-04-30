@@ -44,7 +44,7 @@ else
 					<div class="book-detail-card-description-genres-links">
 						<?php
 						foreach ($arResult['Bookshelf']['Tags'] as $tag): ?>
-							<p><?= htmlspecialcharsbx($tag) ?></p>
+							<p><?= $tag ?></p>
 						<?php
 						endforeach; ?>
 					</div>
@@ -58,14 +58,14 @@ else
 
 			<?php
 			if ($arResult['USER']['ID'] && $arResult['USER']['ROLE'] === 'admin'):
-			?>
+				?>
 				<div class="bookshelf-detail-admin-section">
 					<?php
 					if ($arResult['Bookshelf']['STATUS'] !== 'modification'):
-					if ($arResult['Bookshelf']['STATUS'] === 'moderation'): ?>
-						<button class="publication-button" onclick="publishBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_PUBLICATION')?></button>
-					<?php endif;?>
-					<button class="modification-button" onclick="modificationBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_MODIFICATION')?></button>
+						if ($arResult['Bookshelf']['STATUS'] === 'moderation'): ?>
+							<button class="publication-button" onclick="publishBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_PUBLICATION')?></button>
+						<?php endif;?>
+						<button class="modification-button" onclick="modificationBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_MODIFICATION')?></button>
 					<?php endif;?>
 					<p><?= Loc::getMessage('UP_LITLAB_STATUS') ?>:<p class="status-info"><?= $arResult['Bookshelf']['STATUS'] ?></p></p>
 				</div>

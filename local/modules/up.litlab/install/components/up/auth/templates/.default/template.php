@@ -41,7 +41,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 				   value="<?=$_SESSION['NAME']?>"
 				<? endif;?>
 				>
-<!--			<p>--><?//=($_SESSION['NAME']++);?><!--"</p>-->
 			<label><?= Loc::getMessage('UP_LITLAB_PASSWORD') ?></label>
 			<input required class="auth-input" name="pass" type="password" id="auth-pass" minlength="8" maxlength="62"
 				<?if (isset($_SESSION['PASSWORD'])):?>

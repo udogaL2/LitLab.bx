@@ -14,45 +14,6 @@ window.addEventListener('load', () => {
 	};
 })
 
-// function addTag(bookshelfId)
-// {
-// 	var tag = document.createElement('input');
-// 	tag.classList.add('bookshelf-edit-tag')
-// 	tag.style.width = '130px';
-// 	tag.style.marginBottom = '10px';
-// 	tag.value = 'Новый тег';
-// 	tag.name = 'tags[]';
-// 	BX.ajax.runComponentAction('up:bookshelf.edit', 'addTag', {
-// 			mode: 'ajax',
-// 			data: {
-// 				bookshelfId: bookshelfId,
-// 				// tagId: tagId,
-// 				tag: tag.textContent,
-// 				action: 'addTag'
-// 			},
-// 		})
-// 		.then(function (response) {
-// 			console.log(response);
-// 			// let tag = document.getElementById(tagId);
-// 			// tag.remove();
-// 			// window.location = '/edit/bookshelf/' + bookshelfId + '/';
-// 			if (!response.data.result)
-// 			{
-// 				console.log('Error');
-// 				return;
-// 			}
-//
-// 			if(response.data.action === 'addTag'){
-// 				// tag.classList.add('bookshelf-edit-tag')
-// 				// tag.style.width = '130px';
-// 				// tag.style.marginBottom = '10px';
-// 				// tag.value = 'Новый тег';
-// 				// tag.name = 'tags[]';
-// 				document.querySelector('.shelf-card-tags-list').appendChild(tag);
-// 			}
-// 		});
-// }
-
 function removeBook(id, bookshelfId)
 {
 	const shouldRemove = confirm("Вы точно хотите удалить данную книгу?");
@@ -80,7 +41,7 @@ function removeBook(id, bookshelfId)
 
 }
 
-function removeBookshelf(bookshelfId)
+function removeBookshelf(bookshelfId, userId)
 {
 	const shouldRemove = confirm("Вы точно хотите удалить данную полку?");
 	if (!shouldRemove)
@@ -117,9 +78,6 @@ function removeTag(tagId, bookshelfId){
 		})
 		.then(function (response) {
 			console.log(response);
-			// let tag = document.getElementById(tagId);
-			// tag.remove();
-			// window.location = '/edit/bookshelf/' + bookshelfId + '/';
 			if (!response.data.result)
 			{
 				console.log('Error');

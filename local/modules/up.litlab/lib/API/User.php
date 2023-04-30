@@ -64,6 +64,14 @@ class User
 		return $name['NAME'];
 	}
 
+	public function getUserNickname(int $userId){
+		$name = UserTable::query()
+						 ->setSelect(['USERNAME'])
+						 ->setFilter(['ID'=>$userId])
+						 ->fetch();
+		return $name['USERNAME'];
+	}
+
 	public function getUserNames(array $userIds)
 	{
 		$names = UserTable::query()
