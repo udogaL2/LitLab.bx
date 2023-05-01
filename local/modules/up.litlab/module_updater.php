@@ -140,7 +140,6 @@ __litlabMigrate(8, function($updater, $DB) {
 				CREATOR_ID   INT                NOT NULL,
 				TITLE        VARCHAR(255)       NOT NULL,
 				DESCRIPTION  TEXT               NOT NULL,
-				LIKES        INT                NOT NULL,
 				DATE_CREATED DATETIME           NOT NULL,
 				DATE_UPDATED DATETIME           NOT NULL,
 				STATUS       VARCHAR(30)        NOT NULL,
@@ -229,15 +228,6 @@ __litlabMigrate(15, function($updater, $DB) {
 	{
 		$DB->query(
 			'alter table up_LitLab_book modify ISBN varchar(20) null;'
-		);
-	}
-});
-
-__litlabMigrate(18, function($updater, $DB) {
-	if ($updater->CanUpdateDatabase() && $updater->TableExists('up_LitLab_bookshelf'))
-	{
-		$DB->query(
-			'ALTER TABLE up_LitLab_bookshelf DROP COLUMN LIKES;'
 		);
 	}
 });
