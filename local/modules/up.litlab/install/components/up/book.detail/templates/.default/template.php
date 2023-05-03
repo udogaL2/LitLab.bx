@@ -96,7 +96,7 @@ else{
 							<<?= $divType ?> <?= isset($_SESSION['USER_ID']) ? "onclick=\"makeEstimation({$arResult['Book']['ID']}, {$rating})\"" : '' ?> class="r-box<?= isset($_SESSION['NAME']) ? '-lu' : '' ?>-<?=$rating?>-active"> </<?= $divType ?>>
 						<?php endfor; ?>
 				</div>
-				<div class="rating-num"><?= $arResult['Book']['BOOK_RATING'] ? number_format((float)$arResult['Book']['BOOK_RATING'], 2, '.', '') : Loc::getMessage('UP_LITLAB_NULL_RATING') ?></div>
+				<div class="rating-num"><?= $arResult['Book']['BOOK_RATING'] ? number_format((float)$arResult['Book']['BOOK_RATING'], 2, '.', '') . ' (' . $arResult['Book']['ESTIMATION_COUNT'] . ')' : Loc::getMessage('UP_LITLAB_NULL_RATING') ?></div>
 			</div>
 			<p class="book-detail-card-description-author"><?= $arResult['Authors']['NAME'] ?></p>
 			<div class="book-detail-card-description-rating"></div>

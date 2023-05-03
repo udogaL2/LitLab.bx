@@ -111,7 +111,7 @@ class Book
 	public function getDetailsById(int $id, array $status = ['public']): array|false
 	{
 		return BookTable::query()
-			->setSelect(['ID', 'TITLE', 'DESCRIPTION', 'IMAGE_ID', 'PUBLICATION_YEAR', 'ISBN', 'STATUS', 'DATE_CREATED', 'BOOK_RATING'])
+			->setSelect(['ID', 'TITLE', 'DESCRIPTION', 'IMAGE_ID', 'PUBLICATION_YEAR', 'ISBN', 'STATUS', 'DATE_CREATED', 'BOOK_RATING', 'ESTIMATION_COUNT'])
 			->where('ID', $id)
 			->whereIn('STATUS', $status)
 			->fetch()
@@ -282,9 +282,9 @@ class Book
 	public function getEstimation(int $book)
 	{
 		return BookTable::query()
-							 ->setSelect(['BOOK_RATING'])
+							 ->setSelect(['BOOK_RATING', 'ESTIMATION_COUNT'])
 							 ->where('ID', $book)
-							 ->fetchAll()[0]['BOOK_RATING']
+							 ->fetchAll()[0]
 			;
 	}
 

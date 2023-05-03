@@ -90,9 +90,10 @@ class BookDetailAjaxController extends \Bitrix\Main\Engine\Controller
 				return ['result' => false];
 			}
 
-			$averageEstimation = number_format((float)$bookApi->getEstimation($bookId), 2, '.', '');
+			$estimation = $bookApi->getEstimation($bookId);
+			$averageEstimation = number_format((float)$estimation['BOOK_RATING'], 2, '.', '');
 
-			return ['result' => true, 'estimationFlag' => !$estimationFlag, 'averageEstimation' => $averageEstimation];
+			return ['result' => true, 'estimationFlag' => !$estimationFlag, 'averageEstimation' => $averageEstimation, 'estimationCount' => $estimation['ESTIMATION_COUNT']];
 		}
 
 		return ['result' => false];

@@ -49,10 +49,7 @@ function makeEstimation(bookId, estimation)
 			const ratingNumber = document.querySelector('.book-detail-card-description .rating-num');
 			if (ratingNumber)
 			{
-				ratingNumber.innerHTML = response.data.averageEstimation;
-			}
-			else{
-				console.log(123);
+				ratingNumber.innerHTML = response.data.averageEstimation + ` (${response.data.estimationCount})`;
 			}
 		});
 }

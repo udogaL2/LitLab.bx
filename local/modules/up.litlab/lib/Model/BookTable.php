@@ -89,7 +89,11 @@ class BookTable extends DataManager
 
 			'BOOK_RATING' => new ExpressionField(
 			'BOOK_RATING', '(select (sum(ESTIMATION) / count(*)) from up_LitLab_rating where BOOK_ID = %s)', ['ID']
-	),
+			),
+
+			'ESTIMATION_COUNT' => new ExpressionField(
+				'ESTIMATION_COUNT', '(select count(*) from up_LitLab_rating where BOOK_ID = %s)', ['ID']
+			),
 		];
 	}
 
