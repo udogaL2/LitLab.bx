@@ -6,5 +6,4 @@ $MESS ['UP_LITLAB_LOGIN'] = "Войти";
 $MESS ['UP_LITLAB_REGISTER'] = "Зарегистрироваться";
 $MESS ['UP_LITLAB_COPYRIGHT'] = "Copyright 2023. Все права защищены.";
 $MESS ['UP_LITLAB_HOME'] = "Главная";
-$MESS ['UP_LITLAB_BOOKS'] = "Книги";
 

@@ -113,7 +113,6 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_BOOKSHELF_NOT_FOUND";
 			}
-			var_dump($this->arParams);
 			if (
 				($currentBookshelf['TITLE'] === $this->arParams['~TITLE']
 					&& $currentBookshelf['DESCRIPTION'] === $this->arParams['~DESCRIPTION']
