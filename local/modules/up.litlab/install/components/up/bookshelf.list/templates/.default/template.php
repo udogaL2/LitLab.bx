@@ -121,7 +121,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				<?php
 				endif; ?>
 				<div class="shelf-card-rating">
-					<!--				нужно будет организовать кнопку, а не картинки-->
 					<div class="shelf-likes">
 						<img class="shelf-likes-input" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" height="25px" width="30px">
 <!--						<input class="liked" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like-liked.png" height="25px" width="30px">-->

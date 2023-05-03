@@ -20,6 +20,9 @@ return function(RoutingConfigurator $routes) {
 	$routes->get('/user/{user_id}/', new PublicPageController('/local/modules/up.litlab/views/profile.php'));
 	$routes->get('/user/{user_id}/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/profile.php'));
 
+	$routes->get('/user/{user_id}/saved/', new PublicPageController('/local/modules/up.litlab/views/profile-saved.php'));
+	$routes->get('/user/{user_id}/saved/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/profile-saved.php'));
+
 	$routes->get('/book/{id}/', new PublicPageController('/local/modules/up.litlab/views/book-detail.php'));
 
 	$routes->get('/create/book/', new PublicPageController('/local/modules/up.litlab/views/book-create.php'));

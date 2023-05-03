@@ -16,7 +16,9 @@ if($_SESSION['NAME'] && $_SERVER['REQUEST_URI'] !== '/logout/')
 
 $APPLICATION->IncludeComponent('up:auth', '',[
 	'NAME' => (string)Context::getCurrent()->getRequest()->getPost('login'),
-	'PASSWORD' => (string)Context::getCurrent()->getRequest()->getPost('pass'),]
+	'PASSWORD' => (string)Context::getCurrent()->getRequest()->getPost('pass'),
+	'TOKEN'=> (string)Context::getCurrent()->getRequest()->getPost('token'),
+	]
 );
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

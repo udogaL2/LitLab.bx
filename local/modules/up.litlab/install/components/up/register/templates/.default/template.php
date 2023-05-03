@@ -35,6 +35,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 	<div class="auth-form-content">
 		<p class="title-form"><?=Loc::getMessage('UP_LITLAB_REGISTER_TITLE')?></p>
 		<form class="login-form" action="" method="post">
+			<input type="hidden" name="token" value="<?=$arResult['TOKEN']?>">
 			<label><?=Loc::getMessage('UP_LITLAB_LOGIN')?></label>
 			<input required class="auth-input" name="login" type="text">
 			<label><?=Loc::getMessage('UP_LITLAB_NICKNAME')?></label>
@@ -42,7 +43,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 			<label><?=Loc::getMessage('UP_LITLAB_PASSWORD')?></label>
 			<input required class="auth-input" name="pass" type="password"/>
 			<input type="submit" class="auth-form-btn" value="Зарегистрироваться">
-<!--			<input type="hidden" name="token" value="--><?//= $token?><!--">-->
 		</form>
 		<a id="auth-page-btn" href="/auth/"><?=Loc::getMessage('UP_LITLAB_AUTH')?></a>
 	</div>

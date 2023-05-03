@@ -36,7 +36,6 @@ class LitlabProfileComponent extends CBitrixComponent
 		$this->arResult['userBookshelfApi'] = $userBookshelfApi;
 		$this->arResult['FormattingApi'] = $formattingApi;
 		$this->arResult['userNickName'] = htmlspecialcharsbx($this->arResult['userApi']->getUserNickname($this->arResult['USER_ID']));
-
 	}
 
 	protected function logout(){

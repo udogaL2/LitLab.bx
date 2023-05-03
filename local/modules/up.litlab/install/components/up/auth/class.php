@@ -26,6 +26,10 @@ class LitlabAuthComponent extends CBitrixComponent
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		$validApi = new \Up\Litlab\API\Validating();
+		$tokenApi = new \Up\Litlab\API\Token();
+		$this->arResult['formattingApi'] = new \Up\Litlab\API\Formatting();
+
+		$this->arResult['TOKEN'] = $tokenApi->createToken();
 		if($request === "POST"){
 			if (!is_string($this->arParams['~NAME']) && !is_string($this->arParams['~PASSWORD']))
 			{
@@ -39,6 +43,11 @@ class LitlabAuthComponent extends CBitrixComponent
 			if ($isValidForm!==true){
 				$this->arResult['ERROR'] = $isValidForm;
 			}
+			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+			if($checkToken!==true){
+				$this->arResult['ERROR'] = $checkToken;
+			}
+
 			$_SESSION['NAME'] = $this->arParams['~NAME'];
 			$_SESSION['PASSWORD'] = $this->arParams['~PASSWORD'];
 
@@ -59,7 +68,7 @@ class LitlabAuthComponent extends CBitrixComponent
 			)
 			{
 				$userId = $userApi->getUserId($this->arResult['NAME']);
-				$_SESSION['USER'] = $this->arResult['NAME'];
+				$_SESSION['USER'] =$this->arResult['NAME'];
 				$_SESSION['USER_ID'] = $userId;
 				LocalRedirect(sprintf("/user/%s/", $userId));
 			}

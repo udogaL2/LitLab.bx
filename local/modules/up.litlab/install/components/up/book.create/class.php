@@ -6,7 +6,7 @@ use Up\Litlab\API\Book;
 use Up\Litlab\API\User;
 use Up\Litlab\API\Validating;
 
-class LitlabBookDetailfComponent extends CBitrixComponent
+class LitlabBookCreateComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
@@ -24,6 +24,8 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 	{
 		$validApi = new Validating;
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
+		$tokenApi = new \Up\Litlab\API\Token();
+		$this->arResult['TOKEN'] = $tokenApi->createToken();
 		if($request === "POST")
 		{
 			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
@@ -33,6 +35,11 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 			$isValidAuthor = $validApi->validate($this->arParams['~AUTHOR'], 1, 255);
 			if ($isValidAuthor!==true){
 				$this->arResult['ERROR'] = $isValidAuthor;
+			}
+
+			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+			if($checkToken!==true){
+				$this->arResult['ERROR'] = $checkToken;
 			}
 
 			$this->arResult['TITLE'] = ($this->arParams['~TITLE']);
@@ -49,10 +56,10 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		session_start();
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		$BookAPI = new Book();
-		$userApi = new User;
+
 		if (empty($this->arResult['ERROR']))
 		{
-			if (!isset($_SESSION['NAME'])){
+			if (!isset($_SESSION['USER_ID'])){
 				LocalRedirect('/auth/');
 			}
 
@@ -62,10 +69,10 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 
 				if (!isset($response))
 				{
-					$this->arParams['ERROR'] = "ERROR3";
+					$this->arParams['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 					$this->includeComponentTemplate();
 				}
-				LocalRedirect(sprintf("/user/%s/", $userApi->getUserId($_SESSION['NAME'])));
+				LocalRedirect(sprintf("/user/%s/", $_SESSION['USER_ID']));
 			}
 		}
 	}

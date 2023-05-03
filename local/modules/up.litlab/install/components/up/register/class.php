@@ -22,6 +22,8 @@ class LitlabRegisterComponent extends CBitrixComponent
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		$validApi = new \Up\Litlab\API\Validating();
+		$tokenApi = new \Up\Litlab\API\Token();
+		$this->arResult['TOKEN'] = $tokenApi->createToken();
 		if ($request === "POST")
 		{
 			if (
@@ -41,6 +43,10 @@ class LitlabRegisterComponent extends CBitrixComponent
 			if ($isValidForm!==true)
 			{
 				$this->arResult['ERROR'] = $isValidForm;
+			}
+			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+			if($checkToken!==true){
+				$this->arResult['ERROR'] = $checkToken;
 			}
 
 			$this->arResult['NAME'] = $this->arParams['~NAME'];

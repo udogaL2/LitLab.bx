@@ -24,6 +24,8 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		$validApi = new \Up\Litlab\API\Validating();
+		$tokenApi = new \Up\Litlab\API\Token();
+		$this->arResult['TOKEN'] = $tokenApi->createToken();
 		if($request === "POST")
 		{
 			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
@@ -33,6 +35,10 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 			$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 2000);
 			if ($isValidDescription!==true){
 				$this->arResult['ERROR'] = $isValidDescription;
+			}
+			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+			if($checkToken!==true){
+				$this->arResult['ERROR'] = $checkToken;
 			}
 
 			$this->arResult['TITLE'] = $this->arParams['~TITLE'];
@@ -51,7 +57,7 @@ class LitlabBookshelfCreateComponent extends CBitrixComponent
 		$userApi = new User;
 		if (empty($this->arResult['ERROR']))
 		{
-			if (!isset($_SESSION['NAME'])){
+			if (!isset($_SESSION['USER_ID'])){
 				LocalRedirect('/auth/');
 			}
 			$this->arResult['CREATOR_ID'] = $userApi->getUserId($_SESSION['NAME']);

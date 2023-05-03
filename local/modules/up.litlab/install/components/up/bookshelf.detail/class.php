@@ -68,7 +68,7 @@ class LitlabBookshelfDetailComponent extends CBitrixComponent
 		);
 		$this->arResult['Bookshelf']['Creator'] = $userApi->getCreatorInfo($this->arParams['USER_ID']);
 
-		if ($_SESSION['NAME'])
+		if ($_SESSION['USER_ID'])
 		{
 			$bookshelfId = $this->arParams['BOOKSHELF_ID'];
 			$userId = ServiceLocator::getInstance()->get('User')->getUserId($_SESSION['NAME']);

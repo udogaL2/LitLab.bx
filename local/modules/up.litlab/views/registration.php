@@ -16,7 +16,9 @@ if($_SESSION['NAME'])
 $APPLICATION->IncludeComponent('up:register', '',[
    'NAME' => (string)Context::getCurrent()->getRequest()->getPost('login'),
    'USERNAME' => (string)Context::getCurrent()->getRequest()->getPost('username'),
-   'PASSWORD' => (string)Context::getCurrent()->getRequest()->getPost('pass'),]
+   'PASSWORD' => (string)Context::getCurrent()->getRequest()->getPost('pass'),
+   'TOKEN'=> (string)Context::getCurrent()->getRequest()->getPost('token'),
+	]
 );
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

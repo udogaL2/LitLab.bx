@@ -15,8 +15,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 <main class="profile-main">
 	<?
-		$userId = (string)$arResult['USER_ID'];
-	if (isset($_SESSION['NAME']) && $userId===$arResult['userApi']->getUserId($_SESSION['NAME'])):?>
+	if (isset($_SESSION['USER_ID']) && (string)$arResult['USER_ID']===$_SESSION['USER_ID']):?>
 	<div class="user-header">
 		<p><?= Loc::getMessage('UP_LITLAB_YOURS_BOOKSHELVES') ?></p>
 		<a href="/create/bookshelf/"><?=Loc::getMessage('UP_LITLAB_CREATE_BOOKSHELF')?></a>
@@ -24,17 +23,19 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	<div class="user-profile">
 		<div class="user-profile-card">
 
-			<p class="user-profile-card-nickname"><?=$arResult['userApi']->getUserNickname($userId)?></p>
+			<p class="user-profile-card-nickname"><?=$arResult['userNickName']?></p>
 			<hr>
 			<a href="/create/book/" style="text-decoration: none"><?=Loc::getMessage('UP_LITLAB_ADD_BOOK')?></a>
+			<hr>
+			<a href="/user/<?=$arResult['USER_ID']?>/saved/" style="text-decoration: none"><?=Loc::getMessage('UP_LITLAB_SAVED')?></a>
 			<hr>
 			<a href="/logout/"><?=Loc::getMessage('UP_LITLAB_LOGOUT')?></a>
 		</div>
 
 	<? else:
-		if ($arResult['userApi']->getCreatorInfo((int)$userId)!==false):?>
+		if ($arResult['userApi']->getCreatorInfo((int)$arResult['USER_ID'])!==false):?>
 		<div class="user-header">
-			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['userApi']->getUserNickname($userId)?></p>
+			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELVES_OF_USER')?> <?=$arResult['userNickName']?></p>
 		</div>
 
 		<?// else:
@@ -47,11 +48,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			$nav = new \Bitrix\Main\UI\PageNavigation('page');
 			$nav->allowAllRecords(false)->setPageSize(4)->initFromUri();
 
-			if (isset($_SESSION['NAME']) && $userId===$arResult['userApi']->getUserId($_SESSION['NAME']))
+			if (isset($_SESSION['USER_ID']) && (string)$arResult['USER_ID']===$_SESSION['USER_ID'])
 			{
 				$publicPage = 0;
 				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
-					$userId,
+					$arResult['USER_ID'],
 					['public', 'private', 'moderated'],
 					$nav->getLimit(),
 					$nav->getOffset(),
@@ -60,7 +61,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			else{
 				$publicPage = 1;
 				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
-					$userId,
+					$arResult['USER_ID'],
 					['public'],
 					$nav->getLimit(),
 					$nav->getOffset(),
@@ -77,14 +78,15 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				);
 			}
 			else{
-			$nav->setRecordCount($arResult['userBookshelfApi']->getUserBookshelfCount($userId));
 			foreach ($userBookshelves as $userBookshelf):
 					$userBookshelf = $arResult['FormattingApi']->prepareText($userBookshelf);
 					$image = $arResult['bookApi']->getImage($userBookshelf['ID']);
 			?>
-				<? if ($publicPage === 1):?>
+				<? if ($publicPage === 1):
+				$nav->setRecordCount($arResult['userBookshelfApi']->getUserBookshelfCount($arResult['USER_ID'], ['public']));?>
 				<div class="user-bookshelf" style="width: 45%">
-				<?else:?>
+				<?else:
+				$nav->setRecordCount($arResult['userBookshelfApi']->getUserBookshelfCount($arResult['USER_ID']));?>
 				<div class="user-bookshelf">
 				<? endif;?>
 				<img src="<?= CFile::GetPath($image) ?>" height="200px" width="150px">
@@ -115,32 +117,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<? endif;?>
 		<?php endforeach;?>
 		<?}?>
-
-		<?php
-		//
-		// 	$savedBookshelves = $arResult['userBookshelfApi']->getListOfSavedBookshelf(
-		// 		$userId,
-		// 		$nav->getRecordCount()%$nav->getLimit(),
-		// 		$nav->getOffset()
-		// 	);
-		// if($savedBookshelves[0]):
-		// foreach ($savedBookshelves as $savedBookshelf):
-		// 	$savedBookshelf = $arResult['FormattingApi']->prepareText($savedBookshelf);
-		// 	$image = $arResult['bookApi']->getImage($savedBookshelf['ID']);
-		// 	?>
-		<!--	<div class="user-bookshelf">-->
-		<!--		<img src="--><?//= CFile::GetPath($image) ?><!--" height="200px" width="150px">-->
-		<!--		<div class="user-bookshelf-description">-->
-		<!--			<a href="/user/--><?//=$savedBookshelf['CREATOR_ID']?><!--/bookshelf/--><?//=$savedBookshelf['ID']?><!--/">--><?//=$savedBookshelf['TITLE']?><!--</a>-->
-		<!--			<span>--><?//=$savedBookshelf['DESCRIPTION']?><!--</span>-->
-		<!--		</div>-->
-		<!--	<div class="user-bookshelf-buttons">-->
-		<!--		<input style="margin-left: 90px;" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="30px" width="25px">-->
-		<!--	</div>-->
-		<!--	</div>-->
-		<!--	<hr width="100%">-->
-		<!--	--><?php //endforeach;?>
-		<?//endif;?>
 		</div>
 	</div>
 	<?php

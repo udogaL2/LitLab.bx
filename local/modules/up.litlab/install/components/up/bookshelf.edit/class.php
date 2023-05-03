@@ -27,11 +27,13 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 	protected function prepareTemplateParams()
 	{
 		$bookshelfApi = new Bookshelf();
-
+		$tokenApi = new \Up\Litlab\API\Token();
 		$validApi = new \Up\Litlab\API\Validating();
 		$formattingApi = new \Up\Litlab\API\Formatting();
 		$this->arResult['formattingApi'] = $formattingApi;
 		$this->arResult['bookshelfApi'] = $bookshelfApi;
+		$this->arResult['bookApi'] = new Book();
+
 		$this->arResult['BOOKSHELF_ID'] = $this->arParams['BOOKSHELF_ID'];
 		$this->arResult['STATUS'] = $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'];
 
@@ -66,11 +68,10 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
 			$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 2000);
 			$isValidComment = $validApi->validate($this->arParams['~COMMENT'], 1, 400);
-
 			if(($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['TITLE'] !== 'Буду читать'
 				&& $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['TITLE'] !== 'Прочитано')){
 					if (!((($isValidTitle!==true || $isValidDescription!==true))
-						xor $isValidComment!==true))
+						xor ($isValidComment!==true && !$this->arParams['BOOK-DELETED'])))
 					{
 
 						if ($isValidTitle!==true){
@@ -86,7 +87,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			}
 			else{
 				if (!($isValidDescription!==true
-					xor $isValidComment!==true))
+					xor ($isValidComment!==true && !$this->arParams['BOOK-DELETED'])))
 				{
 					if ($isValidDescription!==true){
 						$this->arResult['ERROR'] = $isValidDescription;
@@ -112,6 +113,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_BOOKSHELF_NOT_FOUND";
 			}
+			var_dump($this->arParams);
 			if (
 				($currentBookshelf['TITLE'] === $this->arParams['~TITLE']
 					&& $currentBookshelf['DESCRIPTION'] === $this->arParams['~DESCRIPTION']
@@ -122,6 +124,10 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			)
 			{    // данные не были как-либо отредактированы
 				$this->arResult['ERROR'] = "UP_LITLAB_DATA_NOT_BEEN_EDITED";
+			}
+			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+			if($checkToken!==true){
+				$this->arResult['ERROR'] = $checkToken;
 			}
 				$this->arResult['DELETED'] = $this->arParams['DELETED'];
 				$this->arResult['STATUS'] = $this->arParams['~STATUS'];
@@ -142,6 +148,10 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if ($request === 'POST')
 		{
+			if (!isset($_SESSION['USER_ID']))
+			{
+				LocalRedirect('/auth/');
+			}
 			if ($this->arResult['STATUS'] === 'private')
 			{
 				if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] !== 'private')
@@ -161,7 +171,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 				}
 			}
 
-			if ($this->arResult['STATUS'] === null)
+			if ($this->arResult['STATUS'] === null && !empty($this->arResult['COMMENT']))//если происходит изменение комментария
 			{
 				if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] === 'public')
 				{
@@ -177,6 +187,10 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if (empty($this->arResult['ERROR']))
 		{
+			if (!isset($_SESSION['USER_ID']))
+			{
+				LocalRedirect('/auth/');
+			}
 			if ($request === 'POST')
 			{
 				if($this->arResult['TAGS-CREATED'])
@@ -255,6 +269,10 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if (empty($this->arResult['ERROR']))
 		{
+			if (!isset($_SESSION['USER_ID']))
+			{
+				LocalRedirect('/auth/');
+			}
 			if ($request === 'POST' && $this->arResult['DELETED'])
 			{
 				$bookshelfApi->deleteTagsOfBookshelf([$this->arResult['DELETED']], $this->arResult['BOOKSHELF_ID']);
@@ -276,6 +294,10 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if (empty($this->arResult['ERROR']))
 		{
+			if (!isset($_SESSION['USER_ID']))
+			{
+				LocalRedirect('/auth/');
+			}
 			if ($request === 'POST' && $this->arResult['COMMENT'])
 			{
 				$bookshelfApi->addComments($this->arResult['BOOKSHELF_ID'], $this->arResult['ITEM_ID'], $this->arResult['COMMENT']);
@@ -296,13 +318,14 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 
 		if (empty($this->arResult['ERROR']))
 		{
-			if (!isset($_SESSION['NAME']))
+			if (!isset($_SESSION['USER_ID']))
 			{
 				LocalRedirect('/auth/');
 			}
 			$bookshelf = $this->arResult['bookshelfApi']->getBookshelfById((int)$this->arResult['BOOKSHELF_ID']);
 			if ($request === 'POST')
 			{
+
 				if ($bookshelf['TITLE'] === 'Буду читать' || $bookshelf['TITLE'] === 'Прочитано')
 				{
 					$response = $bookshelfApi->updateBookshelf((int)$this->arResult['BOOKSHELF_ID'], [

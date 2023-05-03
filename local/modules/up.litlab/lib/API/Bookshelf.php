@@ -139,13 +139,13 @@ class Bookshelf
 		return $result;
 	}
 
-	public function getComments(int $bookshelfId, string $status = 'public'): array|false
+	public function getComments(int $bookshelfId): array|false
 	{
 		$comments = BookshelfTable::query()
 								  ->setSelect(['B_COMMENT' => 'BOOKSHELF.COMMENT',
 											   'B_BOOK_ID' => 'BOOKSHELF.BOOK_ID'])
 								  ->where('ID', $bookshelfId)
-								  ->where('STATUS', $status)
+								  // ->where('STATUS', $status)
 								  ->fetchAll()
 		;
 
@@ -172,7 +172,7 @@ class Bookshelf
 	{
 		$result = count(UserTable::query()
 								   ->setSelect(['BOOKSHELVES.ID'])
-								   ->where('ID', $userId)
+								   ->setFilter(['ID'=>$userId, 'BOOKSHELVES.STATUS'=>'public'])
 								   ->fetchAll())
 			;
 		return $result;

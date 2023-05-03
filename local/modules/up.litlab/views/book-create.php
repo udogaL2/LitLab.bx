@@ -12,6 +12,7 @@ $APPLICATION->SetTitle("LitLab");
 $APPLICATION->IncludeComponent('up:book.create', '', [
 	'TITLE' => (string)Context::getCurrent()->getRequest()->getPost('input-book-title'),
 	'AUTHOR' => (string)Context::getCurrent()->getRequest()->getPost('input-book-author'),
+	'TOKEN'=> (string)Context::getCurrent()->getRequest()->getPost('token'),
 ]);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

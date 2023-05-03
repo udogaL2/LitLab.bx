@@ -45,6 +45,7 @@ class BookDetailAjaxController extends \Bitrix\Main\Engine\Controller
 			{
 				$bookshelfApi->deleteBookOfBookshelf([$bookId], $bookshelfId);
 			}
+			$bookshelfApi->updateBookshelf($bookshelfId, ['DATE_UPDATED'=>new \Bitrix\Main\Type\DateTime()]);
 			return ['result'=>true, 'addedFlag'=>!$addFlag];
 		}
 

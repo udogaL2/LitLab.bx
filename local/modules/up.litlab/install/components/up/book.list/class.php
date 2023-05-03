@@ -27,6 +27,7 @@ class LitlabBookListComponent extends CBitrixComponent
 
 	protected function fetchBookList()
 	{
+
 		$bookApi = ServiceLocator::getInstance()->get('Book');
 		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 		$formattingApi = ServiceLocator::getInstance()->get('Formatting');

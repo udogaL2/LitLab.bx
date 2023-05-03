@@ -28,6 +28,7 @@ if (!empty($arResult['ERROR']))
 <main class="bookshelf-create-main">
 	<p class="bookshelf-create-main-title"><?= Loc::getMessage('UP_LITLAB_BOOK_ADD_REQUEST') ?></p>
 	<form class="bookshelf-add-form" action="" method="post">
+		<input type="hidden" name="token" value="<?=$arResult['TOKEN']?>">
 		<div class="bookshelf-create-name">
 			<p><?= Loc::getMessage('UP_LITLAB_TITLE') ?></p>
 			<input required type="text" name="input-book-title">

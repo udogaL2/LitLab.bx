@@ -34,11 +34,12 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 	<div class="auth-form-content">
 		<p class="title-form"><?= Loc::getMessage('UP_LITLAB_LOGIN_TITLE') ?></p>
 		<form class="login-form" action="" method="post">
+			<input type="hidden" name="token" value="<?=$arResult['TOKEN']?>">
 			<label><?= Loc::getMessage('UP_LITLAB_LOGIN') ?></label>
 			<input required class="auth-input" name="login" type="text" id="auth-login" minlength="5" maxlength="62"
 				<?
-				if (isset($_SESSION['NAME'])):?>
-				   value="<?=$_SESSION['NAME']?>"
+				if (isset($_SESSION['USER'])):?>
+				   value="<?=htmlspecialcharsbx($_SESSION['USER'])?>"
 				<? endif;?>
 				>
 			<label><?= Loc::getMessage('UP_LITLAB_PASSWORD') ?></label>

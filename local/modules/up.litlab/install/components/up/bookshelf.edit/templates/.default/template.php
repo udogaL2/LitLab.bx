@@ -29,15 +29,14 @@ CJSCore::Init(array('ajax'));
 ?>
 
 <?php
+$arResult['bookshelf'] = $arResult['bookshelfApi']->getBookshelfById((int)$arResult['BOOKSHELF_ID']);
+$arResult['bookshelfTags'] = $arResult['bookshelfApi']->getTags($arResult['BOOKSHELF_ID']);
+$arResult['booksComments'] = $arResult['bookshelfApi']->getComments($arResult['BOOKSHELF_ID']);
+$arResult['booksOfBookshelf'] = $arResult['bookApi']->getListOfBookByBookshelf($arResult['BOOKSHELF_ID'], null, 0, 'public');
+	$tokenApi = new \Up\Litlab\API\Token();
+	$arResult['bookshelf'] = $arResult['formattingApi']->prepareText($arResult['bookshelf']);
 
-	$bookshelfId = $arResult['BOOKSHELF_ID'];
-	$bookshelf = $arResult['bookshelfApi']->getBookshelfById((int)$bookshelfId);
-	$bookshelfTags = $arResult['bookshelfApi']->getTags($bookshelfId);
-
-	$booksComments = $arResult['bookshelfApi']->getComments($bookshelfId, $bookshelf['STATUS']);
-	$bookshelf = $arResult['formattingApi']->prepareText($bookshelf);
-
-	if(!(isset($_SESSION['USER_ID']) && $_SESSION['USER_ID']==$bookshelf['CREATOR_ID'])):
+	if(!(isset($_SESSION['USER_ID']) && (int)$_SESSION['USER_ID']==$arResult['bookshelf']['CREATOR_ID']) || $arResult['bookshelf']['STATUS']==='deleted'):
 		$APPLICATION->IncludeComponent(
 			'up:system.messeage',
 			'',
@@ -49,23 +48,23 @@ CJSCore::Init(array('ajax'));
 <section class="bookshelf-create-main">
 	<p class="bookshelf-create-main-title"><?=Loc::getMessage('UP_LITLAB_EDIT_BOOKSHELF')?></p>
 	<form class="bookshelf-add-form" action="" method="post">
-
-		<?if($bookshelf['TITLE']==='Буду читать' || $bookshelf['TITLE']==='Прочитано'):?>
+		<input type="hidden" name="token" value="<?=$tokenApi->createToken();?>">
+		<?if($arResult['bookshelf']['TITLE']==='Буду читать' || $arResult['bookshelf']['TITLE']==='Прочитано'):?>
 		<div class="bookshelf-create-name" style="justify-content: flex-start">
 			<p style="margin-right:20px"><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TITLE')?></p>
-			<p><?=$bookshelf['TITLE']?></p>
+			<p><?=$arResult['bookshelf']['TITLE']?></p>
 			<?else:?>
 			<div class="bookshelf-create-name" style="justify-content: flex-start">
 				<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TITLE')?></p>
-				<input name="title" required type="text" value="<?=$bookshelf['TITLE']?>">
-			<?endif;?>
+				<input name="title" required type="text" value="<?=$arResult['bookshelf']['TITLE']?>">
+				<?endif;?>
 		</div>
 		<div class="bookshelf-create-description">
 			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_DESC')?></p>
-			<input required class="bookshelf-edit-descr" type="text" value="<?=$bookshelf['DESCRIPTION']?>" name="description">
+			<input required class="bookshelf-edit-descr" type="text" value="<?=$arResult['bookshelf']['DESCRIPTION']?>" name="description">
 		</div>
 		<div style="justify-content: space-evenly;">
-			<?if ($bookshelf['STATUS']==='private' || $bookshelf['STATUS']==='moderated'):?>
+			<?if ($arResult['bookshelf']['STATUS']==='private' || $arResult['bookshelf']['STATUS']==='moderated'):?>
 				<label>
 					<input type="radio" name="status" value="private" checked> Приватная
 				</label>
@@ -85,7 +84,7 @@ CJSCore::Init(array('ajax'));
 
 		<div class="bookshelf-create-description two" style="">
 		<?
-		if (!$bookshelfTags[0]):?>
+		if (!$arResult['bookshelfTags'][0]):?>
 			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?>
 				<a class="button-add-tag" onclick="return createTag()">+</a>
 			</p>
@@ -98,7 +97,7 @@ CJSCore::Init(array('ajax'));
 			<a class="button-add-tag" onclick="return createTag()">+</a></p>
 			<section class="shelf-card-tags-list">
 				<?php
-				foreach ($arResult['formattingApi']->prepareText($bookshelfTags) as $tag):
+				foreach ($arResult['formattingApi']->prepareText($arResult['bookshelfTags']) as $tag):
 					$tagId = $arResult['bookshelfApi']->getTagByName($tag)['ID']?>
 				<section id="<?=$tagId?>">
 					<input required class="bookshelf-edit-tag" type="text" value="<?= $tag ?>" name="tags-created[]" style="
@@ -114,21 +113,23 @@ CJSCore::Init(array('ajax'));
 	</form>
 
 <?php
-$booksOfBookshelf = $arResult['bookApi']->getListOfBookByBookshelf($bookshelfId, null, 0, 'public');
-if ($booksOfBookshelf !== []):?>
+
+if ($arResult['booksOfBookshelf'] !== []):?>
 	<hr width="100%">
 	<section class="user-bookshelf-list bookshelf-edit-books">
-	<? foreach ($booksOfBookshelf as $book):?>
+	<? foreach ($arResult['booksOfBookshelf'] as $book):
+		$book = $arResult['formattingApi']->prepareText($book)?>
 	<section class="user-bookshelf" ">
 		<img height="200px" width="150px" src="<?= CFile::GetPath($book['IMAGE_ID']) ?>">
 		<form method="post" style="width: 100%;display: flex;align-items: baseline;margin-left: 50px;">
+			<input type="hidden" name="token" value="<?=$tokenApi->createToken();?>">
 		<section class="user-bookshelf-description">
 			<p><?=$book['TITLE']?></p>
 			<p style="font-size: 18px"><?=$arResult['bookApi']->getAuthors($book['ID'])[0]['NAME']?></p>
 			<section style="display: flex; align-items: flex-end;">
 					<?
-					if ($booksComments[$book['ID']][0]):?>
-					<input class="bookshelf-edit-comment" type="text" value="<?=($booksComments[$book['ID']])?>" name="comment">
+					if ($arResult['booksComments'][$book['ID']][0]):?>
+					<input class="bookshelf-edit-comment" type="text" value="<?=htmlspecialcharsbx($arResult['booksComments'][$book['ID']])?>" name="comment">
 					<?else:?>
 						<input class="bookshelf-edit-comment" type="text" value="" placeholder="Комментарий..." name="comment">
 					<?endif;?>
@@ -139,6 +140,8 @@ if ($booksOfBookshelf !== []):?>
 		</form>
 				<section class="user-bookshelf-buttons">
 					<form method="post">
+						<input type="hidden" name="token" value="<?=$tokenApi->createToken();?>">
+						<input type="hidden" name="deleteBook" value="<?=$book['ID']?>">
 						<input type="image" onclick="removeBook(<?=$book['ID']?>, <?=$arResult['BOOKSHELF_ID']?>)" src="\local\modules\up.litlab\install\templates\litlab\images\icon-trash.png" height="30px" width="25px">
 					</form>
 				</section>
@@ -151,10 +154,10 @@ if ($booksOfBookshelf !== []):?>
 </section>
 
 </div>
-<?if($bookshelf['TITLE']!=='Буду читать' && $bookshelf['TITLE']!=='Прочитано'):?>
+<?if($arResult['bookshelf']['TITLE']!=='Буду читать' && $arResult['bookshelf']['TITLE']!=='Прочитано'):?>
 	<div style="width: 100%; text-align: center; display: block;">
 		<form method="post">
-			<button type="submit" onclick="removeBookshelf(<?=$arResult['BOOKSHELF_ID']?>, <?=$bookshelf['CREATOR_ID']?>)" class="bookshelf-edit-save" style="background-color: rgba(216,0,0,0.83)">Удалить полку</button>
+			<button type="submit" onclick="removeBookshelf(<?=$arResult['BOOKSHELF_ID']?>, <?=$arResult['bookshelf']['CREATOR_ID']?>)" class="bookshelf-edit-save" style="background-color: rgba(216,0,0,0.83)">Удалить полку</button>
 		</form>
 	</div>
 <?endif;?>

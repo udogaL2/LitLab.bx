@@ -9,6 +9,7 @@ $MESS ['UP_LITLAB_BOOKSHELF_MISSING'] = "Книжная полка не найд
 $MESS ['UP_LITLAB_PAGE_NOT_FOUND'] = "Страница не найдена."; //
 $MESS ['UP_LITLAB_ACCESS_IS_RESTRICTED'] = "Доступ ограничен."; //
 
+$MESS ['UP_LITLAB_BAD_TOKEN'] = "Доступ к этому действию закрыт.";
 $MESS ['UP_LITLAB_SAVING_ERROR'] = "При сохранении произошла ошибка. Проверьте правильность введенных данных и повторите попытку позже."; //ERROR3
 $MESS ['UP_LITLAB_TYPE_ERROR'] = "Получен неверный тип переданных параметров. Попробуйте ещё раз."; //ERROR1
 $MESS ['UP_LITLAB_EMPTY_ERROR'] = "Обязательные поля не были заполнены. Попробуйте ещё раз."; //ERROR2

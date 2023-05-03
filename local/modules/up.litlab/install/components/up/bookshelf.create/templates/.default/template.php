@@ -28,6 +28,7 @@ if (!empty($arResult['ERROR']))
 <main class="bookshelf-create-main">
 	<p class="bookshelf-create-main-title"><?= Loc::getMessage('UP_LITLAB_ADD_NEW_BOOKSHELF_TITLE') ?></p>
 	<form class="bookshelf-add-form" action="" method="post">
+		<input type="hidden" name="token" value="<?=$arResult['TOKEN']?>">
 		<div class="bookshelf-create-name">
 			<p><?= Loc::getMessage('UP_LITLAB_TITLE') ?></p>
 			<input required type="text" name="input-bookshelf-name">
@@ -36,18 +37,9 @@ if (!empty($arResult['ERROR']))
 			<p><?= Loc::getMessage('UP_LITLAB_DESC') ?></p>
 			<input required class="bookshelf-edit-descr" type="text" style="" name="input-bookshelf-description">
 		</div>
-			<input class="bookshelf-create-save" type="submit" value="<?= Loc::getMessage('UP_LITLAB_SAVE') ?>">
-
+		<input class="bookshelf-create-save" type="submit" value="<?= Loc::getMessage('UP_LITLAB_SAVE') ?>">
 	</form>
 </main>
-<?php
-// $APPLICATION->IncludeComponent(
-// 	"bitrix:system.auth.registration",
-// 	"",
-// 	[
-// 	],
-// 	false
-// );
-// ?>
+
 
 

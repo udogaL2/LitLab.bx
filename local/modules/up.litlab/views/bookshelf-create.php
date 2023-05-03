@@ -12,6 +12,7 @@ $APPLICATION->SetTitle("LitLab");
 $APPLICATION->IncludeComponent('up:bookshelf.create', '', [
 	'TITLE' => (string)Context::getCurrent()->getRequest()->getPost('input-bookshelf-name'),
 	'DESCRIPTION' => (string)Context::getCurrent()->getRequest()->getPost('input-bookshelf-description'),
+	'TOKEN'=> (string)Context::getCurrent()->getRequest()->getPost('token'),
 ]);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");

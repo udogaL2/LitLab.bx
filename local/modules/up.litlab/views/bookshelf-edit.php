@@ -20,6 +20,8 @@ $APPLICATION->IncludeComponent(
 	'STATUS' => Context::getCurrent()->getRequest()->getPost('status'),
 	'ITEM_ID' => Context::getCurrent()->getRequest()->getPost('item'),
 	'DELETED' => Context::getCurrent()->getRequest()->getPost('delete'),
+	'BOOK-DELETED' => Context::getCurrent()->getRequest()->getPost('deleteBook'),
+	'TOKEN'=> (string)Context::getCurrent()->getRequest()->getPost('token'),
 ]);
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");

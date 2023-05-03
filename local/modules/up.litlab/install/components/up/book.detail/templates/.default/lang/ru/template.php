@@ -6,3 +6,4 @@ $MESS ['UP_LITLAB_GENRES'] = 'Жанры';
 $MESS ['UP_LITLAB_PUBLICATION_YEAR'] = 'Год публикации';
 $MESS ['UP_LITLAB_NULL_RATING'] = 'оценок нет';
 $MESS ['UP_LITLAB_RATING'] = 'Рейтинг книги';
+$MESS ['UP_LITLAB_NO_BOOKSHELVES'] = 'У вас еще нет созданных книжных полок';

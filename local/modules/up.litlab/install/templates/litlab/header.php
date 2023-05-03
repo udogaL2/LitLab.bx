@@ -38,14 +38,16 @@ use Up\Litlab\API\User;
 
 		<?php
 			$userApi = new User;
+			$formattingApi = new \Up\Litlab\API\Formatting();
 			$userId = $userApi->getUserId($_SESSION['USER']);
 		?>
 		<div class="navbar-end">
 			<div class="navbar-item">
 				<div class="buttons">
 
-					<?if (isset($_SESSION['USER'])):?>
-					<a href="/user/<?=$userId?>/" class="button is-primary"><?=$_SESSION['USER']?></a>
+					<?
+					if (isset($_SESSION['USER'])):?>
+					<a href="/user/<?=$userId?>/" class="button is-primary"><?=htmlspecialcharsbx($_SESSION['USER'])?></a>
 					<a href="/logout/" class="button is-light"><?= Loc::getMessage('UP_LITLAB_LOGOUT') ?></a>
 					<? else:?>
 					<a class="button is-primary" href="/auth/">

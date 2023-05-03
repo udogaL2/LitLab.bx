@@ -17,6 +17,7 @@ class Book
 			->where('STATUS', $status)
 			->setLimit($limit)
 			->setOffset($offset)
+			->setOrder(['BOOK_RATING'=>'DESC'])
 			;
 
 		if ($search)
