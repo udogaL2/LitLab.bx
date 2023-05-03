@@ -13,6 +13,15 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	die();
 }
 $this->addExternalCss("\local\modules\up.litlab\install\components\up\book.create\\templates\.default\add-style.css");
+
+if (!empty($arResult['ERROR']))
+{
+	$APPLICATION->IncludeComponent(
+		'up:system.messeage',
+		'',
+		['MESSEAGE' => $arResult['ERROR']],
+	);
+}
 ?>
 <?php
 if (!empty($arResult['ERROR']))
@@ -24,6 +33,8 @@ if (!empty($arResult['ERROR']))
 	);
 }
 ?>
+
+
 
 <main class="bookshelf-create-main">
 	<p class="bookshelf-create-main-title"><?= Loc::getMessage('UP_LITLAB_BOOK_ADD_REQUEST') ?></p>

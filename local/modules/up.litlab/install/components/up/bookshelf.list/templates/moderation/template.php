@@ -81,7 +81,7 @@ else{
 		$images = $arResult['BookApi']->getImages($bookshelfIds);
 		$creatorNames = $arResult['UserApi']->getUserNames($creatorIds);
 
-		$nav->setRecordCount($arResult['BookshelfApi']->getCount($arResult['SEARCH'], notEmpty: true));
+		$nav->setRecordCount($arResult['BookshelfApi']->getCount($arResult['SEARCH'], status: $arResult['STATUS'],));
 		foreach ($bookshelves as $bookshelf):
 			$bookshelf = $arResult['FormattingApi']->prepareText($bookshelf);
 			?>

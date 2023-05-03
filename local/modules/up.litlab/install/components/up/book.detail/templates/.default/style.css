@@ -82,7 +82,7 @@
 	width: 100%;
 }
 
-.book-detail-card-description-genres-links a{
+.book-detail-card-description-genres-links a, .book-detail-edit-link{
 	margin-right: 15px;
 	margin-bottom: 20px;
 	padding: 5px 10px;

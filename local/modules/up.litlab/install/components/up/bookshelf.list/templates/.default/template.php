@@ -36,7 +36,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 </div>
 
 <main class="shelf-list-main">
-
 	<?php
 	if ($arResult['USER']['ID'] && $arResult['USER']['ROLE'] === 'admin'):
 	?>
@@ -76,7 +75,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			$creatorIds[] = $bookshelf['CREATOR_ID'];
 		}
 
-		$savesCount = $arResult['BookshelfApi']->getCountOfSavedBookshelvesForEach($bookshelfIds);
 		$bookshelvesTag = $arResult['BookshelfApi']->getTagsInEachBookshelf($bookshelfIds);
 		$images = $arResult['BookApi']->getImages($bookshelfIds);
 		$creatorNames = $arResult['UserApi']->getUserNames($creatorIds);
@@ -123,15 +121,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				<div class="shelf-card-rating">
 					<div class="shelf-likes">
 						<img class="shelf-likes-input" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like.png" height="25px" width="30px">
-<!--						<input class="liked" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-like-liked.png" height="25px" width="30px">-->
 						<p class="likes-amount"><?= $bookshelf['LIKES'] ?></p>
 					</div>
 					<div class="shelf-likes">
 						<img class="shelf-save-input" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save.png" height="25px" width="20px">
-<!--						<input class="saved" type="hidden" src="\local\modules\up.litlab\install\templates\litlab\images\icon-save-saved.png" height="25px" width="20px">-->
-						<p class="save-amount"><?= $savesCount[$bookshelf['ID']][0] ? count(
-								$savesCount[$bookshelf['ID']]
-							) : 0 ?></p>
+						<p class="save-amount"><?= $bookshelf['SAVES'] ?></p>
 					</div>
 				</div>
 			</div>

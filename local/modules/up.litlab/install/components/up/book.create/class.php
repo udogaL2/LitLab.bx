@@ -31,15 +31,18 @@ class LitlabBookCreateComponent extends CBitrixComponent
 			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
 			if ($isValidTitle!==true){
 				$this->arResult['ERROR'] = $isValidTitle;
+				return;
 			}
 			$isValidAuthor = $validApi->validate($this->arParams['~AUTHOR'], 1, 255);
 			if ($isValidAuthor!==true){
 				$this->arResult['ERROR'] = $isValidAuthor;
+				return;
 			}
 
-			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+			$checkToken = $tokenApi->checkToken($this->arResult['TOKEN'], $_SESSION['TOKEN']);
 			if($checkToken!==true){
 				$this->arResult['ERROR'] = $checkToken;
+				return;
 			}
 
 			$this->arResult['TITLE'] = ($this->arParams['~TITLE']);
@@ -47,7 +50,7 @@ class LitlabBookCreateComponent extends CBitrixComponent
 			$this->arResult['IMAGE_ID'] = 1;
 			$this->arResult['PUBLICATION_YEAR'] = '2023';
 			$this->arResult['DATE_CREATED'] = new \Bitrix\Main\Type\DateTime();
-			$this->arResult['STATUS'] = 'moderated';
+			$this->arResult['STATUS'] = 'moderation';
 		}
 	}
 
@@ -71,6 +74,7 @@ class LitlabBookCreateComponent extends CBitrixComponent
 				{
 					$this->arParams['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 					$this->includeComponentTemplate();
+					return;
 				}
 				LocalRedirect(sprintf("/user/%s/", $_SESSION['USER_ID']));
 			}

@@ -48,4 +48,11 @@ return function(RoutingConfigurator $routes) {
 	// admin zone_____
 
 	$routes->get('/bookshelves/moderation/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-moderation.php'));
+	$routes->get('/bookshelves/moderation/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-moderation.php'));
+
+	$routes->get('/books/request/', new PublicPageController('/local/modules/up.litlab/views/book-request.php'));
+	$routes->get('/books/request/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/book-request.php'));
+
+	$routes->get('/edit/book/{book_id}/', new PublicPageController('/local/modules/up.litlab/views/book-edit.php'));
+	$routes->post('/edit/book/{book_id}/', new PublicPageController('/local/modules/up.litlab/views/book-edit.php'));
 };

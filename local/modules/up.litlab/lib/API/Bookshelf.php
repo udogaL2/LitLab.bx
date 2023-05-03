@@ -15,7 +15,7 @@ class Bookshelf
 	public function getListOfBookshelf(?int $limit = 3, int $offset = 0, array $status = ['public'], string $search = null, bool $notEmpty = false): array
 	{
 		$query = BookshelfTable::query()
-		 	->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
+		 	->setSelect(['ID', 'CREATOR_ID', 'SAVES', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
 			->whereIn('STATUS', $status)
 			->setLimit($limit)
 			->setOffset($offset)
@@ -34,12 +34,12 @@ class Bookshelf
 
 		return $query->fetchAll();
 	}
-	public function getListOfUserBookshelf(int $userId, array $status = ['public', 'private', 'moderated'], ?int $limit = 3, int $offset = 0): array
+	public function getListOfUserBookshelf(int $userId, array $status = ['public', 'private', 'moderation'], ?int $limit = 3, int $offset = 0): array
 	{
 		return BookshelfTable::query()
 							 ->setSelect(['*'])
-							 ->setFilter(array(['CREATOR_ID'=>$userId]))
-							 ->wherein('STATUS', $status)
+							 ->where('CREATOR_ID', $userId)
+							 ->whereIn('STATUS', $status)
 							 ->setLimit($limit)
 							 ->setOffset($offset)
 							 ->fetchAll()
@@ -145,7 +145,6 @@ class Bookshelf
 								  ->setSelect(['B_COMMENT' => 'BOOKSHELF.COMMENT',
 											   'B_BOOK_ID' => 'BOOKSHELF.BOOK_ID'])
 								  ->where('ID', $bookshelfId)
-								  // ->where('STATUS', $status)
 								  ->fetchAll()
 		;
 
@@ -263,9 +262,9 @@ class Bookshelf
 	}
 	public function deleteTagOfBookshelf(int $tagId, int $bookshelfId){
 		$bookshelf = BookshelfTable::getByPrimary($bookshelfId)->fetchObject();
-			$tag = TagTable::getByPrimary($tagId)->fetchObject();
-			$bookshelf->removeFromTags($tag);
-			$bookshelf->save();
+		$tag = TagTable::getByPrimary($tagId)->fetchObject();
+		$bookshelf->removeFromTags($tag);
+		$bookshelf->save();
 	}
 
 	public function addComments(int $bookshelfId, int $bookId, string $comment)

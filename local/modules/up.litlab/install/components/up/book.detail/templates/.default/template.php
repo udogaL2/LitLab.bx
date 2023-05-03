@@ -12,8 +12,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	die();
 }
 CJSCore::Init(array('ajax'));
-$bookshelfApi = new \Up\Litlab\API\Bookshelf();
-$userApi = new \Up\Litlab\API\User();
 if($arResult['MESSEAGE'])
 {
 	$APPLICATION->IncludeComponent(
@@ -31,8 +29,8 @@ else{
 			<img height="500px" width="400px" alt="" src="<?= $arResult['Book']['IMG_PATH'] ?>">
 			<?if(isset($_SESSION['USER_ID'])):?>
 			<div class="book-detail-card-buttons">
-				<? $arResult['Bookshelf']['ADDED']= $arResult['bookApi']->checkBookInBookshelf($arResult['Book']['ID'], $arResult['WILL_READ_ID']);
-				if($arResult['Bookshelf']['ADDED']):?>
+				<?php
+				if($arResult['Bookshelf']['ADDED_WILL_READ_ID']):?>
 					<button id="button-add-willread"  style="background-color: #84c25c" type="submit" onclick="addBookToWillReadBookshelf(
 					<?= $arResult['Book']['ID']?>,
 					<?= $arResult['WILL_READ_ID']?>)">
@@ -44,8 +42,8 @@ else{
 						<?= Loc::getMessage('UP_LITLAB_WILL_READ_BUTTON') ?></button>
 				<?endif;?>
 
-				<? $arResult['Bookshelf']['ADDED']= $arResult['bookApi']->checkBookInBookshelf($arResult['Book']['ID'], $arResult['READ_ID']);
-				if($arResult['Bookshelf']['ADDED']):?>
+				<?php
+				if($arResult['Bookshelf']['ADDED_READ_ID']):?>
 					<button id="button-add-read" style="background-color: #84c25c" type="submit" onclick="addBookToReadBookshelf(
 					<?= $arResult['Book']['ID']?>,
 					<?= $arResult['READ_ID']?>)">
@@ -58,9 +56,10 @@ else{
 				<?endif;?>
 			</div>
 			<button style="padding: 10px 50px; background-color: #7fb255; border: 1px solid #65B95E" class="popup" onclick="">+ <?= Loc::getMessage('UP_LITLAB_ADD_BUTTON') ?></button>
+
 			<main id="listUserBookshelves" class="list-user-bookshelf" style="display: none; flex-direction: column">
 				<input style="width: 20px; margin:-20px 0 20px 400px" type="submit" value="✖">
-			<?if($arResult['Bookshelves'][0]):
+			<?php if($arResult['Bookshelves'][0]):
 				foreach ($arResult['Bookshelves'] as $bookshelf):
 					$bookshelf = $arResult['formattingApi']->prepareText($bookshelf);
 					$arResult['Bookshelf']['ADDED']= $arResult['bookApi']->checkBookInBookshelf($arResult['Book']['ID'], $bookshelf['ID']);?>
@@ -104,20 +103,31 @@ else{
 			<p class="book-detail-card-description-overview">
 					<span> <?= $arResult['Book']['DESCRIPTION'] ?> </span>
 			</p>
-			<div class="book-detail-card-description-genres">
-				<p style="margin-right: 20px"><?= Loc::getMessage('UP_LITLAB_GENRES') ?>:</p>
-				<div class="book-detail-card-description-genres-links">
-					<?php foreach ($arResult['Genre'] as $id => $genre): ?>
-					<a href="/books/?genre_id=<?= $id ?>"><?= $genre ?></a>
-					<?php endforeach; ?>
+			<?php if(array_values($arResult['Genre'])[0]): ?>
+				<div class="book-detail-card-description-genres">
+					<p style="margin-right: 20px"><?= Loc::getMessage('UP_LITLAB_GENRES') ?>:</p>
+					<div class="book-detail-card-description-genres-links">
+						<?php foreach ($arResult['Genre'] as $id => $genre): ?>
+						<a href="/books/?genre_id=<?= $id ?>"><?= $genre ?></a>
+						<?php endforeach; ?>
+					</div>
 				</div>
-			</div>
+			<?php
+			endif;
+			?>
 			<div class="book-detail-card-description-ISBN">
 				<p style="margin-right: 20px">ISBN: <?= $arResult['Book']['ISBN'] ? : 'отсутствует' ?></p>
 			</div>
 			<div class="book-detail-card-description-publication-date">
 				<p style="margin:20px 0"><?= Loc::getMessage('UP_LITLAB_PUBLICATION_YEAR') ?>: <?= $arResult['Book']['PUBLICATION_YEAR'] ? : 'отсутствует' ?></p>
 			</div>
+			<?php
+			if ($arResult['USER']['ROLE'] === 'admin'):
+				?>
+				<a class="book-detail-edit-link" href="/edit/book/<?=$arResult['Book']['ID']?>/" style="padding: 10px 50px; background-color: #7fb255; border: 1px solid #65B95E"><?=Loc::getMessage('UP_LITLAB_EDIT_BUTTON')?></a>
+			<?php
+			endif;
+			?>
 		</div>
 	</div>
 </main>

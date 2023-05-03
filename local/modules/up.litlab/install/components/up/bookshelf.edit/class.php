@@ -163,11 +163,11 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			{
 				if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] !== 'public')
 				{
-					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderated');
+					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
 				}
 				else
 				{
-					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderated');
+					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
 				}
 			}
 
@@ -175,7 +175,7 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			{
 				if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] === 'public')
 				{
-					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderated');
+					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
 				}
 			}
 		}

@@ -16,6 +16,19 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 <main class="book-list-main">
 	<div class="main-header">
 		<p class="main-title"><?= Loc::getMessage('UP_LITLAB_BOOKS') ?></p>
+		<?php
+		if ($arResult['USER']['ID'] && $arResult['USER']['ROLE'] === 'admin'):
+			?>
+			<a href="/books/request/" class="request-link">
+				<p>На страницу заявок</p>
+			</a>
+			<a href="/create/book/" class="add-book-link">
+				<p>Добавить книгу</p>
+			</a>
+		<?php
+		endif;
+		?>
+
 		<div class="book-filter-block">
 			<div class="book-filter-genre">
 				<div class="book-filter-genre-header">
@@ -24,6 +37,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 						<img style="margin-left:10px" width="20px" height="20px" src="\local\modules\up.litlab\install\templates\litlab\images\icon-menu.png">
 					</button>
 				</div>
+
 				<div class="book-filter-genre-list">
 					<?php
 					$genres = $arResult['FormattingApi']->prepareText($arResult['BookApi']->getAllGenres());
@@ -60,10 +74,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			</form>
 		</div>
 	</div>
+
 	<div class="book-list-cards">
 		<?php
 		$nav = new \Bitrix\Main\UI\PageNavigation('page');
-		$nav->allowAllRecords(false)->setPageSize(16)->initFromUri();
+		$nav->allowAllRecords(false)->setPageSize(12)->initFromUri();
 
 		$books = $arResult['BookApi']->getListOfBook(
 					  $nav->getLimit(),

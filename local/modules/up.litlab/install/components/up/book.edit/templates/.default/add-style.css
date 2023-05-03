@@ -1,0 +1,173 @@
+.book-edit-main {
+	width: 90%;
+	margin: 50px auto 50px auto;
+	background-color: #ededed;
+	padding: 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 10px;
+}
+
+.book-add-form {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.book-edit-main-title {
+	font-size: 26px;
+	margin-bottom: 20px;
+}
+
+div.book-edit-isbn, div.book-edit-year, div.book-edit-author, div.book-edit-description, div.book-edit-title, div.book-edit-image
+{
+	display: flex;
+	margin-bottom: 30px;
+	width: 80%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+div.book-edit-genre-div, div.book-edit-author-div
+{
+	display: flex;
+	margin-bottom: 30px;
+	width: 80%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.book-edit-genre-title-section, .book-edit-author-title-section
+{
+	display: flex;
+	align-items: center;
+}
+
+.book-edit-main div p {
+	font-size: 20px;
+	margin-right:10px;
+}
+
+input.book-edit-isbn, input.book-edit-year, input.book-edit-author, input.book-edit-description, input.book-edit-title
+{
+	width: 80%;
+	border-radius: 10px;
+	border: 1px solid #000;
+	padding: 10px;
+}
+.file-input
+{
+	display: flex;
+	align-items: center;
+	min-width: 40%;
+	width: auto;
+	border-radius: 10px;
+	border: 1px solid #000;
+	padding: 10px;
+}
+
+.book-edit-main .book-edit-save {
+	padding: 10px 30px;
+	font-size: 16px;
+	margin-top: 10px;
+	background-color: #81b95e;
+	border: none;
+	cursor: pointer;
+	border-radius: 10px;
+}
+
+.button-add-genre, .button-add-author
+{
+	padding: 0 10px;
+	border: 1px solid #6ab04c;
+	border-radius: 10px;
+	background-color: #6ab04c;
+	cursor: pointer;
+	margin: 0 2px;
+}
+
+.button-remove-genre, .button-remove-author
+{
+	padding: 0 10px;
+	border: 1px solid #eb4d4b;
+	border-radius: 10px;
+	background-color: #eb4d4b;
+	cursor: pointer;
+	margin: 0 2px;
+}
+
+.book-edit-genre, .book-edit-author, .book-edit-author-created, .book-edit-genre-created
+{
+	width: 80%;
+	margin-bottom: 5px;
+	border-radius: 10px;
+	border: 1px solid #000;
+	padding: 10px;
+	margin-left: 5px;
+}
+
+.book-genre-list, .book-author-list
+{
+	display: flex;
+	width: 80%;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.book-edit-author-created-delete, .book-edit-genre-created-delete
+{
+	padding: 10px 15px;
+	font-size: 16px;
+	margin-top: 10px;
+	background-color: #7bb753;
+	border: none;
+	cursor: pointer;
+	border-radius: 10px
+}
+
+.book-edit-detail-link{
+	margin-bottom: 20px;
+	padding: 5px 10px;
+	border: 1px solid #DDDDDD;
+	border-radius: 10px;
+	color:#000;
+	background-color: #81b95e;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.book-edit-delete{
+	margin-bottom: 20px;
+	padding: 5px 10px;
+	border: 1px solid #DDDDDD;
+	border-radius: 10px;
+	color:#000;
+	background-color: #eb4d4b;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+	html {
+		-webkit-text-size-adjust: none;
+	}
+
+	.book-edit-main {
+		width: inherit;
+	}
+
+	.book-edit-main div {
+		width: 80%;
+	}
+
+	.book-edit-main div p {
+		font-size: 16px;
+	}
+
+	.book-edit-main div input {
+		margin-left: 20px;
+	}
+}

@@ -25,5 +25,8 @@ $MESS ['UP_LITLAB_BOOKSHELF_NOT_FOUND'] = "Такой книжной полки 
 $MESS ['UP_LITLAB_DATA_NOT_BEEN_EDITED'] = "Данные не были как-либо отредактированы."; //ERROR9
 $MESS ['UP_LITLAB_INSUFFICIENT_VALUE_LENGTH'] = "Введено значение недостаточной длины."; //
 $MESS ['UP_LITLAB_EXCEEDING_VALUE_LENGTH'] = "Введите значение меньшей длины."; //
+$MESS ['UP_LITLAB_TEMP_IMAGE_NOT_FOUND'] = "Выбранный файл не было загружено, повторите попытку."; //
+$MESS ['UP_LITLAB_ERROR_FILE_TYPE'] = "Выбранный файл не соответствует требованиям. (макс. размер 2 Мбайт)"; //
+$MESS ['UP_LITLAB_MAX_LEN_EXCEEDED'] = "Превышена максимальная длина."; //
 
 

@@ -16,3 +16,6 @@ values ('книги 2022');
 
 insert into up_LitLab_tag_bookshelf (TAG_ID, BOOKSHELF_ID)
 values (1, 1);
+
+insert into up_LitLab_user (NAME, USERNAME, PASSWORD, ROLE)
+values ('Admin', 'Amin_account', 'f135273cedefa9f663c7476b16efd6af', 'admin');

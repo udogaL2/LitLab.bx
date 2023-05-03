@@ -8,6 +8,7 @@ class LitlabBookListComponent extends CBitrixComponent
 	{
 		$this->prepareTemplateParams();
 		$this->fetchBookList();
+		$this->prepareSession();
 		$this->includeComponentTemplate();
 	}
 
@@ -16,8 +17,22 @@ class LitlabBookListComponent extends CBitrixComponent
 		return $arParams;
 	}
 
+	protected function prepareSession()
+	{
+		if($_SESSION['USER_ID'])
+		{
+			$this->arResult['USER']['ID'] = $_SESSION['USER_ID'];
+			$this->arResult['USER']['ROLE'] = $this->arResult['UserApi']->getUserRole($_SESSION['USER_ID']);
+		}
+	}
+
 	protected function prepareTemplateParams()
 	{
+		if ($this->arParams['STATUS'])
+		{
+			$this->arResult['STATUS'] = $this->arParams['STATUS'];
+		}
+
 		if($this->arParams['BOOKSHELF_ID']){
 			$this->arResult['BOOKSHELF_ID'] = $this->arParams['BOOKSHELF_ID'];
 		}
@@ -31,9 +46,11 @@ class LitlabBookListComponent extends CBitrixComponent
 		$bookApi = ServiceLocator::getInstance()->get('Book');
 		$bookshelfApi = ServiceLocator::getInstance()->get('Bookshelf');
 		$formattingApi = ServiceLocator::getInstance()->get('Formatting');
+		$userApi = ServiceLocator::getInstance()->get('User');
 
 		$this->arResult['BookApi'] = $bookApi;
 		$this->arResult['BookshelfApi'] = $bookshelfApi;
 		$this->arResult['FormattingApi'] = $formattingApi;
+		$this->arResult['UserApi'] = $userApi;
 	}
 }

@@ -73,7 +73,7 @@ class BookshelfTable extends DataManager
 
 			'BOOK_COUNT' => new ExpressionField(
 				'BOOK_COUNT',
-				'(select count(*) as `BOOK_COUNT` from up_LitLab_bookshelf_book where BOOKSHELF_ID = %s)',
+				'(select count(*) as `BOOK_COUNT` from up_LitLab_bookshelf_book inner join up_LitLab_book as b on BOOKSHELF_ID = b.ID where BOOKSHELF_ID = %s and b.STATUS = \'public\')',
 				['ID']
 			),
 
