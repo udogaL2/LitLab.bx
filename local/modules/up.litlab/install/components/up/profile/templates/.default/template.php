@@ -53,7 +53,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				$publicPage = 0;
 				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
 					$arResult['USER_ID'],
-					['public', 'private', 'moderated'],
+					['public', 'private', 'moderation'],
 					$nav->getLimit(),
 					$nav->getOffset(),
 				);
