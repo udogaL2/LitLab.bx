@@ -314,9 +314,12 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 	{
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 
-		if ($request === 'POST' && !$this->arParams['BOOK_ID'])
+		if (empty($this->arResult['ERROR']))
 		{
-			LocalRedirect("/book/{$this->arResult["BOOK"]["ID"]}/");
+			if ($request === 'POST' && !$this->arParams['BOOK_ID'])
+			{
+				LocalRedirect("/book/{$this->arResult["BOOK"]["ID"]}/");
+			}
 		}
 	}
 }
