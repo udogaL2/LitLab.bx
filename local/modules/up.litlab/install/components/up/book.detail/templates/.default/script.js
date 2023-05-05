@@ -47,9 +47,15 @@ function makeEstimation(bookId, estimation)
 				}
 			}
 			const ratingNumber = document.querySelector('.book-detail-card-description .rating-num');
+			const ratingCount = document.querySelector('.book-detail-card-description .rating-count');
 			if (ratingNumber)
 			{
-				ratingNumber.innerHTML = response.data.averageEstimation + ` (${response.data.estimationCount})`;
+				ratingNumber.innerHTML = response.data.averageEstimation;
+			}
+			if (ratingCount)
+			{
+				ratingCount.innerHTML = `(${response.data.estimationCount})`;
+
 			}
 		});
 }
