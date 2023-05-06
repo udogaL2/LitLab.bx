@@ -13,14 +13,15 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$this->prepareTemplateParams();
 		$this->editBookshelf();
 		$this->addTags();
-		$this->deleteTag();
 		$this->changeStatus();
 		$this->addComment();
+		// $this->prepareRedirect();
 		$this->includeComponentTemplate();
 	}
 
 	public function onPrepareComponentParams($arParams)
 	{
+		$this->arParams['~TAGS'] = $this->arParams['~TAGS'] ? : [];
 		return $arParams;
 	}
 
@@ -35,109 +36,119 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$this->arResult['bookApi'] = new Book();
 
 		$this->arResult['BOOKSHELF_ID'] = $this->arParams['BOOKSHELF_ID'];
-		$this->arResult['STATUS'] = $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'];
-
-		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		if ($request === "POST")
+		if(isset($_SESSION['USER_ID']))
 		{
-			if (!empty($this->arParams['~TAGS']))
+			$bookInfo = $bookshelfApi->getDetailsById($this->arParams['BOOKSHELF_ID'], $_SESSION['USER_ID']);
+			$this->arParams['BOOKSHELF'] = $bookInfo;
+			$tags = $bookshelfApi->getTags($this->arParams['BOOKSHELF_ID']);
+			$this->arResult['BOOKSHELF']['TAGS'] = array_values($tags)[0] ? $tags : [];
+			$this->arResult['STATUS'] = $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'];
+
+			$request = Context::getCurrent()->getRequest()->getRequestMethod();
+			if ($request === "POST")
 			{
-				foreach ($this->arParams['~TAGS'] as $tag)
+				if (!empty($this->arParams['~TAGS']))
 				{
-					$isValidTag = $validApi->validate($tag, 1, 150);
-					if (!$isValidTag)
+					foreach ($this->arParams['~TAGS'] as $tag)
 					{
-						$this->arResult['ERROR'] = $isValidTag;
-						break;
+						$isValidTag = $validApi->validate($tag, 1, 150);
+						if (!$isValidTag)
+						{
+							$this->arResult['ERROR'] = $isValidTag;
+							break;
+						}
 					}
 				}
-			}
-			if (!empty($this->arParams['~TAGS-CREATED']))
-			{
-				foreach ($this->arParams['~TAGS-CREATED'] as $tag)
+
+				$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
+				$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 2000);
+				$isValidComment = $validApi->validate($this->arParams['~COMMENT'], 1, 400);
+				if (
+					($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['TITLE'] !== 'Буду читать'
+						&& $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['TITLE'] !== 'Прочитано')
+				)
 				{
-					$isValidTag = $validApi->validate($tag, 1, 150);
-					if ($isValidTag !== true)
+					if (
+						!((($isValidTitle !== true || $isValidDescription !== true)) xor ($isValidComment !== true
+								&& !$this->arParams['BOOK-DELETED']))
+					)
 					{
 
-						$this->arResult['ERROR'] = $isValidTag;
-						break;
-					}
-				}
-			}
-			$isValidTitle = $validApi->validate($this->arParams['~TITLE'], 1, 255);
-			$isValidDescription = $validApi->validate($this->arParams['~DESCRIPTION'], 1, 2000);
-			$isValidComment = $validApi->validate($this->arParams['~COMMENT'], 1, 400);
-			if(($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['TITLE'] !== 'Буду читать'
-				&& $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['TITLE'] !== 'Прочитано')){
-					if (!((($isValidTitle!==true || $isValidDescription!==true))
-						xor ($isValidComment!==true && !$this->arParams['BOOK-DELETED'])))
-					{
-
-						if ($isValidTitle!==true){
+						if ($isValidTitle !== true)
+						{
 							$this->arResult['ERROR'] = $isValidTitle;
 						}
-						elseif ($isValidDescription!==true){
+						elseif ($isValidDescription !== true)
+						{
 							$this->arResult['ERROR'] = $isValidDescription;
 						}
-						elseif($isValidComment!==true){
+						elseif ($isValidComment !== true)
+						{
 							$this->arResult['ERROR'] = $isValidComment;
 						}
 					}
-			}
-			else{
-				if (!($isValidDescription!==true
-					xor ($isValidComment!==true && !$this->arParams['BOOK-DELETED'])))
+				}
+				else
 				{
-					if ($isValidDescription!==true){
-						$this->arResult['ERROR'] = $isValidDescription;
-					}
-					elseif($isValidComment!==true){
-						$this->arResult['ERROR'] = $isValidComment;
+					if (
+						!($isValidDescription !== true xor ($isValidComment !== true
+								&& !$this->arParams['BOOK-DELETED']))
+					)
+					{
+						if ($isValidDescription !== true)
+						{
+							$this->arResult['ERROR'] = $isValidDescription;
+						}
+						elseif ($isValidComment !== true)
+						{
+							$this->arResult['ERROR'] = $isValidComment;
+						}
 					}
 				}
-			}
 
-			// if (!((!$this->arParams['~TITLE']
-			// 			|| !$this->arParams['~DESCRIPTION']
-			// 			|| !$this->arParams['~STATUS']
-			// 			|| !$this->arParams['~TAGS']
-			// 			|| !$this->arParams['~TAGS-CREATED']
-			// 			|| !$this->arParams['~DELETED']) xor (!$this->arParams['COMMENT']))
-			// )
-			// {
-			// 	$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
-			// }
+				// if (!((!$this->arParams['~TITLE']
+				// 			|| !$this->arParams['~DESCRIPTION']
+				// 			|| !$this->arParams['~STATUS']
+				// 			|| !$this->arParams['~TAGS']
+				// 			|| !$this->arParams['~TAGS-CREATED']
+				// 			|| !$this->arParams['~DELETED']) xor (!$this->arParams['COMMENT']))
+				// )
+				// {
+				// 	$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
+				// }
 
-			if (!$currentBookshelf = $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID']))
-			{
-				$this->arResult['ERROR'] = "UP_LITLAB_BOOKSHELF_NOT_FOUND";
-			}
-			if (
-				($currentBookshelf['TITLE'] === $this->arParams['~TITLE']
-					&& $currentBookshelf['DESCRIPTION'] === $this->arParams['~DESCRIPTION']
-					&& $bookshelfApi->getTags((int)$currentBookshelf['ID']) === $this->arParams['~TAGS-CREATED']
-					&& !$this->arParams['~TAGS'] && $currentBookshelf['STATUS'] === $this->arParams['~STATUS'])
-				&& !$this->arParams['COMMENT']
-				&& !$this->arParams['DELETED']
-			)
-			{    // данные не были как-либо отредактированы
-				$this->arResult['ERROR'] = "UP_LITLAB_DATA_NOT_BEEN_EDITED";
-			}
-			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
-			if($checkToken!==true){
-				$this->arResult['ERROR'] = $checkToken;
-			}
+				if (!$currentBookshelf = $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID']))
+				{
+					$this->arResult['ERROR'] = "UP_LITLAB_BOOKSHELF_NOT_FOUND";
+				}
+				if (
+					($currentBookshelf['TITLE'] === $this->arParams['~TITLE']
+						&& $currentBookshelf['DESCRIPTION'] === $this->arParams['~DESCRIPTION']
+						// && $bookshelfApi->getTags((int)$currentBookshelf['ID']) === $this->arParams['~TAGS-CREATED']
+						&& !$this->arParams['~TAGS']
+						&& $currentBookshelf['STATUS'] === $this->arParams['~STATUS'])
+					&& !$this->arParams['COMMENT']
+					&& !$this->arParams['DELETED']
+				)
+				{    // данные не были как-либо отредактированы
+					$this->arResult['ERROR'] = "UP_LITLAB_DATA_NOT_BEEN_EDITED";
+				}
+				$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+				if ($checkToken !== true)
+				{
+					$this->arResult['ERROR'] = $checkToken;
+				}
 				$this->arResult['DELETED'] = $this->arParams['DELETED'];
 				$this->arResult['STATUS'] = $this->arParams['~STATUS'];
 				$this->arResult['COMMENT'] = $this->arParams['~COMMENT'];
 				$this->arResult['TAGS'] = $this->arParams['~TAGS'];
-				$this->arResult['TAGS-CREATED'] = $this->arParams['~TAGS-CREATED'];
+				// $this->arResult['TAGS-CREATED'] = $this->arParams['~TAGS-CREATED'];
 				$this->arResult['TITLE'] = $this->arParams['~TITLE'];
 				$this->arResult['DESCRIPTION'] = $this->arParams['~DESCRIPTION'];
 				$this->arResult['DATE_UPDATED'] = new \Bitrix\Main\Type\DateTime();
 				$this->arResult['ITEM_ID'] = $this->arParams['ITEM_ID'];
 
+			}
 		}
 	}
 
@@ -147,34 +158,40 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if ($request === 'POST')
 		{
-			if (!isset($_SESSION['USER_ID']))
+			if (empty($this->arResult['ERROR']))
 			{
-				LocalRedirect('/auth/');
-			}
-			if ($this->arResult['STATUS'] === 'private')
-			{
-				if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] !== 'private')
+				if (!isset($_SESSION['USER_ID']))
 				{
-					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'private');
+					LocalRedirect('/auth/');
 				}
-			}
-			if ($this->arResult['STATUS'] === 'public')
-			{
-				if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] !== 'public')
+				if ($this->arResult['STATUS'] === 'private')
 				{
-					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
+					if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] !== 'private')
+					{
+						$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'private');
+					}
 				}
-				else
+				if ($this->arResult['STATUS'] === 'public')
 				{
-					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
+					if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] !== 'public')
+					{
+						$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
+					}
+					else
+					{
+						$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
+					}
 				}
-			}
 
-			if ($this->arResult['STATUS'] === null && !empty($this->arResult['COMMENT']))//если происходит изменение комментария
-			{
-				if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] === 'public')
+				if (
+					$this->arResult['STATUS'] === null
+					&& !empty($this->arResult['COMMENT'])
+				)//если происходит изменение комментария
 				{
-					$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
+					if ($bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['STATUS'] === 'public')
+					{
+						$bookshelfApi->updateStatus($this->arResult['BOOKSHELF_ID'], 'moderation');
+					}
 				}
 			}
 		}
@@ -192,92 +209,45 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			}
 			if ($request === 'POST')
 			{
-				if($this->arResult['TAGS-CREATED'])
-				{
-					foreach ($this->arResult['TAGS-CREATED'] as $key => $tag) //добавление измененного значения
-					{
-						if (in_array($tag, $bookshelfApi->getTags($this->arResult['BOOKSHELF_ID']), true))
-						{
-							continue;
-						}
-						if ($bookshelfApi->getTagByName($tag) === false)
-						{
-							$bookshelfApi->addTag($tag);
-							$bookshelfApi->addTagsOfBookshelf(
-								(int)$bookshelfApi->getTagByName($tag)['ID'],
-								(int)$this->arResult['BOOKSHELF_ID']
-							);
-						}
-						else
-						{
-							$bookshelfApi->addTagsOfBookshelf(
-								(int)$bookshelfApi->getTagByName($tag)['ID'],
-								(int)$this->arResult['BOOKSHELF_ID']
-							);
-						}
-					}
-
-					$tagsId = [];
-					foreach ($this->arResult['TAGS-CREATED'] as $key => $tag)// удаление старого значения
-					{
-
-						if ($tag === $bookshelfApi->getTags($this->arResult['BOOKSHELF_ID'])[$key])
-						{
-							continue;
-						}
-						$tagsId[] = $bookshelfApi->getTagByName(
-							$bookshelfApi->getTags($this->arResult['BOOKSHELF_ID'])[$key]
-						)['ID'];
-					}
-
-					$bookshelfApi->deleteTagsOfBookshelf($tagsId, $this->arResult['BOOKSHELF_ID']);
-				}
-
+				$bookshelfTags = $this->arResult['BOOKSHELF']['TAGS'];
+				$tags = $bookshelfApi->getAllTags();
 				foreach ($this->arResult['TAGS'] as $tag)
 				{
-					if ($bookshelfApi->getTagByName($tag) === false) //если тега не существует
+					if (!in_array($tag, $tags)) //если тега не существует
 					{
+						$tagId = (int)$bookshelfApi->getTagByName($tag)['ID'];
 						$bookshelfApi->addTag($tag);
 						$bookshelfApi->addTagsOfBookshelf(
-							(int)$bookshelfApi->getTagByName($tag)['ID'],
+							$tagId,
 							(int)$this->arResult['BOOKSHELF_ID']
 						);
+						$bookshelfTags[$tagId] = $tag;
 					}
 					else
 					{
-						if (in_array($tag, $bookshelfApi->getTags($this->arResult['BOOKSHELF_ID'])))
+						if ($bookshelfTags && in_array($tag, $bookshelfTags, true))
 						{ // если существует и такая связь есть
 							continue;
 						}
 						else
 						{
-							$bookshelfApi->addTagsOfBookshelf(
-								(int)$bookshelfApi->getTagByName($tag)['ID'],
-								(int)$this->arResult['BOOKSHELF_ID']
-							);
+							$tagId = (int)array_search($tag, $tags);
+							if ($tagId)
+							{
+								$bookshelfApi->addTagsOfBookshelf(
+									$tagId,
+									(int)$this->arResult['BOOKSHELF_ID']
+								);
+							}
+							$bookshelfTags[$tagId] = $tag;
 						}
 					}
 				}
-				// LocalRedirect(sprintf("/user/%s/", $bookshelfApi->getBookshelfById($this->arResult['BOOKSHELF_ID'])['CREATOR_ID']));
+				$this->arResult['BOOKSHELF']['TAGS'] = $bookshelfTags;
 			}
 		}
 	}
 
-	protected function deleteTag(){
-		$bookshelfApi = new Bookshelf();
-		$request = Context::getCurrent()->getRequest()->getRequestMethod();
-		if (empty($this->arResult['ERROR']))
-		{
-			if (!isset($_SESSION['USER_ID']))
-			{
-				LocalRedirect('/auth/');
-			}
-			if ($request === 'POST' && $this->arResult['DELETED'])
-			{
-				$bookshelfApi->deleteTagsOfBookshelf([$this->arResult['DELETED']], $this->arResult['BOOKSHELF_ID']);
-			}
-		}
-	}
 	protected function addComment()
 	{
 		$bookshelfApi = new Bookshelf();
@@ -288,8 +258,6 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 		$this->arResult['bookApi'] = $bookApi;
 		$this->arResult['formattingApi'] = $formattingApi;
 
-		$books = $bookApi->getListOfBookByBookshelf(
-			$this->arResult['BOOKSHELF_ID'], null);
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
 		if (empty($this->arResult['ERROR']))
 		{
@@ -347,6 +315,15 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 					$this->arResult['ERROR'] = "UP_LITLAB_SAVING_ERROR";
 				}
 			}
+		}
+	}
+	protected function prepareRedirect()
+	{
+		$request = Context::getCurrent()->getRequest()->getRequestMethod();
+
+		if ($request === 'POST')
+		{
+			LocalRedirect("/edit/bookshelf/{$this->arResult["BOOKSHELF_ID"]}/");
 		}
 	}
 }

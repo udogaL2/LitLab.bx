@@ -12,6 +12,21 @@ window.addEventListener('load', () => {
 		document.querySelector('.shelf-card-tags-list').appendChild(tag);
 		return false;
 	};
+
+	let buttonGenreRemove = document.querySelector('.button-remove-tag');
+
+	buttonGenreRemove.onclick = function deleteField() {
+		let elems = document.querySelectorAll('.bookshelf-edit-tag');
+		if (elems[0])
+		{
+			let el = elems[elems.length - 1];
+			if (el.classList[0] === 'bookshelf-edit-tag')
+			{
+				el.parentNode.removeChild(el);
+			}
+		}
+		return false;
+	};
 })
 
 function removeBook(id, bookshelfId)
@@ -57,6 +72,7 @@ function removeBookshelf(bookshelfId, userId)
 
 		})
 		.then(function (response) {
+			console.log(response)
 			if (!response.data.result)
 			{
 				console.log('Error');
@@ -67,6 +83,12 @@ function removeBookshelf(bookshelfId, userId)
 }
 
 function removeTag(tagId, bookshelfId){
+	const shouldRemove = confirm('Вы точно хотите удалить данный тег? Действие будет применено немедленно.');
+
+	if (!shouldRemove)
+	{
+		return;
+	}
 	BX.ajax.runComponentAction('up:bookshelf.edit', 'deleteTag', {
 			mode: 'ajax',
 			data: {
@@ -84,10 +106,9 @@ function removeTag(tagId, bookshelfId){
 				return;
 			}
 
-			if(response.data.action === 'delete'){
-				const tag = document.getElementById(tagId);
+			const tag = document.getElementById(`tag_${tagId}`);
+			if(tag){
 				tag.remove();
-				// window.location = '/edit/bookshelf/' + bookshelfId + '/';
 			}
 		});
 }

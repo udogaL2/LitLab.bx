@@ -91,7 +91,7 @@ class Bookshelf
 		return BookshelfTable::getCount(['CREATOR_ID'=> $userId, 'STATUS'=> $status]);
 	}
 
-	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private', 'moderated']): array|false
+	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private', 'modification']): array|false
 	{
 		return BookshelfTable::query()
 							 ->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])
@@ -127,15 +127,30 @@ class Bookshelf
 
 	public function getTags(int $bookshelfId): array
 	{
-		$tags = BookshelfTable::getByPrimary($bookshelfId, ['select' => ['T_TITLE' => 'TAGS.TITLE']])
+		$tags = BookshelfTable::getByPrimary($bookshelfId, ['select' => ['T_ID'=>'TAGS.ID','T_TITLE' => 'TAGS.TITLE']])
 						->fetchAll()
 			;
 
 		$result = [];
 
 		foreach ($tags as $tag){
-			$result[] = $tag['T_TITLE'];
+			$result[$tag['T_ID']] = $tag['T_TITLE'];
 		}
+		return $result;
+	}
+	public function getAllTags(){
+		$query = TagTable::query()
+						   ->setSelect(['*'])
+						   ->fetchAll()
+		;
+
+		$result = [];
+
+		foreach ($query as $tag)
+		{
+			$result[$tag['ID']] = $tag['TITLE'];
+		}
+
 		return $result;
 	}
 
@@ -156,6 +171,13 @@ class Bookshelf
 		}
 
 		return $result;
+	}
+	public function getBookshelfCreator(int $bookshelfId){
+		$result = BookshelfTable::query()
+			->setSelect(['CREATOR_ID'])
+			->setFilter(['ID'=>$bookshelfId])
+			->fetch();
+		return $result['CREATOR_ID'];
 	}
 
 	public function getCountOfSavedBookshelves(int $bookshelfId)

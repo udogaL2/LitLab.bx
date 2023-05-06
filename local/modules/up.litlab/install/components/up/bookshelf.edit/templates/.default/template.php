@@ -15,7 +15,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 $this->addExternalCss("\local\modules\up.litlab\install\components\up\bookshelf.edit\\templates\.default\add-style.css");
 $this->addExternalCss("\local\modules\up.litlab\install\components\up\bookshelf.edit\\templates\.default\add-two-style.css");
-CJSCore::Init(array('ajax'));
 ?>
 <?php
 	if (!empty($arResult['ERROR']))
@@ -63,7 +62,7 @@ $arResult['booksOfBookshelf'] = $arResult['bookApi']->getListOfBookByBookshelf($
 			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_DESC')?></p>
 			<input required class="bookshelf-edit-descr" type="text" value="<?=$arResult['bookshelf']['DESCRIPTION']?>" name="description">
 		</div>
-		<div style="justify-content: space-evenly;">
+		<div class="bookshelf-create-status" style="justify-content: space-evenly;">
 			<?if ($arResult['bookshelf']['STATUS']==='private' || $arResult['bookshelf']['STATUS']==='moderated'):?>
 				<label>
 					<input type="radio" name="status" value="private" checked> Приватная
@@ -82,33 +81,27 @@ $arResult['booksOfBookshelf'] = $arResult['bookApi']->getListOfBookByBookshelf($
 		</div>
 
 
-		<div class="bookshelf-create-description two" style="">
-		<?
-		if (!$arResult['bookshelfTags'][0]):?>
-			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?>
-				<a class="button-add-tag" onclick="return createTag()">+</a>
-			</p>
+		<div class="bookshelf-edit-tag-div">
+			<div class="bookshelf-edit-tag-title-section">
+				<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?></p>
+				<a class="button-add-tag" onclick="return createField()">+</a>
+				<a class="button-remove-tag" onclick="return deleteField()">-</a>
+			</div>
 
-			<section class="shelf-card-tags-list">
-
-			</section>
-		<? else:?>
-			<p><?=Loc::getMessage('UP_LITLAB_BOOKSHELF_TAGS')?>
-			<a class="button-add-tag" onclick="return createTag()">+</a></p>
 			<section class="shelf-card-tags-list">
 				<?php
-				foreach ($arResult['formattingApi']->prepareText($arResult['bookshelfTags']) as $tag):
-					$tagId = $arResult['bookshelfApi']->getTagByName($tag)['ID']?>
-				<section id="<?=$tagId?>">
-					<input required class="bookshelf-edit-tag" type="text" value="<?= $tag ?>" name="tags-created[]" style="
+				if ($arResult['BOOKSHELF']['TAGS']):
+				foreach ($arResult['formattingApi']->prepareText($arResult['BOOKSHELF']['TAGS']) as $id => $tag):?>
+				<section id="tag_<?=$id?>">
+					<input required class="bookshelf-edit-tag-created" type="text" value="<?= $tag ?>" name="tags[]" style="
 								width: 130px; text-align: center; word-wrap: break-word; margin: 10px 5px 10px 0">
-					<button style="padding: 5px 10px; margin-right: 10px" type="submit" value="<?=$tagId?>" name="delete" onclick="removeTag(<?=$tagId?>, <?=$arResult['BOOKSHELF_ID']?>)">-</button>
+					<a class="button-delete-tag" style="padding: 5px 10px; margin-right: 10px" onclick="removeTag(<?=$id?>, <?=$arResult['BOOKSHELF_ID']?>)">-</a>
 				</section>
 				<?php
-				endforeach; ?>
+				endforeach;
+				endif;?>
 			</section>
-		<?endif;?>
-	</div>
+		</div>
 		<div style="width: 100%; text-align: center"><button type="submit" class="bookshelf-edit-save">Сохранить</button></div>
 	</form>
 
@@ -157,7 +150,8 @@ if ($arResult['booksOfBookshelf'] !== []):?>
 <?if($arResult['bookshelf']['TITLE']!=='Буду читать' && $arResult['bookshelf']['TITLE']!=='Прочитано'):?>
 	<div style="width: 100%; text-align: center; display: block;">
 		<form method="post">
-			<button type="submit" onclick="removeBookshelf(<?=$arResult['BOOKSHELF_ID']?>, <?=$arResult['bookshelf']['CREATOR_ID']?>)" class="bookshelf-edit-save" style="background-color: rgba(216,0,0,0.83)">Удалить полку</button>
+			<input type="hidden" name="token" value="<?=$tokenApi->createToken();?>">
+			<a onclick="removeBookshelf(<?=$arResult['BOOKSHELF_ID']?>, <?=$arResult['bookshelf']['CREATOR_ID']?>)" class="bookshelf-edit-delete" style="background-color: rgba(216,0,0,0.83); display: block">Удалить полку</a>
 		</form>
 	</div>
 <?endif;?>

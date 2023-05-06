@@ -20,7 +20,7 @@
 	margin-bottom: 50px;
 }
 
-.bookshelf-create-main div{
+.bookshelf-create-name, .bookshelf-create-description, .bookshelf-create-status{
 	display: flex;
 	margin-bottom: 30px;
 	width: 60%;

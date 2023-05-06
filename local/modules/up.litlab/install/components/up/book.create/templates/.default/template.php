@@ -23,18 +23,6 @@ if (!empty($arResult['ERROR']))
 	);
 }
 ?>
-<?php
-if (!empty($arResult['ERROR']))
-{
-	$APPLICATION->IncludeComponent(
-		'up:system.messeage',
-		'',
-		['MESSEAGE' => $arResult['ERROR']],
-	);
-}
-?>
-
-
 
 <main class="bookshelf-create-main">
 	<p class="bookshelf-create-main-title"><?= Loc::getMessage('UP_LITLAB_BOOK_ADD_REQUEST') ?></p>

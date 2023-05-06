@@ -73,7 +73,6 @@ class LitlabBookCreateComponent extends CBitrixComponent
 				if (!isset($response))
 				{
 					$this->arParams['ERROR'] = "UP_LITLAB_SAVING_ERROR";
-					$this->includeComponentTemplate();
 					return;
 				}
 				LocalRedirect(sprintf("/user/%s/", $_SESSION['USER_ID']));
