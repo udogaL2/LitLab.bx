@@ -37,11 +37,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 						<img style="margin-left:10px" width="20px" height="20px" src="\local\modules\up.litlab\install\templates\litlab\images\icon-menu.png">
 					</button>
 				</div>
+				<p class="genre-active"><?= $arResult['Genres'][$arResult['GENRE_ID']]?></p>
 
 				<div class="book-filter-genre-list">
 					<?php
-					$genres = $arResult['FormattingApi']->prepareText($arResult['BookApi']->getAllGenres());
-					foreach ($genres as $id => $genre):
+					foreach ($arResult['Genres'] as $id => $genre):
 						?>
 						<a <?= $id === $arResult['GENRE_ID'] ? 'class="active"'
 							: '' ?> href="/books/?<?= $arResult['FormattingApi']->createSearchRequest(
@@ -49,7 +49,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 							$arResult['SEARCH']
 						) ?>">
 							<div class="book-filter-genre-item">
-
 								<?= $genre ?>
 							</div>
 						</a>

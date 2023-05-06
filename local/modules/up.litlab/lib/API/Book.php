@@ -171,6 +171,7 @@ class Book
 	public function getGenres(int $bookId): array
 	{
 		$genres = BookTable::getByPrimary($bookId, ['select' => ['G_ID' => 'GENRES.ID', 'G_TITLE' => 'GENRES.TITLE']])
+
 						->fetchAll()
 			;
 
@@ -223,6 +224,7 @@ class Book
 	{
 		$query = GenreTable::query()
 			->setSelect(['*'])
+			->setOrder(['TITLE'])
 			->fetchAll()
 		;
 

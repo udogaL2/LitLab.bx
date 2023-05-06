@@ -53,7 +53,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 				$publicPage = 0;
 				$userBookshelves = $arResult['userBookshelfApi']->getListOfUserBookshelf(
 					$arResult['USER_ID'],
-					['public', 'private', 'modification'],
+					['public', 'private', 'modification', 'moderation'],
 					$nav->getLimit(),
 					$nav->getOffset(),
 				);
@@ -106,6 +106,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 					<?elseif($userBookshelf['STATUS'] === 'modification'):?>
 						<input class="status" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-modification.png" height="30px" width="25px">
 						<p class="status-descr">Ваша полка отправлена на доработку</p>
+					<?else:?>
+						<input class="status" type="image" src="\local\modules\up.litlab\install\templates\litlab\images\icon-moderated.png" height="30px" width="30px">
+						<p class="status-descr">На модерации</p>
 					<?endif;?>
 					</div>
 					<a href="/edit/bookshelf/<?=$userBookshelf['ID']?>/"><?=Loc::getMessage('UP_LITLAB_EDIT')?></a>
