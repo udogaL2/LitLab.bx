@@ -34,7 +34,7 @@ class Bookshelf
 
 		return $query->fetchAll();
 	}
-	public function getListOfUserBookshelf(int $userId, array $status = ['public', 'private', 'moderation'], ?int $limit = 3, int $offset = 0): array
+	public function getListOfUserBookshelf(int $userId, array $status = ['public', 'private', 'moderation', 'modification'], ?int $limit = 3, int $offset = 0): array
 	{
 		return BookshelfTable::query()
 							 ->setSelect(['*'])
@@ -86,12 +86,12 @@ class Bookshelf
 		return count($query->fetchAll());
 	}
 
-	public function getUserBookshelfCount($userId, array $status = ['public', 'private', 'moderated']): int
+	public function getUserBookshelfCount($userId, array $status = ['public', 'private', 'moderation', 'modification']): int
 	{
 		return BookshelfTable::getCount(['CREATOR_ID'=> $userId, 'STATUS'=> $status]);
 	}
 
-	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private', 'modification']): array|false
+	public function getDetailsById(int $id, int $userId, array $status = ['public', 'private', 'modification', 'moderation']): array|false
 	{
 		return BookshelfTable::query()
 							 ->setSelect(['ID', 'CREATOR_ID', 'TITLE', 'DESCRIPTION', 'LIKES', 'DATE_CREATED', 'DATE_UPDATED', 'STATUS', 'BOOK_COUNT'])

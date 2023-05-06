@@ -63,7 +63,8 @@ $arResult['booksOfBookshelf'] = $arResult['bookApi']->getListOfBookByBookshelf($
 			<input required class="bookshelf-edit-descr" type="text" value="<?=$arResult['bookshelf']['DESCRIPTION']?>" name="description">
 		</div>
 		<div class="bookshelf-create-status" style="justify-content: space-evenly;">
-			<?if ($arResult['bookshelf']['STATUS']==='private' || $arResult['bookshelf']['STATUS']==='moderated'):?>
+			<?if ($arResult['bookshelf']['STATUS']==='private' || $arResult['bookshelf']['STATUS']==='moderation'
+				|| $arResult['bookshelf']['STATUS']==='modification'):?>
 				<label>
 					<input type="radio" name="status" value="private" checked> Приватная
 				</label>

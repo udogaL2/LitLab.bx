@@ -82,7 +82,7 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 			$this->arResult['Bookshelf']['ADDED_READ_ID']= $bookAPI->checkBookInBookshelf($this->arResult['Book']['ID'], $this->arResult['READ_ID']);
 			$this->arResult['Book']['RATING_NUMBER'] = (int)$bookAPI->getUserEstimation($userId, $bookInfo['ID']);
 
-			$this->arResult['Bookshelves'] = array_slice($bookshelfApi->getListOfUserBookshelf($this->arResult['USER_ID'], ['public', 'private', 'moderation'], null, 0), 2);
+			$this->arResult['Bookshelves'] = array_slice($bookshelfApi->getListOfUserBookshelf($this->arResult['USER_ID'], ['public', 'private', 'moderation', 'modification'], null, 0), 2);
 		}
 		else
 		{
