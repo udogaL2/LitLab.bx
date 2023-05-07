@@ -245,3 +245,45 @@ __litlabMigrate(19, function($updater, $DB) {
 		);
 	}
 });
+
+__litlabMigrate(20, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query(
+			'CREATE INDEX ix_perf_up_LitLab_bookshelf_1  ON `up_LitLab_bookshelf` (`STATUS`);'
+		);
+	}
+});
+
+__litlabMigrate(21, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query(
+			'CREATE INDEX ix_perf_up_LitLab_bookshelf_2 ON `up_LitLab_bookshelf` (`CREATOR_ID`);'
+		);
+	}
+});
+__litlabMigrate(22, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query(
+			'CREATE INDEX ix_perf_up_LitLab_book_1 ON `up_LitLab_book` (`STATUS`);'
+		);
+	}
+});
+__litlabMigrate(23, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query(
+			'CREATE INDEX ix_perf_up_LitLab_book_2 ON `up_LitLab_book` (`TITLE`);'
+		);
+	}
+});
+__litlabMigrate(24, function($updater, $DB) {
+	if ($updater->CanUpdateDatabase())
+	{
+		$DB->query(
+			'CREATE INDEX ix_perf_up_LitLab_book_3 ON `up_LitLab_book` (`ISBN`);'
+		);
+	}
+});

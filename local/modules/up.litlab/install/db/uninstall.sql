@@ -12,3 +12,10 @@ DROP TABLE IF EXISTS up_LitLab_bookshelf_book;
 DROP TABLE IF EXISTS up_LitLab_tag;
 DROP TABLE IF EXISTS up_LitLab_tag_bookshelf;
 DROP TABLE IF EXISTS up_LitLab_likes;
+
+DROP INDEX ix_perf_up_LitLab_bookshelf_1  ON `up_LitLab_bookshelf`;
+DROP INDEX ix_perf_up_LitLab_bookshelf_2 ON `up_LitLab_bookshelf`;
+
+DROP INDEX ix_perf_up_LitLab_book_1 ON `up_LitLab_book`;
+DROP INDEX ix_perf_up_LitLab_book_2 ON `up_LitLab_book`;
+DROP INDEX ix_perf_up_LitLab_book_3 ON `up_LitLab_book`;

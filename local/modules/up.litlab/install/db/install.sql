@@ -116,3 +116,10 @@ CREATE TABLE IF NOT EXISTS up_LitLab_likes
     BOOKSHELF_ID INT NOT NULL,
     PRIMARY KEY (USER_ID, BOOKSHELF_ID)
 );
+
+CREATE INDEX ix_perf_up_LitLab_bookshelf_1  ON `up_LitLab_bookshelf` (`STATUS`);
+CREATE INDEX ix_perf_up_LitLab_bookshelf_2 ON `up_LitLab_bookshelf` (`CREATOR_ID`);
+
+CREATE INDEX ix_perf_up_LitLab_book_1 ON `up_LitLab_book` (`STATUS`);
+CREATE INDEX ix_perf_up_LitLab_book_2 ON `up_LitLab_book` (`TITLE`);
+CREATE INDEX ix_perf_up_LitLab_book_3 ON `up_LitLab_book` (`ISBN`);

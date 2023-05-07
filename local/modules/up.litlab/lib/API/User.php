@@ -75,7 +75,7 @@ class User
 	public function getUserNames(array $userIds)
 	{
 		$names = UserTable::query()
-			->setSelect(['ID', 'NAME'])
+			->setSelect(['ID', 'USERNAME'])
 			->where('ID', 'in', $userIds)
 			->fetchAll();
 
@@ -83,7 +83,7 @@ class User
 
 		foreach ($names as $name)
 		{
-			$result[$name['ID']] = $name['NAME'];
+			$result[$name['ID']] = $name['USERNAME'];
 		}
 
 		return $result;

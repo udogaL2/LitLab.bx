@@ -56,16 +56,16 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 					endforeach; ?>
 				</div>
 			</div>
-			<form action="/books/" method="get">
+			<form id="searchForm" action="javascript:void(0);" method="get">
 				<?= $arResult['GENRE_ID'] ? "<input type=\"hidden\" name=\"genre_id\" value=\"{$arResult['GENRE_ID']}\">" : '' ?>
 				<div class="book-list-search">
 					<p class="book-list-search-wrapper input-wrapper">
 						<label>
-							<input class="book-list-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="<?= Loc::getMessage('UP_LITLAB_PLACEHOLDER_FIND_BOOK') ?>">
+							<input id="searchInput" class="book-list-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="<?= Loc::getMessage('UP_LITLAB_PLACEHOLDER_FIND_BOOK') ?>">
 						</label>
 					</p>
 					<p class="book-list-search-wrapper">
-						<button class="button book-list-is-info">
+						<button onclick="makeSearch()" class="button book-list-is-info">
 							<?= Loc::getMessage('UP_LITLAB_SEARCH') ?>
 						</button>
 					</p>

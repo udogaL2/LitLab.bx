@@ -243,6 +243,8 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 							(int)$genreId,
 							(int)$this->arResult['BOOK']['ID']
 						);
+
+						$allGenre[$genreId] = $genre;
 						$bookGenre[$genreId] = $genre;
 					}
 					else
@@ -285,6 +287,8 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 							(int)$authorId,
 							(int)$this->arResult['BOOK']['ID']
 						);
+
+						$allAuthors[$authorId] = $author;
 						$bookAuthors[$authorId] = $author;
 					}
 					else

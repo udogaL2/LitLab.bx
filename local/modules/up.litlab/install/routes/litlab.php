@@ -6,6 +6,9 @@ use Bitrix\Main\Routing\RoutingConfigurator;
 
 return function(RoutingConfigurator $routes) {
 	$routes->get('/404', new PublicPageController('/local/modules/up.litlab/views/404.php'));
+	$routes->get('/about/', new PublicPageController('/local/modules/up.litlab/views/about.php'));
+	$routes->get('/regulation/', new PublicPageController('/local/modules/up.litlab/views/rules.php'));
+
 
 	$routes->get('/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));
 	$routes->get('/page/{page}/', new PublicPageController('/local/modules/up.litlab/views/bookshelf-list.php'));

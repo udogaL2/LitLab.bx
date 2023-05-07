@@ -91,14 +91,22 @@ class up_litlab extends CModule
 
 	public function uninstallFiles(): void
 	{
+		$this->deleteDir($_SERVER['DOCUMENT_ROOT'] . '/local/components/');
+		$this->deleteDir($_SERVER['DOCUMENT_ROOT'] . '/local/templates/');
+		$this->deleteDir($_SERVER['DOCUMENT_ROOT'] . '/local/routes/');
+		$this->deleteDir($_SERVER['DOCUMENT_ROOT'] . '/upload/img/');
 	}
 
-	public function installEvents(): void
-	{
-	}
-
-	public function uninstallEvents(): void
-	{
+	public function deleteDir($dirPath) {
+		$files = glob($dirPath . '*', GLOB_MARK);
+		foreach ($files as $file) {
+			if (is_dir($file)) {
+				$this->deleteDir($file);
+			} else {
+				unlink($file);
+			}
+		}
+		rmdir($dirPath);
 	}
 
 	public function doInstall(): void

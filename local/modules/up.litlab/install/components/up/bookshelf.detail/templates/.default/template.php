@@ -34,7 +34,7 @@ else
 			<p class="bookshelf-detail-name"><?= Loc::getMessage(
 					'UP_LITLAB_BOOKSHELF'
 				) ?> "<?= $arResult['Bookshelf']['TITLE'] ?>" <?= Loc::getMessage('UP_LITLAB_FROM') ?>
-				<a class="bookshelf-detail-author-name" href="/user/<?= $arResult['Bookshelf']['Creator']['ID'] ?>/"><?= $arResult['Bookshelf']['Creator']['NAME'] ?></a>
+				<a class="bookshelf-detail-author-name" href="/user/<?= $arResult['Bookshelf']['Creator']['ID'] ?>/"><?= $arResult['Bookshelf']['Creator']['USERNAME'] ?></a>
 			</p>
 			<p class="bookshelf-detail-description"><?= $arResult['Bookshelf']['DESCRIPTION'] ?></p>
 			<?php

@@ -19,15 +19,15 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 		<h1><?= Loc::getMessage('UP_LITLAB_TITLE')?> </h1>
 		<h3><?= Loc::getMessage('UP_LITLAB_UNDER_TITLE') ?></h3>
 	</div>
-	<form action="/" method="get">
+	<form id="searchForm" action="javascript:void(0);" method="get">
 		<div class="header-search">
 			<p class="header-search-wrapper header-input-wrapper">
 				<label>
-					<input class="header-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="<?= Loc::getMessage('UP_LITLAB_PLACEHOLDER_FIND_BOOK') ?>">
+					<input id="searchInput" class="header-search-input" type="text" name="search" value="<?= $arResult['SEARCH'] ?>" placeholder="<?= Loc::getMessage('UP_LITLAB_PLACEHOLDER_FIND_BOOK') ?>">
 				</label>
 			</p>
 			<p class="header-search-wrapper">
-				<button class="button header-is-info">
+				<button class="button header-is-info" onclick="makeSearch()">
 					<?= Loc::getMessage('UP_LITLAB_SEARCH') ?>
 				</button>
 			</p>
