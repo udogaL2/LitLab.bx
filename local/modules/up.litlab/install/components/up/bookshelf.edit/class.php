@@ -207,16 +207,18 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 			{
 				LocalRedirect('/auth/');
 			}
-			if ($request === 'POST')
+
 			{
 				$bookshelfTags = $this->arResult['BOOKSHELF']['TAGS'];
+				if ($request === 'POST')
+
 				$tags = $bookshelfApi->getAllTags();
 				foreach ($this->arResult['TAGS'] as $tag)
 				{
-					if (!in_array($tag, $tags)) //если тега не существует
+					if (!$bookshelfApi->getTagByName($tag)) //если тега не существует
 					{
-						$tagId = (int)$bookshelfApi->getTagByName($tag)['ID'];
 						$bookshelfApi->addTag($tag);
+						$tagId = $bookshelfApi->getTagByName($tag);
 						$bookshelfApi->addTagsOfBookshelf(
 							$tagId,
 							(int)$this->arResult['BOOKSHELF_ID']
@@ -225,13 +227,13 @@ class LitlabBookshelfEditComponent extends CBitrixComponent
 					}
 					else
 					{
-						if ($bookshelfTags && in_array($tag, $bookshelfTags, true))
+						if ($tag && in_array($tag, $bookshelfApi->getTags((int)$this->arResult['BOOKSHELF_ID'])))
 						{ // если существует и такая связь есть
 							continue;
 						}
 						else
 						{
-							$tagId = (int)array_search($tag, $tags);
+							$tagId = $bookshelfApi->getTagByName($tag);
 							if ($tagId)
 							{
 								$bookshelfApi->addTagsOfBookshelf(

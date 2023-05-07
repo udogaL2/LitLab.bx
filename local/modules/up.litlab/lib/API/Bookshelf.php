@@ -246,10 +246,11 @@ class Bookshelf
 	}
 
 	public function getTagByName(string $tagName){
-		return TagTable::query()
-			->setSelect(['*'])
+		$result =  TagTable::query()
+			->setSelect(['ID'])
 			->setFilter(['TITLE'=>$tagName])
 			->fetch();
+		return $result['ID'];
 	}
 
 	public function updateBookshelf(int $bookshelfId, array $updateFields){
