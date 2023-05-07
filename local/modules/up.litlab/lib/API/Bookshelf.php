@@ -50,15 +50,14 @@ class Bookshelf
 
 		$bookshelves = UserTable::query()
 					  ->setSelect(['BS_ID' => 'BOOKSHELVES.ID', 'STATUS'=>'BOOKSHELVES.STATUS', 'CREATOR_ID'=>'BOOKSHELVES.CREATOR_ID'])
-					  ->setFilter(array(['ID'=>$userId]))
+					  ->setFilter(array(['ID'=>$userId, 'STATUS'=>'public']))
 					  ->setLimit($limit)
 					  ->setOffset($offset)
 					  ->fetchAll();
 
 		$result = [];
-
 		foreach ($bookshelves as $bookshelf){
-			if($bookshelf['STATUS'] === 'public' && $bookshelf['CREATOR_ID']!==(string)$userId)
+			if($bookshelf['CREATOR_ID']!==(string)$userId)
 			{
 				$result[] = $this->getBookshelfById($bookshelf['BS_ID']);
 			}
