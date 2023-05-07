@@ -97,13 +97,14 @@ class up_litlab extends CModule
 		$this->deleteDir($_SERVER['DOCUMENT_ROOT'] . '/upload/img/');
 	}
 
-	public function deleteDir($dirPath) {
-		$files = glob($dirPath . '*', GLOB_MARK);
+	function deleteDir($dirPath) {
+		$files = array_diff(scandir ($dirPath), array('..', '.'));;
 		foreach ($files as $file) {
-			if (is_dir($file)) {
-				$this->deleteDir($file);
+			$filePath = $dirPath . $file;
+			if (is_dir($filePath)) {
+				$this->deleteDir($filePath . '/');
 			} else {
-				unlink($file);
+				unlink($filePath);
 			}
 		}
 		rmdir($dirPath);
