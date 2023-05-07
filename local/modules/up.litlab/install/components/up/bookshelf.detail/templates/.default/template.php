@@ -38,7 +38,7 @@ else
 			</p>
 			<p class="bookshelf-detail-description"><?= $arResult['Bookshelf']['DESCRIPTION'] ?></p>
 			<?php
-			if ($arResult['Bookshelf']['Tags'][0]): ?>
+			if (array_values($arResult['Bookshelf']['Tags'])[0]): ?>
 				<div class="book-detail-card-description-genres">
 					<p style="margin-right: 20px"><?= Loc::getMessage('UP_LITLAB_TAGS') ?>:</p>
 					<div class="book-detail-card-description-genres-links">
