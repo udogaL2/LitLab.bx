@@ -22,7 +22,7 @@ if (!empty($arResult['ERROR']))
 		['MESSEAGE' => $arResult['ERROR']],
 	);
 }
-
+$tokenApi = new \Up\Litlab\API\Token();
 $arResult['BOOK'] = ServiceLocator::getInstance()->get('Formatting')->prepareText($arResult['BOOK']);
 ?>
 
@@ -41,6 +41,7 @@ $arResult['BOOK'] = ServiceLocator::getInstance()->get('Formatting')->prepareTex
 	endif;
 	?>
 	<form class="book-add-form" action="" method="post">
+		<input type="hidden" name="token" value="<?=$tokenApi->createToken();?>">
 		<div class="book-edit-title">
 			<p><?=Loc::getMessage('UP_LITLAB_BOOK_TITLE')?></p>
 			<input class="book-edit-title" type="text" name="input-book-title" value="<?= $arResult['BOOK']['TITLE'] ?>">
