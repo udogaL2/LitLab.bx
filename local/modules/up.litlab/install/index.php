@@ -97,7 +97,7 @@ class up_litlab extends CModule
 		$this->deleteDir($_SERVER['DOCUMENT_ROOT'] . '/upload/img/');
 	}
 
-	function deleteDir($dirPath) {
+	public function deleteDir($dirPath) {
 		$files = array_diff(scandir ($dirPath), array('..', '.'));;
 		foreach ($files as $file) {
 			$filePath = $dirPath . $file;
