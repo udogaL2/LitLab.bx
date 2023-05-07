@@ -32,6 +32,7 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 		}
 
 		$request = Context::getCurrent()->getRequest()->getRequestMethod();
+		$tokenApi = new \Up\Litlab\API\Token();
 
 		if($this->arParams['BOOK_ID'])
 		{
@@ -61,6 +62,11 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 
 		if($request === "POST")
 		{
+			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
+			if ($checkToken !== true)
+			{
+				$this->arResult['ERROR'] = $checkToken;
+			}
 			if (!$this->arParams['~TITLE'] ||
 				!$this->arParams['~DESCRIPTION'] || !$this->arParams['YEAR'] ||
 				!$this->arParams['~ISBN'] || !$this->arParams['IMG'] && !$this->arParams['BOOK']['IMAGE_ID']

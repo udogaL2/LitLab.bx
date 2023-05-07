@@ -21,6 +21,7 @@ $APPLICATION->IncludeComponent(
 		'ISBN' => (string)Context::getCurrent()->getRequest()->getPost('input-book-isbn'),
 		'GENRE' => Context::getCurrent()->getRequest()->getPost('genre'),
 		'AUTHOR' => Context::getCurrent()->getRequest()->getPost('author'),
+		'TOKEN' => Context::getCurrent()->getRequest()->getPost('token')
 	]
 );
 
