@@ -2,6 +2,7 @@
 
 use Bitrix\Main\Context;
 use Bitrix\Main\DI\ServiceLocator;
+use Bitrix\Main\Localization\Loc;
 use Up\Litlab\API\Book;
 use Up\Litlab\API\User;
 
@@ -19,8 +20,9 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 
 	public function onPrepareComponentParams($arParams)
 	{
-		$this->arParams['~GENRE'] = $this->arParams['~GENRE'] ? : [];
-		$this->arParams['~AUTHOR'] = $this->arParams['~AUTHOR'] ? : [];
+		$arParams['~GENRE'] = $arParams['~GENRE'] ? : [];
+		$arParams['~AUTHOR'] = $arParams['~AUTHOR'] ? : [];
+		$arParams['TEMPLATE_TITLE'] = $arParams['TITLE_FLAG'] ? 'UP_LITLAB_BOOK_CREATE' :'UP_LITLAB_BOOK_EDIT';
 		return $arParams;
 	}
 

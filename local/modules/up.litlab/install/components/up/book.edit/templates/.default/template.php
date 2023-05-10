@@ -27,7 +27,7 @@ $arResult['BOOK'] = ServiceLocator::getInstance()->get('Formatting')->prepareTex
 ?>
 
 <main class="book-edit-main">
-	<p class="book-edit-main-title"><?=Loc::getMessage('UP_LITLAB_BOOK_EDIT')?></p>
+	<p class="book-edit-main-title"><?=Loc::getMessage($arParams['TEMPLATE_TITLE'])?></p>
 	<?php
 	if ($arResult['BOOK']['ID']):
 		if ($arResult['BOOK']['STATUS'] !== 'moderation'):

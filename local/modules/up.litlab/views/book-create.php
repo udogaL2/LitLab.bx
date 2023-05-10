@@ -24,6 +24,7 @@ if ($_SESSION['USER_ID'] && ServiceLocator::getInstance()->get('User')->getUserR
 			'ISBN' => (string)Context::getCurrent()->getRequest()->getPost('input-book-isbn'),
 			'GENRE' => Context::getCurrent()->getRequest()->getPost('genre'),
 			'AUTHOR' => Context::getCurrent()->getRequest()->getPost('author'),
+			'TITLE_FLAG' => true,
 		]
 	);
 }

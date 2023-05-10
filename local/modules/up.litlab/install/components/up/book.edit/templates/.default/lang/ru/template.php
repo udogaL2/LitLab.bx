@@ -1,4 +1,5 @@
 <?php
+$MESS ['UP_LITLAB_BOOK_CREATE'] = 'Добавление книги';
 $MESS ['UP_LITLAB_BOOK_EDIT'] = 'Редактирование книги';
 $MESS ['UP_LITLAB_TO_BOOK_PAGE'] = 'На страницу книги';
 $MESS ['UP_LITLAB_BOOK_TITLE'] = 'Название книги';
