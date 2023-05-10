@@ -15,6 +15,8 @@ class LitlabBookshelfDetailComponent extends CBitrixComponent
 
 	public function onPrepareComponentParams($arParams)
 	{
+		$arParams['STATUS_LIST'] = ['moderation' => 'UP_LITLAB_STATUS_MODERATION', 'public' => 'UP_LITLAB_STATUS_PUBLIC',
+			'modification' => 'UP_LITLAB_STATUS_MODIFICATION', 'private' => 'UP_LITLAB_STATUS_PRIVATE'];
 		return $arParams;
 	}
 

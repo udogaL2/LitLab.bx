@@ -67,7 +67,7 @@ else
 						<?php endif;?>
 						<button class="modification-button" onclick="modificationBookshelf(<?=$arResult['Bookshelf']['ID']?>)"><?=Loc::getMessage('UP_LITLAB_MODIFICATION')?></button>
 					<?php endif;?>
-					<p><?= Loc::getMessage('UP_LITLAB_STATUS') ?>:<p class="status-info"><?= $arResult['Bookshelf']['STATUS'] ?></p></p>
+					<p><?= Loc::getMessage('UP_LITLAB_STATUS') ?>:<p class="status-info"><?= Loc::getMessage($arParams['STATUS_LIST'][$arResult['Bookshelf']['STATUS']]) ?></p></p>
 				</div>
 			<?php
 			endif;
