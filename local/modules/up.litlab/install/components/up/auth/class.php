@@ -34,18 +34,22 @@ class LitlabAuthComponent extends CBitrixComponent
 			if (!is_string($this->arParams['~NAME']) && !is_string($this->arParams['~PASSWORD']))
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
+				return;
 			}
 			if (!$this->arParams['~NAME'] && !$this->arParams['~PASSWORD'])
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
+				return;
 			}
 			$isValidForm = $validApi->validateAuthForm($this->arParams['~NAME'], $this->arParams['~PASSWORD']);
 			if ($isValidForm!==true){
 				$this->arResult['ERROR'] = $isValidForm;
+				return;
 			}
 			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
 			if($checkToken!==true){
 				$this->arResult['ERROR'] = $checkToken;
+				return;
 			}
 
 			$_SESSION['NAME'] = $this->arParams['~NAME'];

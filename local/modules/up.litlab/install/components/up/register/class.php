@@ -33,20 +33,23 @@ class LitlabRegisterComponent extends CBitrixComponent
 			)
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_TYPE_ERROR";
-
+				return;
 			}
 			if (!$this->arParams['~NAME'] || !$this->arParams['~PASSWORD'] || !$this->arParams['~USERNAME'])
 			{
 				$this->arResult['ERROR'] = "UP_LITLAB_EMPTY_ERROR";
+				return;
 			}
 			$isValidForm = $validApi->validateRegisterForm($this->arParams['~NAME'], $this->arParams['~USERNAME'], $this->arParams['~PASSWORD']);
 			if ($isValidForm!==true)
 			{
 				$this->arResult['ERROR'] = $isValidForm;
+				return;
 			}
 			$checkToken = $tokenApi->checkToken($this->arParams['TOKEN'], $_SESSION['TOKEN']);
 			if($checkToken!==true){
 				$this->arResult['ERROR'] = $checkToken;
+				return;
 			}
 
 			$this->arResult['NAME'] = $this->arParams['~NAME'];
