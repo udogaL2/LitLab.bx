@@ -68,6 +68,7 @@ class LitlabBookDetailfComponent extends CBitrixComponent
 			if ($checkToken !== true)
 			{
 				$this->arResult['ERROR'] = $checkToken;
+				return;
 			}
 			if (!$this->arParams['~TITLE'] ||
 				!$this->arParams['~DESCRIPTION'] || !$this->arParams['YEAR'] ||
